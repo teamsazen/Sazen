@@ -12,6 +12,19 @@ const word = ['S', 'A', 'Z', 'E', 'N'];
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    {import.meta.env.PROD && (
+      <>
+        <!-- Google tag (gtag.js) -->
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline set:html={`
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '${gaId}');
+`} />
+      </>
+    )}
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -31,17 +44,6 @@ const word = ['S', 'A', 'Z', 'E', 'N'];
     <link rel="preload" href="/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/google-sans.woff2" as="font" type="font/woff2" crossorigin />
     <slot name="head" />
-    {import.meta.env.PROD && (
-      <>
-        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-        <script is:inline define:vars={{ gaId }}>
-          window.dataLayer = window.dataLayer || [];
-          function gtag() { dataLayer.push(arguments); }
-          gtag('js', new Date());
-          gtag('config', gaId);
-        </script>
-      </>
-    )}
     <script is:inline>document.documentElement.classList.add('js')</script>
   </head>
   <body>
