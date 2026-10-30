@@ -155,14 +155,14 @@ img{max-width:100%}
 .frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(12px,1.6vw,24px);perspective:1200px}
 .reel{margin:0;display:grid;gap:16px}
 .frame{position:relative;aspect-ratio:1;border-radius:clamp(28px,3vw,44px);overflow:hidden;background:var(--panel);transition:transform .6s var(--ease);transform-style:preserve-3d}
-.frame video{display:block;width:100%;height:100%;object-fit:cover;transition:opacity .6s var(--ease),filter .6s var(--ease)}
-.js .reel:not(.is-current) video{opacity:.55;filter:saturate(.6)}
+.frame video{display:block;width:100%;height:100%;object-fit:cover}
+.frame::after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px var(--line);pointer-events:none}
 .reel-play{position:absolute;inset:0;width:100%;border:0;background:none;cursor:pointer;border-radius:inherit}
 .reel-play:focus-visible{outline:2px solid var(--fg);outline-offset:-4px}
+.reel.is-paused .reel-play::after{content:'';position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:rgba(0,0,0,.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E") center / 28px no-repeat;backdrop-filter:blur(6px)}
 .reel figcaption{display:grid;gap:12px}
 .reel-bar{display:block;height:2px;background:var(--line);overflow:hidden}
 .reel-bar i{display:block;height:100%;background:var(--fg);transform:scaleX(0);transform-origin:0 50%}
-@media (prefers-reduced-motion:reduce){.frame video{transition:none}}
 
 /* Google Play CTA */
 .cta{background:var(--fg);color:var(--bg);padding-block:clamp(90px,13vw,200px);display:grid;gap:clamp(30px,4vw,56px);justify-items:start}

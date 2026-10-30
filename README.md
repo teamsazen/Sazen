@@ -22,7 +22,7 @@ Production canonical domain: **https://teamsazen.com**. Connect this custom doma
 
 ## Pages
 
-- `/`: headline and coverflow showcase of all seven apps, marquee, studio manifesto, Apps and Games panels with app rows, pinned horizontal "How we build" cards, collection of three studio reels that play one after another, three blog cards, Google Play CTA.
+- `/`: headline and coverflow showcase of all seven apps, marquee, studio manifesto, Apps and Games panels with app rows, pinned horizontal "How we build" cards, collection of three looping studio reels that play together, three blog cards, Google Play CTA.
 - `/apps/<slug>`: app hero with three phones, feature rows, screenshot gallery with an enlargement dialog, support links, other apps.
 - `/blog` and `/blog/<slug>`: one short post per app.
 - `/privacy`: website-only privacy; each app's store listing remains the source for its own policies.

@@ -18,7 +18,7 @@ const worlds = [
   { id: 'games', label: '02 · Games with personality', title: 'Games', text: 'A puzzle to solve. A little play between the serious things.', list: apps.filter(app => app.filter === 'games') },
 ];
 const schema = { '@context': 'https://schema.org', '@type': 'Organization', name: 'Sazen', url: Astro.site?.toString(), logo: new URL('/images/sazen-logo.png', Astro.site).toString(), sameAs: [developerUrl] };
-// Studio reels rendered from brand/promo; they play one after another.
+// Studio reels rendered from brand/promo; each loops on its own while on screen.
 const reels = [
   { id: 'ivory', title: 'The studio reel', label: 'Sazen studio reel: all seven apps in a phone coverflow' },
   { id: 'dark', title: 'After dark', label: 'Sazen reel after dark: each app with its features' },
@@ -156,8 +156,8 @@ const principles = [
       {reels.map((reel, i) => (
         <figure class="reel reveal">
           <div class="frame" data-tilt>
-            <video src={`/videos/sazen-reel-${reel.id}.mp4`} poster={`/images/reels/${reel.id}.webp`} width="960" height="960" muted playsinline preload="none" aria-label={reel.label}></video>
-            <button class="reel-play" type="button" aria-label={`Play ${reel.title}`}></button>
+            <video src={`/videos/sazen-reel-${reel.id}.mp4`} poster={`/images/reels/${reel.id}.webp`} width="960" height="960" muted loop playsinline preload="none" aria-label={reel.label}></video>
+            <button class="reel-play" type="button" data-title={reel.title} aria-label={`Play ${reel.title}`}></button>
           </div>
           <figcaption><span class="eyebrow">{String(i + 1).padStart(2, '0')} · {reel.title}</span><span class="reel-bar" aria-hidden="true"><i></i></span></figcaption>
         </figure>
@@ -292,46 +292,48 @@ const principles = [
       go(active);
     }
 
-    // Collection reels: play one after another while in view; reduced motion waits for a click and never auto-advances.
+    // Collection reels: each loops on its own while on screen; clicking pauses or resumes it. Reduced motion waits for a click.
     const reelWrap = document.querySelector<HTMLElement>('[data-reels]');
     if (reelWrap) {
-      const reels = [...reelWrap.querySelectorAll<HTMLElement>('.reel')];
-      const videos = reels.map(reel => reel.querySelector('video')!);
-      const bars = reels.map(reel => reel.querySelector<HTMLElement>('.reel-bar i')!);
-      let current = 0, visible = false, chosen = false, frame = 0;
+      const reels = [...reelWrap.querySelectorAll<HTMLElement>('.reel')].map(el => ({
+        el,
+        video: el.querySelector('video')!,
+        bar: el.querySelector<HTMLElement>('.reel-bar i')!,
+        button: el.querySelector<HTMLButtonElement>('.reel-play')!,
+        title: el.querySelector<HTMLButtonElement>('.reel-play')!.dataset.title!,
+        visible: false,
+        paused: reduce,
+      }));
+      let frame = 0;
 
       const tick = () => {
-        const v = videos[current];
-        bars.forEach((bar, i) => (bar.style.transform = `scaleX(${i === current ? v.currentTime / v.duration || 0 : 0})`));
+        reels.forEach(({ video, bar }) => (bar.style.transform = `scaleX(${video.currentTime / video.duration || 0})`));
         frame = requestAnimationFrame(tick);
       };
       const sync = () => {
-        const on = visible && !document.hidden && (!reduce || chosen);
-        videos.forEach((v, i) => {
-          if (i === current && on) {
-            v.preload = 'auto';
-            v.play().catch(() => {});
-          } else v.pause();
+        reels.forEach(reel => {
+          const on = reel.visible && !reel.paused && !document.hidden;
+          on ? reel.video.play().catch(() => {}) : reel.video.pause();
+          reel.el.classList.toggle('is-paused', reel.paused);
+          reel.button.setAttribute('aria-label', `${reel.paused ? 'Play' : 'Pause'} ${reel.title}`);
         });
-        reels.forEach((reel, i) => reel.classList.toggle('is-current', i === current));
         cancelAnimationFrame(frame);
-        if (on) tick();
+        if (reels.some(reel => reel.visible)) tick();
       };
-      const go = (i: number) => {
-        current = (i + reels.length) % reels.length;
-        videos[current].currentTime = 0;
+      // Start fetching just before the section arrives, so playback begins without a stall.
+      new IntersectionObserver(([entry], observer) => {
+        if (!entry.isIntersecting) return;
+        reels.forEach(({ video }) => (video.preload = 'auto'));
+        observer.disconnect();
+      }, { rootMargin: '400px 0px' }).observe(reelWrap);
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => (reels.find(reel => reel.el === entry.target)!.visible = entry.isIntersecting));
         sync();
-      };
-      videos.forEach((v, i) => {
-        v.addEventListener('ended', () => {
-          if (!reduce) return go(i + 1);
-          chosen = false;
-          sync();
-        });
-        v.addEventListener('timeupdate', () => { if (v.duration - v.currentTime < 4) videos[(i + 1) % videos.length].preload = 'auto'; });
+      }, { threshold: 0.25 });
+      reels.forEach(reel => {
+        io.observe(reel.el);
+        reel.button.addEventListener('click', () => { reel.paused = !reel.paused; sync(); });
       });
-      reels.forEach((reel, i) => reel.querySelector('.reel-play')!.addEventListener('click', () => { chosen = true; go(i); }));
-      new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }, { threshold: 0.35 }).observe(reelWrap);
       document.addEventListener('visibilitychange', sync);
     }
   </script>
