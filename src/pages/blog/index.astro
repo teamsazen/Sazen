@@ -22,7 +22,7 @@ const schema = [
   </section>
   <section class="journal band" aria-label="All posts">
     <div class="post-grid" data-posts>
-      {posts.map((post, i) => <div class="post-slot" data-extra={i >= FIRST ? '' : undefined}><PostCard post={post} index={i} /></div>)}
+      {posts.map((post, i) => <div class="post-slot" data-extra={i >= FIRST ? '' : undefined}><PostCard post={post} index={i} heading="h2" /></div>)}
     </div>
     <div class="more-wrap"><button type="button" class="btn" data-more hidden>View all {posts.length} posts</button></div>
   </section>

@@ -1,13 +1,16 @@
 ---
 import Studio from '../../layouts/Studio.astro';
 import PhonePreview from '../../components/PhonePreview.astro';
+import PostCard from '../../components/PostCard.astro';
 import { apps, icon, playUrl, screen } from '../../data/apps';
+import { posts } from '../../data/blog';
 import { appPath, breadcrumbs, organization } from '../../data/studio';
 export function getStaticPaths() { return apps.map(app => ({ params: { slug: app.slug }, props: { app } })); }
 const { app } = Astro.props;
 const fullName = `${app.name}${app.slug === '99-names' ? ' – Asmaul Husna' : ''}`;
 const others = apps.filter(other => other.slug !== app.slug);
 const external = app.website.startsWith('https');
+const related = posts.filter(post => post.app === app.slug);
 const site = Astro.site!;
 const url = (path: string) => new URL(path, site).toString();
 const category = { faith: 'LifestyleApplication', games: 'GameApplication', everyday: 'FinanceApplication', shopping: 'ShoppingApplication' }[app.filter];
@@ -87,6 +90,16 @@ const schema = [
       {external && <a class="btn ghost" href={app.website} target="_blank" rel="noopener noreferrer">Visit website ↗</a>}
     </div>
   </section>
+
+  {related.length > 0 && (
+    <section class="journal band">
+      <div class="gal-head">
+        <h2 class="display lines"><span><span>From the blog.</span></span></h2>
+        <a class="btn ghost reveal" href={`/blog`}>View all posts →</a>
+      </div>
+      <div class="post-grid">{related.map((post, i) => <PostCard post={post} index={i} />)}</div>
+    </section>
+  )}
 
   <section class="more band">
     <div class="gal-head">

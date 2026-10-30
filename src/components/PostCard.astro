@@ -3,8 +3,8 @@ import PhonePreview from './PhonePreview.astro';
 import { apps, icon } from '../data/apps';
 import { readMinutes, type Post } from '../data/blog';
 import { postPath } from '../data/studio';
-interface Props { post: Post; index?: number }
-const { post, index = 0 } = Astro.props;
+interface Props { post: Post; index?: number; heading?: 'h2' | 'h3' }
+const { post, index = 0, heading: Heading = 'h3' } = Astro.props;
 const app = apps.find(a => a.slug === post.app)!;
 ---
 <a class:list={['post-card', 'reveal', { dark: index % 2 === 1 }]} href={postPath(post.slug)} data-post>
@@ -14,7 +14,7 @@ const app = apps.find(a => a.slug === post.app)!;
     <span class="post-phone"><PhonePreview app={app} index={index % 3 + 1} /></span>
   </span>
   <span class="post-meta">{app.category} · {readMinutes(post)} min read</span>
-  <span class="post-title">{post.title}</span>
+  <Heading class="post-title">{post.title}</Heading>
   <span class="post-excerpt">{post.excerpt}</span>
   <span class="post-more">Read post <span aria-hidden="true">→</span></span>
 </a>
