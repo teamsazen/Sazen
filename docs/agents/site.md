@@ -24,7 +24,7 @@ public/videos/exit-rush.mp4    Exit Rush gameplay
 public/favicon.svg             Theme-aware Sazen S favicon (black on light, white on dark)
 public/{favicon,apple-touch-icon,og}.png  Brand and social assets
 public/_headers                Cloudflare cache and security response headers
-brand/                         Sazen brand kit sources (S mark, logo, feature graphics); not served
+brand/                         Sazen brand kit sources (S mark, logo, feature graphics, og/og.html = social banner source); not served
 scripts/check-site.mjs         Build-output route, asset, anchor and metadata checks
 docs/asset-sources.json        Asset provenance
 ```

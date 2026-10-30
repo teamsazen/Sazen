@@ -1,0 +1,13 @@
+@font-face{font-family:Anton;src:url('../../public/fonts/anton.woff2')}
+@font-face{font-family:GS;src:url('../../public/fonts/google-sans.woff2')}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{font-family:GS,sans-serif;position:relative}
+.d{font-family:Anton;text-transform:uppercase;line-height:.92;letter-spacing:.005em}
+.brand{display:flex;align-items:center;gap:14px;font-size:30px;font-weight:600;letter-spacing:-.01em}
+.brand svg{width:44px;height:44px}
+.icons{display:flex;gap:14px}
+.icons img{width:62px;height:62px;border-radius:15px}
+.ph{position:absolute;width:236px;aspect-ratio:9/19.5;border-radius:34px;background:#0b0b0b;padding:7px;box-shadow:0 30px 60px rgba(20,18,12,.28)}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:28px;display:block}
+.url{font-size:22px;letter-spacing:.02em}
