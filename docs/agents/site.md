@@ -19,12 +19,12 @@ src/pages/robots.txt.ts        Crawl rules derived from configured origin
 src/pages/sitemap.xml.ts       Home, app pages, blog, posts, privacy
 src/styles/studio.css          Tokens, type, layout, motion, light/dark, reduced motion
 public/fonts/                  Self-hosted Anton (display) and Google Sans (body)
-public/images/                 Sazen logo, 7 icons, 21 screenshots, device bezel and status bars, Exit Rush poster
-public/videos/exit-rush.mp4    Exit Rush gameplay
+public/images/                 Sazen logo, 7 icons, 21 screenshots, device bezel and status bars, Exit Rush poster, reels/ posters
+public/videos/                 exit-rush.mp4 gameplay; sazen-reel-{ivory,dark,colour}.mp4 collection reels (960px web encodes of brand/promo)
 public/favicon.svg             Theme-aware Sazen S favicon (black on light, white on dark)
 public/{favicon,apple-touch-icon,og}.png  Brand and social assets
 public/_headers                Cloudflare cache and security response headers
-brand/                         Sazen brand kit sources (S mark, logo, feature graphics, og/og.html = social banner source); not served
+brand/                         Sazen brand kit sources (S mark, logo, feature graphics, og/og.html = social banner source, promo/ = 30 s 1:1 social promo videos: promo.html (ivory), promo-dark.html and promo-colour.html timelines, render.cjs renderer, sazen-promo*.mp4); not served
 scripts/check-site.mjs         Build-output route, asset, anchor and metadata checks
 docs/asset-sources.json        Asset provenance
 ```
@@ -39,7 +39,7 @@ Motion is balanced: line-by-line headline reveals, soft fade-up, a never-pausing
 
 ## Experience
 
-**Home.** The hero pairs the headline with a coverflow of all seven apps in `PhonePreview` frames, fully visible on the page background. It auto-advances every 4.2 s with a progress line, pauses on hover and focus, and responds to arrow buttons, the keyboard, swipe and clicking a side phone. The bar below shows the active app's icon, category, name, headline, its Sazen page and Google Play. Exit Rush plays its gameplay video only while it is the active slide and on screen. The Apps and Games panels list every app as an icon row linking to its page. "How we build" pins and scrolls horizontally on screens 900px and wider; narrower screens swipe natively. The collection section holds labelled placeholders for owner-supplied product videos: planned behaviour is play on hover on desktop and muted autoplay while in view on touch devices. Three blog cards link to posts and to `/blog`.
+**Home.** The hero pairs the headline with a coverflow of all seven apps in `PhonePreview` frames, fully visible on the page background. It auto-advances every 4.2 s with a progress line, pauses on hover and focus, and responds to arrow buttons, the keyboard, swipe and clicking a side phone. The bar below shows the active app's icon, category, name, headline, its Sazen page and Google Play. Exit Rush plays its gameplay video only while it is the active slide and on screen. The Apps and Games panels list every app as an icon row linking to its page. "How we build" pins and scrolls horizontally on screens 900px and wider; narrower screens swipe natively. The collection section shows the three studio reels (ivory, dark, colour) rendered from `brand/promo`: while in view they play muted one after another and loop, pausing off-screen or in a hidden tab; clicking a reel jumps to it. Reduced motion shows posters and plays only the clicked reel, without advancing. Three blog cards link to posts and to `/blog`.
 
 **App pages.** Fanned three-phone hero (the centre phone plays the Exit Rush video on its page), feature marquee and numbered feature rows, three real screenshots with a native `<dialog>` enlargement (Escape, close button, backdrop, arrow keys), a support band pointing to that app's own Google Play listing and website, and rows for the other six apps. Budget AI states its pricing in its note.
 

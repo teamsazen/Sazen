@@ -1,0 +1,236 @@
+<!doctype html>
+<!-- 30 s, 1080x1080 Sazen promo, dark variation. Every frame is a pure function of time: render.cjs calls window.render(t) and captures it. -->
+<meta charset="utf-8">
+<title>Sazen Promo Dark</title>
+<style>
+@font-face{font-family:Anton;src:url('../../public/fonts/anton.woff2')}
+@font-face{font-family:GS;src:url('../../public/fonts/google-sans.woff2')}
+:root{--muted:#8d8d8d;--line:#2a2a2a}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1080px;overflow:hidden;background:#000}
+body{font-family:GS,sans-serif;-webkit-font-smoothing:antialiased;color:#fff}
+#stage{position:relative;width:1080px;height:1080px;overflow:hidden;background:#000}
+.layer{position:absolute;inset:0}
+.d{font-family:Anton;text-transform:uppercase;font-weight:400;line-height:.9;white-space:nowrap}
+.mask{display:block;overflow:hidden;padding-bottom:.04em}
+.mask>span{display:block}
+.eyebrow{font-size:18px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.o{color:transparent;-webkit-text-stroke:2.5px #fff}
+svg.s{display:block;fill:currentColor}
+
+/* 1 · Kinetic beats */
+.beat{position:absolute;inset:0;display:grid;place-items:center}
+#beats .tagline{position:absolute;left:70px;right:70px;bottom:60px;display:flex;justify-content:space-between}
+
+/* 2 · Screen wall */
+#wall{overflow:hidden}
+#cols{position:absolute;left:50%;top:50%;display:flex;gap:34px}
+.col{display:flex;flex-direction:column;gap:34px;width:210px}
+#wall .shade{position:absolute;inset:0;background:radial-gradient(closest-side,rgba(0,0,0,.92),rgba(0,0,0,.55) 70%,rgba(0,0,0,.25))}
+#wall .lock{position:absolute;left:0;right:0;top:420px;display:flex;justify-content:center;align-items:center;gap:30px}
+#wall .lock .s{width:150px;height:150px}
+#wall .lock .d{font-size:190px;line-height:1}
+#wall .eyebrow{position:absolute;left:0;right:0;top:640px;text-align:center;color:#cfcfcf}
+
+.phone-render{display:block;position:relative;width:100%;aspect-ratio:1470/3000;container-type:inline-size;--screen-bg:#fffffa;--status-image:url('../../public/images/device/statusbar-light.png');filter:drop-shadow(0 18px 14px rgba(0,0,0,.7))}
+.phone-render.phone-dark{--screen-bg:#080d09;--status-image:url('../../public/images/device/statusbar-dark.png')}
+.phone-screen{position:absolute;inset:2.23% 5.1%;border-radius:15% / 7%;overflow:hidden;background:var(--screen-bg);display:flex;flex-direction:column}
+.phone-content{position:relative;display:block;min-height:0;flex:1}
+.phone-content img{display:block;width:100%;height:100%;object-fit:fill}
+.phone-status{display:block;flex:0 0 6.2%;background:var(--screen-bg) var(--status-image) center 2.1cqw / 88% auto no-repeat;z-index:2}
+.phone-status-overlay{position:absolute;top:0;left:0;right:0;height:4%}
+.phone-mask-status .phone-status-overlay{height:6.5%}
+.phone-bezel{position:absolute;inset:0;z-index:3;background:url('../../public/images/device/rafeeq-bezel.png') center / 100% 100% no-repeat;clip-path:inset(.45% 1% round 17.5% / 8.6%)}
+
+/* 3 · App chapters */
+.ch{visibility:hidden}
+.ch .top{position:absolute;left:70px;right:70px;top:56px;display:flex;align-items:center;gap:18px}
+.ch .num{font-family:Anton;font-size:34px;line-height:1}
+.ch .num span{color:var(--muted)}
+.ch .top img{width:64px;height:64px;border-radius:17px;margin-left:auto}
+.ch .name{position:absolute;left:66px;top:150px}
+.ch .headline{position:absolute;left:70px;top:610px;width:470px;font-size:36px;line-height:1.2}
+.ch .feats{position:absolute;left:70px;top:740px;display:grid;gap:14px;justify-items:start}
+.ch .feats span{display:flex;align-items:center;gap:14px;border:1.5px solid #3a3a3a;border-radius:999px;padding:12px 22px 12px 14px;font-size:21px;white-space:nowrap}
+.ch .feats b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;color:#000;font-size:14px;font-weight:600}
+.ch .ph{position:absolute;width:290px;transform-origin:50% 100%}
+.ch .back{left:600px;top:380px;filter:brightness(.55)}
+.ch .front{left:735px;top:440px}
+
+/* 4 · Footer wordmark end card */
+#end .brand{position:absolute;left:70px;top:70px;display:flex;align-items:center;gap:14px;font-size:24px;font-weight:600}
+#end .brand .s{width:34px;height:34px}
+#end .lines{position:absolute;left:70px;top:150px}
+#end .lines .muted{color:var(--muted)}
+#end .icons{position:absolute;left:70px;top:378px;display:flex;gap:16px}
+#end .icons img{width:76px;height:76px;border-radius:20px}
+#end .act{position:absolute;left:70px;top:490px;display:flex;align-items:center;gap:24px}
+#end .cta{display:inline-flex;align-items:center;gap:11px;background:#fff;color:#000;font-weight:600;font-size:22px;padding:17px 28px;border-radius:999px}
+#end .url{font-size:24px;font-weight:600}
+#end .wordmark{position:absolute;left:40px;right:40px;bottom:18px;display:flex;justify-content:space-between;font-family:Anton;text-transform:uppercase;line-height:1.02;overflow:hidden}
+#end .wordmark span{display:block}
+#flash{position:absolute;inset:0;background:#fff;pointer-events:none}
+</style>
+
+<svg width="0" height="0" style="position:absolute"><defs><g id="S"><path d="M118.95 -300H-75A187.5 187.5 0 0 0 -75 75H75A37.5 37.5 0 0 1 75 150H-170.55A32.25 32.25 0 0 0 -170.55 214.5H-80.25A10.5 10.5 0 0 1 -80.25 235.5H-118.95A32.25 32.25 0 0 0 -118.95 300H75A187.5 187.5 0 0 0 75 -75H-75A37.5 37.5 0 0 1 -75 -150H170.55A32.25 32.25 0 0 0 170.55 -214.5H80.25A10.5 10.5 0 0 1 80.25 -235.5H118.95A32.25 32.25 0 0 0 118.95 -300Z"/><rect x="172.20" y="-300.00" width="90.30" height="64.50" rx="32.25"/><rect x="-262.50" y="235.50" width="90.30" height="64.50" rx="32.25"/></g></defs></svg>
+
+<div id="stage">
+  <section class="layer" id="beats">
+    <div class="tagline eyebrow"><span>Sazen</span><span>Independent app &amp; game studio</span></div>
+  </section>
+  <section class="layer" id="wall">
+    <div id="cols"></div>
+    <div class="shade"></div>
+    <div class="lock"><svg class="s" viewBox="-300 -300 600 600"><use href="#S"/></svg><span class="mask d"><span>Sazen</span></span></div>
+    <div class="eyebrow mask"><span>Seven apps &amp; games · 21 real screens</span></div>
+  </section>
+  <section class="layer" id="chapters"></section>
+  <section class="layer" id="end">
+    <div class="brand"><svg class="s" viewBox="-300 -300 600 600"><use href="#S"/></svg>Sazen</div>
+    <div class="lines">
+      <span class="mask d"><span>Apps with purpose.</span></span>
+      <span class="mask d"><span class="muted">Games with personality.</span></span>
+    </div>
+    <div class="icons"></div>
+    <div class="act">
+      <span class="cta"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M3 2.5v19l10-9.5L3 2.5Zm1.5-1L16 8.1l-2 2.1L4.5 1.5Zm12.8 7.4 3.2 1.8c1 .6 1 2 0 2.6l-3.2 1.8L14.1 12l3.2-3.1ZM16 15.9 4.5 22.5l9.5-8.7 2 2.1Z"/></svg>Google Play</span>
+      <span class="url">teamsazen.com</span>
+    </div>
+    <div class="wordmark"><span>S</span><span>A</span><span>Z</span><span>E</span><span>N</span></div>
+  </section>
+  <div id="flash"></div>
+</div>
+
+<script>
+// App copy mirrors src/data/apps.ts (name, category, headline, features) — keep in sync.
+const apps = [
+  {slug:'quran-khatam-tracker',name:'Quran Khatam|Tracker',category:'Faith & reflection',headline:'Make every ayah count.',features:['Ayah-by-ayah progress','Khatam journeys','Reading streaks & awards']},
+  {slug:'exit-rush',name:'Exit Rush',category:'Games',headline:'Every arrow wants out.',features:['Arrow puzzles','Special stages','Plays offline']},
+  {slug:'rafeeq',name:'Rafeeq',category:'Faith & reflection',headline:'A little closer. Every day.',features:['Quran reading & recitation','Prayer times & Qibla','Duas & Namaz guide']},
+  {slug:'budget-ai',name:'Budget AI',category:'Everyday tools',headline:'Less logging. More living.',features:['Chat, voice & receipt input','Spending insights','Home Screen widgets']},
+  {slug:'99-names',name:'99 Names',category:'Faith & reflection',headline:'Beautiful names. Deeper meaning.',features:['English & Urdu meanings','Reflections & favourites','Works fully offline']},
+  {slug:'fm-crafts',name:'FM Crafts',category:'Shopping & gifts',headline:'Find something made with love.',features:['Handmade crochet collection','Bouquets & thoughtful gifts','Ask about pieces on WhatsApp']},
+  {slug:'salahlog',name:'SalahLog',category:'Faith & reflection',headline:'Small steps. A steady practice.',features:['Daily prayer tracking','Prayer history & progress','Prayer times & reminders']},
+];
+// The hero's supporting line, one beat per phrase.
+const beats = [['Thoughtful',''],['apps and',''],['playful',''],['escapes.','o'],['Made with care,',''],['by Sazen.','']];
+const IMG = '../../public/images/';
+const icon = a => `${IMG}${a.slug}/icon.webp`;
+const params = new URLSearchParams(location.search);
+const FRAMES = params.get('frames'); // dir of Exit Rush gameplay JPGs (f001.jpg…), made by render.cjs
+const NFRAMES = +(params.get('nframes') || 0);
+const $ = s => document.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, x) => a + (b - a) * x;
+const out = x => 1 - Math.pow(1 - x, 4);
+const expo = x => x >= 1 ? 1 : 1 - Math.pow(2, -10 * x);
+const io = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const back = x => { const c = 1.6; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const show = (el, on) => { el.style.visibility = on ? 'visible' : 'hidden'; };
+const line = (el, x, y = 0) => { el.firstElementChild.style.transform = `translateY(${(1 - out(x)) * 110 - io(y) * 110}%)`; };
+const BEAT = .5, WALL = [3.0, 6.0], CH0 = 6.0, CH = 2.7, END = CH0 + 7 * CH;
+
+function phone(a, i, cls = '', id = '') {
+  const addStatus = ['quran-khatam-tracker','99-names'].includes(a.slug);
+  const overlay = ['exit-rush','salahlog'].includes(a.slug);
+  const dark = a.slug === 'quran-khatam-tracker' || (a.slug === 'salahlog' && i === 1);
+  const src = id && FRAMES ? `${FRAMES}/f001.jpg` : `${IMG}${a.slug}/${i}.webp`;
+  return `<div class="${cls}"><span class="phone-render ${dark?'phone-dark':''} ${a.slug==='salahlog'?'phone-mask-status':''}"><span class="phone-screen">${addStatus?'<span class="phone-status"></span>':''}<span class="phone-content"><img src="${src}" ${id?`id="${id}"`:''}></span>${overlay?'<span class="phone-status phone-status-overlay"></span>':''}</span><span class="phone-bezel"></span></span></div>`;
+}
+
+// ---------- build ----------
+$('#beats').insertAdjacentHTML('afterbegin', beats.map(([w, c]) => `<div class="beat"><span class="mask d ${c}"><span>${w}</span></span></div>`).join(''));
+const screens = apps.flatMap(a => [1, 2, 3].map(i => [a, i]));
+const order = screens.map((_, k) => screens[(k * 8) % 21]); // spread each app's screens across the wall
+$('#cols').innerHTML = [0, 1, 2, 3, 4].map(c => `<div class="col">${[0, 1, 2, 3, 4, 5].map(r => { const [a, i] = order[(c * 6 + r) % 21]; return phone(a, i); }).join('')}</div>`).join('');
+$('#chapters').innerHTML = apps.map((a, k) => `<div class="layer ch">
+  <div class="top"><div class="num">0${k + 1} <span>/ 07</span></div><span class="eyebrow">${a.category}</span><img src="${icon(a)}"></div>
+  <div class="name">${a.name.split('|').map(w => `<span class="mask d"><span>${w}</span></span>`).join('')}</div>
+  ${phone(a, 2, 'ph back')}${phone(a, 1, 'ph front', a.slug === 'exit-rush' ? 'vid' : '')}
+  <p class="headline">${a.headline}</p>
+  <div class="feats">${a.features.map((f, i) => `<span><b>${i + 1}</b>${f}</span>`).join('')}</div>
+</div>`).join('');
+$('#end .icons').innerHTML = apps.map(a => `<img src="${icon(a)}">`).join('');
+
+// Size display type to a width, capped.
+function fit(els, width, cap) { els.forEach(e => e.style.fontSize = '200px'); const w = Math.max(...els.map(e => e.firstElementChild.scrollWidth)); const f = Math.min(cap, 200 * width / w); els.forEach(e => e.style.fontSize = f + 'px'); }
+
+let lastVid = '';
+window.render = async function (t) {
+  // 1 · Kinetic beats: one phrase per half second, hard cuts.
+  show($('#beats'), t < WALL[0]);
+  $$('.beat').forEach((b, i) => {
+    const a = i * BEAT, on = t >= a && t < a + BEAT;
+    show(b, on);
+    if (on) { const x = prog(t, a, a + .16); line(b.firstElementChild, x); b.style.transform = `scale(${lerp(1.12, 1, out(prog(t, a, a + BEAT)))})`; }
+  });
+  $('#beats .tagline').style.opacity = out(prog(t, .2, .8));
+
+  // 2 · Wall of every screenshot, drifting columns, logo lockup on top.
+  show($('#wall'), t >= WALL[0] && t < WALL[1]);
+  {
+    const zin = expo(prog(t, 3.0, 3.9)), zout = io(prog(t, 5.55, 6.0));
+    $('#cols').style.transform = `translate(-50%,-50%) rotate(-14deg) scale(${lerp(1.7, 1.2, zin) + zout * .5})`;
+    $$('.col').forEach((c, i) => c.style.transform = `translateY(${(i % 2 ? -1 : 1) * ((t - 3) * 120 - 160) + (i % 2 ? -200 : 0)}px)`);
+    const s = $('#wall .lock .s'), a = expo(prog(t, 3.35, 4.2));
+    s.style.transform = `rotate(${(1 - a) * -40}deg) scale(${lerp(.5, 1, a) + zout * .3})`; s.style.opacity = a * (1 - zout);
+    line($('#wall .lock .mask'), prog(t, 3.5, 4.3), prog(t, 5.5, 5.9));
+    line($('#wall .eyebrow'), prog(t, 3.9, 4.6), prog(t, 5.45, 5.85));
+    $('#wall').style.opacity = 1 - zout;
+  }
+
+  // 3 · One chapter per app.
+  for (const [k, ch] of $$('.ch').entries()) {
+    const a0 = CH0 + k * CH, u = t - a0, on = u >= 0 && u < CH;
+    show(ch, on);
+    if (!on) continue;
+    const xo = prog(u, 2.3, 2.65);
+    $$('.name .mask', ch).forEach((m, i) => line(m, prog(u, .05 + i * .08, .6 + i * .08), prog(u, 2.25 + i * .05, 2.6 + i * .05)));
+    const top = out(prog(u, 0, .5)) * (1 - xo);
+    $('.top', ch).style.opacity = top;
+    [['.back', .08, 8], ['.front', 0, -4]].forEach(([sel, dl, rot]) => {
+      const e = expo(prog(u, .05 + dl, .9 + dl)), f = Math.sin((u + dl * 10) * 2.2) * 6;
+      $(sel, ch).style.transform = `translate(${(1 - e) * 260}px,${(1 - e) * 420 + f - io(xo) * 700}px) rotate(${rot + (1 - e) * 18}deg)`;
+    });
+    const h = out(prog(u, .3, .85));
+    $('.headline', ch).style.opacity = h * (1 - xo);
+    $('.headline', ch).style.transform = `translateY(${(1 - h) * 24}px)`;
+    $$('.feats span', ch).forEach((p, i) => { const e = out(prog(u, .5 + i * .1, 1.0 + i * .1)); p.style.opacity = e * (1 - xo); p.style.transform = `translateX(${(1 - e) * -40}px)`; });
+    if (apps[k].slug === 'exit-rush' && FRAMES && NFRAMES) {
+      const f = `${FRAMES}/f${String(Math.floor(u * 30) % NFRAMES + 1).padStart(3, '0')}.jpg`;
+      if (f !== lastVid) { lastVid = f; const v = $('#vid'); v.src = f; await v.decode().catch(() => {}); }
+    }
+  }
+
+  // 4 · End card: footer wordmark rises letter by letter.
+  show($('#end'), t >= END);
+  {
+    $$('#end .wordmark span').forEach((l, i) => l.style.transform = `translateY(${(1 - expo(prog(t, END + .1 + i * .07, END + 1.1 + i * .07))) * 105}%)`);
+    const b = out(prog(t, END + .5, END + 1.1));
+    $('#end .brand').style.opacity = b;
+    $$('#end .lines .mask').forEach((m, i) => line(m, prog(t, END + .6 + i * .12, END + 1.4 + i * .12)));
+    $$('#end .icons img').forEach((el, i) => { const e = prog(t, END + 1.1 + i * .06, END + 1.7 + i * .06); el.style.transform = `translateY(${(1 - out(e)) * 26}px) scale(${back(e)})`; el.style.opacity = clamp(e * 3); });
+    const act = out(prog(t, END + 1.6, END + 2.3));
+    $('#end .act').style.opacity = act; $('#end .act').style.transform = `translateY(${(1 - act) * 22}px)`;
+  }
+
+  // White flash frames on the big cuts.
+  const flash = Math.max(...[WALL[0], CH0, END].map(c => t >= c && t < c + .12 ? 1 - (t - c) / .12 : 0));
+  $('#flash').style.opacity = flash * .9;
+};
+
+window.ready = (async () => {
+  await document.fonts.ready;
+  await Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+  $$('.beat .mask').forEach(m => fit([m], 940, 330));
+  $$('.ch').forEach(ch => fit($$('.name .mask', ch), 940, 250));
+  fit($$('#end .lines .mask'), 940, 96);
+  const wm = $('#end .wordmark');
+  wm.style.fontSize = '200px';
+  wm.style.fontSize = 200 * 880 / [...wm.children].reduce((s, c) => s + c.offsetWidth, 0) + 'px';
+  await window.render(+(params.get('t') || 0));
+  return true;
+})();
+</script>

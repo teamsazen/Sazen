@@ -6,3 +6,5 @@ dist/
 !.env.example
 .DS_Store
 test-results/
+# Full-size promo renders; rebuild with brand/promo/render.cjs
+brand/promo/*.mp4

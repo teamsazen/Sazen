@@ -77,5 +77,10 @@
     "anton": "https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm3Kz-C8CSKlv.woff2 (latin subset, downloaded 2026-10-30)",
     "google-sans": "Budget AI website (self-hosted)"
   },
-  "sazen-s-favicon": "brand/svg/sazen-s-white.svg, recoloured with a prefers-color-scheme style"
+  "sazen-s-favicon": "brand/svg/sazen-s-white.svg, recoloured with a prefers-color-scheme style",
+  "reels": {
+    "videos": "public/videos/sazen-reel-{ivory,dark,colour}.mp4: 960px encodes of brand/promo/sazen-promo{,-dark,-colour}.mp4, rendered by brand/promo/render.cjs from promo{,-dark,-colour}.html",
+    "posters": "public/images/reels/{ivory,dark,colour}.webp: frames at 11.5 s, 15.5 s and 11.5 s of those renders",
+    "note": "Built only from the site's own icons, screenshots, Exit Rush gameplay, fonts, Sazen mark and app copy; colour-cut backgrounds are sampled from each app icon."
+  }
 }

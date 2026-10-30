@@ -18,6 +18,12 @@ const worlds = [
   { id: 'games', label: '02 · Games with personality', title: 'Games', text: 'A puzzle to solve. A little play between the serious things.', list: apps.filter(app => app.filter === 'games') },
 ];
 const schema = { '@context': 'https://schema.org', '@type': 'Organization', name: 'Sazen', url: Astro.site?.toString(), logo: new URL('/images/sazen-logo.png', Astro.site).toString(), sameAs: [developerUrl] };
+// Studio reels rendered from brand/promo; they play one after another.
+const reels = [
+  { id: 'ivory', title: 'The studio reel', label: 'Sazen studio reel: all seven apps in a phone coverflow' },
+  { id: 'dark', title: 'After dark', label: 'Sazen reel after dark: each app with its features' },
+  { id: 'colour', title: 'In colour', label: 'Sazen reel in colour: each app in its icon colour' },
+];
 const marquee = ['Apps with purpose', 'Games with personality', 'Crafted with care', 'Independent by nature', 'Thoughtful by design'];
 const principles = [
   ['A clear purpose', 'Every app starts with a real moment in someone’s day, and is built around it.'],
@@ -146,11 +152,15 @@ const principles = [
       <span class="eyebrow reveal">The collection</span>
       <h2 class="display lines"><span><span>Different worlds.</span></span><span><span>One studio.</span></span></h2>
     </div>
-    <div class="frames">
-      {[1, 2, 3].map(() => (
-        <div class="frame reveal" data-tilt>
-          <div><svg viewBox="0 0 600 600" aria-hidden="true"><use href="#sazen-s" width="600" height="600" /></svg><span>New screens and videos<br />arriving here soon</span></div>
-        </div>
+    <div class="frames" data-reels>
+      {reels.map((reel, i) => (
+        <figure class="reel reveal">
+          <div class="frame" data-tilt>
+            <video src={`/videos/sazen-reel-${reel.id}.mp4`} poster={`/images/reels/${reel.id}.webp`} width="960" height="960" muted playsinline preload="none" aria-label={reel.label}></video>
+            <button class="reel-play" type="button" aria-label={`Play ${reel.title}`}></button>
+          </div>
+          <figcaption><span class="eyebrow">{String(i + 1).padStart(2, '0')} · {reel.title}</span><span class="reel-bar" aria-hidden="true"><i></i></span></figcaption>
+        </figure>
       ))}
     </div>
   </section>
@@ -280,6 +290,49 @@ const principles = [
         stage.style.transform = `translateY(${t * -60}px) scale(${1 - t * 0.06})`;
       }, { passive: true });
       go(active);
+    }
+
+    // Collection reels: play one after another while in view; reduced motion waits for a click and never auto-advances.
+    const reelWrap = document.querySelector<HTMLElement>('[data-reels]');
+    if (reelWrap) {
+      const reels = [...reelWrap.querySelectorAll<HTMLElement>('.reel')];
+      const videos = reels.map(reel => reel.querySelector('video')!);
+      const bars = reels.map(reel => reel.querySelector<HTMLElement>('.reel-bar i')!);
+      let current = 0, visible = false, chosen = false, frame = 0;
+
+      const tick = () => {
+        const v = videos[current];
+        bars.forEach((bar, i) => (bar.style.transform = `scaleX(${i === current ? v.currentTime / v.duration || 0 : 0})`));
+        frame = requestAnimationFrame(tick);
+      };
+      const sync = () => {
+        const on = visible && !document.hidden && (!reduce || chosen);
+        videos.forEach((v, i) => {
+          if (i === current && on) {
+            v.preload = 'auto';
+            v.play().catch(() => {});
+          } else v.pause();
+        });
+        reels.forEach((reel, i) => reel.classList.toggle('is-current', i === current));
+        cancelAnimationFrame(frame);
+        if (on) tick();
+      };
+      const go = (i: number) => {
+        current = (i + reels.length) % reels.length;
+        videos[current].currentTime = 0;
+        sync();
+      };
+      videos.forEach((v, i) => {
+        v.addEventListener('ended', () => {
+          if (!reduce) return go(i + 1);
+          chosen = false;
+          sync();
+        });
+        v.addEventListener('timeupdate', () => { if (v.duration - v.currentTime < 4) videos[(i + 1) % videos.length].preload = 'auto'; });
+      });
+      reels.forEach((reel, i) => reel.querySelector('.reel-play')!.addEventListener('click', () => { chosen = true; go(i); }));
+      new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }, { threshold: 0.35 }).observe(reelWrap);
+      document.addEventListener('visibilitychange', sync);
     }
   </script>
 </Studio>
