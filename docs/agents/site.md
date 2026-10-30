@@ -6,7 +6,7 @@
 astro.config.mjs               Static build, production origin, clean URL output
 src/data/apps.ts               Seven apps, copy, features, captions, store/website URLs
 src/data/blog.ts               One short blog post per app, written only from each app's existing copy
-src/data/studio.ts             App and post URL helpers
+src/data/studio.ts             Studio GitHub profile, analytics ID, app and post URL helpers
 src/layouts/Studio.astro       SEO, glass pill header, giant-wordmark footer, Lenis, reveals, tilt
 src/components/PhonePreview.astro  Shared device frame for every screenshot and the Exit Rush video
 src/components/PostCard.astro  Blog card with app icon and a real screenshot cover
@@ -66,3 +66,5 @@ Do not store Cloudflare/GitHub tokens in files. No changes to Budget AI's Flutte
 Store-link verification on 23 October 2026: the four existing app websites returned HTTP 200. Budget AI’s configured Google Play package URL returned HTTP 404, so its CTA says “Check Google Play”; the intended package link is retained alongside its working website.
 
 Cloudflare CLI note: Wrangler 4.152 delegates new Pages projects to Workers. The Sazen Pages project was created with `pages project create sazen --production-branch master --force` to keep the `pages.dev` domain. Routine deployments use the existing project without that flag.
+
+The shared header includes an accessible GitHub icon linking to `https://github.com/teamsazen`, visible on desktop and mobile.

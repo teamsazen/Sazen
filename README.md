@@ -64,7 +64,7 @@ For a different Pages project, change the deploy script's `--project-name` and s
 
 - `src/data/apps.ts`: app copy, package IDs, website links, screenshot captions, and categories.
 - `src/data/blog.ts`: blog posts (one per app, written only from each app's existing copy).
-- `src/data/studio.ts`: app and post URL helpers.
+- `src/data/studio.ts`: studio GitHub profile, analytics ID, and app/post URL helpers.
 - `src/layouts/Studio.astro`: SEO, glass pill header, footer, smooth scroll, reveals, tilt.
 - `src/pages/`: home, app pages, blog, privacy, 404, robots and sitemap.
 - `src/components/PhonePreview.astro`: shared device frame; `src/components/PostCard.astro`: blog card.
@@ -73,3 +73,5 @@ For a different Pages project, change the deploy script's `--project-name` and s
 - `docs/asset-sources.json`: asset provenance.
 
 Google Analytics 4 (`G-1R2782BC02`) loads in production builds only and is disclosed on `/privacy`. There are no accounts, forms, remote fonts, or backend services. Keep Budget AI pricing accurate: free manual tracking; paid AI with 5 free messages monthly. See [AGENTS.md](AGENTS.md) and [the site guide](docs/agents/site.md).
+
+The shared header includes an accessible GitHub icon linking to `https://github.com/teamsazen`, visible on desktop and mobile.

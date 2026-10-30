@@ -6,6 +6,7 @@ Read `docs/agents/site.md` before changing structure, app content, visuals, or d
 
 ## Rules
 
+- Keep the header GitHub icon linked to `https://github.com/teamsazen` (configured in `src/data/studio.ts`) and visible on mobile.
 - Keep the hero phone frames fully visible on the page background, without a clipping backdrop or a bottom badge over the screens.
 - Use the full-bleed studio design: ivory/black in light mode, pure black/white in dark mode, Anton display type with Google Sans, glass pill header, balanced motion. Keep the actual Sazen S mark.
 - Reuse real app icons/screenshots and keep their sources in `docs/asset-sources.json`; do not invent app screens, ratings, download counts, testimonials, or product claims.
