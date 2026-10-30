@@ -47,6 +47,28 @@ npm run preview
 
 `check` verifies generated page metadata (clean canonicals matching `og:url`, existing `og:image` files, `noindex` only on 404), local asset references, page links, anchors, structured data, and deployment support files. Browser QA should cover 390px, 768px and desktop widths; light and dark mode; the hero showcase (auto-advance, arrows, swipe, keyboard); the pinned "How we build" section; the screenshot dialog (Escape, close, backdrop, arrow keys); the blog "View all" button; reduced motion; and no-JavaScript content.
 
+## Adding a blog post
+
+Create `src/content/blog/<url-slug>.md`; the file name becomes `/blog/<url-slug>`:
+
+```md
+---
+title: "Post title"
+excerpt: "One or two sentences, used as the card text and meta description."
+app: budget-ai          # slug from src/data/apps.ts
+date: 2026-11-15        # publish date; newest posts show first
+order: 1                # optional: order among posts with the same date
+---
+
+Intro paragraph (shown larger).
+
+## A section heading
+
+Section text. Use `##` for each section.
+```
+
+Then run `node brand/og/render.mjs` for its share image, `npm run build` and `npm run check`. The sitemap, blog index, structured data and reading time update on their own.
+
 ## Publishing
 
 Production branch: `master`. The Cloudflare Pages project is `sazen`.
@@ -63,7 +85,7 @@ For a different Pages project, change the deploy script's `--project-name` and s
 ## Maintenance
 
 - `src/data/apps.ts`: app copy, search titles, package IDs, website links, screenshot captions, and categories.
-- `src/data/blog.ts`: blog posts (one per app, written only from each app's existing copy), each with an ISO `date`.
+- `src/content/blog/`: blog posts as Markdown (one per app, written only from each app's existing copy); `src/data/blog.ts` loads and sorts them.
 - `public/og/`: per-app and per-post share images; regenerate with `node brand/og/render.mjs` after adding or renaming an app or post.
 - `src/data/studio.ts`: studio GitHub profile, analytics ID, and app/post URL helpers.
 - `src/layouts/Studio.astro`: SEO, glass pill header, footer, smooth scroll, reveals, tilt.

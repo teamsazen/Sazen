@@ -2,15 +2,21 @@
 // Reads the same data the site uses, so run it after adding or renaming an app or post:
 //   node brand/og/render.mjs
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { apps } from '../../src/data/apps.ts';
-import { posts } from '../../src/data/blog.ts';
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const here = dirname(fileURLToPath(import.meta.url));
+// Post title and app from each Markdown file's frontmatter (astro:content only exists inside the Astro build).
+const blogDir = join(here, '../../src/content/blog');
+const posts = readdirSync(blogDir).filter((f) => f.endsWith('.md')).map((f) => {
+  const fm = readFileSync(join(blogDir, f), 'utf8').split('---')[1];
+  const field = (key) => fm.match(new RegExp(`^${key}:\\s*(.+)$`, 'm'))[1].trim().replace(/^(["'])(.*)\1$/, '$2');
+  return { slug: basename(f, '.md'), title: field('title'), app: field('app') };
+});
 const out = join(here, '../../public/og');
 const mark = readFileSync(join(here, 'og.html'), 'utf8').match(/<svg[\s\S]*?<\/svg>/)[0];
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');

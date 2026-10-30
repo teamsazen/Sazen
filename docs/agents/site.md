@@ -3,9 +3,11 @@
 ## Structure
 
 ```text
-astro.config.mjs               Static build, production origin, clean URL output
+astro.config.mjs               Static build, production origin, clean URL output, Markdown section wrapper for posts
 src/data/apps.ts               Seven apps, copy, features, captions, search titles, store/website URLs
-src/data/blog.ts               One short blog post per app (with ISO publish date), written only from each app's existing copy
+src/content/blog/              One Markdown post per app (frontmatter: title, excerpt, app, date, order), written only from each app's existing copy
+src/content.config.ts          Blog collection schema; the build fails on a missing field or unknown app slug
+src/data/blog.ts               Loads the blog collection, sorted newest first (same-day posts by order), plus date and reading-time helpers
 src/data/studio.ts             Studio GitHub profile, analytics ID, app and post URL helpers, Organization and breadcrumb structured data
 src/layouts/Studio.astro       SEO, glass pill header, giant-wordmark footer, Lenis, reveals, tilt
 src/components/PhonePreview.astro  Shared device frame for every screenshot and the Exit Rush video
@@ -44,7 +46,7 @@ Motion is balanced: line-by-line headline reveals, soft fade-up, a never-pausing
 
 **App pages.** Fanned three-phone hero (the centre phone plays the Exit Rush video on its page), feature marquee and numbered feature rows, three real screenshots with a native `<dialog>` enlargement (Escape, close button, backdrop, arrow keys), a support band pointing to that app's own Google Play listing and website, and rows for the other six apps. Budget AI states its pricing in its note.
 
-**Blog.** One post per app, each with its own `date` (all seven were published 30 October 2026). The index shows three posts and reveals the rest with a button; all posts render without JavaScript. Post pages show the app's screens as a banner, the article, a sticky app card and three more posts.
+**Blog.** One Markdown post per app, each with its own `date` (all seven were published 30 October 2026). A rehype plugin in `astro.config.mjs` wraps the intro and each `##` heading with its content in `<section class="reveal">`, which the `.prose` layout and scroll reveals rely on, so posts should use `##` for sections. The index shows three posts and reveals the rest with a button; all posts render without JavaScript. Post pages show the app's screens as a banner, the article, a sticky app card and three more posts.
 
 **Privacy and 404.** Same visual system. No app policies are consolidated into a studio-wide claim.
 

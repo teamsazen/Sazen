@@ -3,6 +3,7 @@ import Studio from '../../layouts/Studio.astro';
 import PhonePreview from '../../components/PhonePreview.astro';
 import PostCard from '../../components/PostCard.astro';
 import { apps, icon, playUrl } from '../../data/apps';
+import { render } from 'astro:content';
 import { postDate, posts, readMinutes } from '../../data/blog';
 import { appPath, breadcrumbs, organization, postPath } from '../../data/studio';
 export function getStaticPaths() { return posts.map(post => ({ params: { slug: post.slug }, props: { post } })); }
@@ -10,6 +11,7 @@ const { post } = Astro.props;
 const app = apps.find(a => a.slug === post.app)!;
 const index = posts.findIndex(p => p.slug === post.slug);
 const more = [1, 2, 3].map(step => posts[(index + step) % posts.length]);
+const { Content } = await render(post.entry);
 const site = Astro.site!;
 const image = `/og/blog/${post.slug}.png`;
 const schema = [
@@ -39,14 +41,7 @@ const schema = [
       </div>
     </div>
     <div class="post-body band">
-      <div class="prose">
-        {post.sections.map(section => (
-          <section class="reveal">
-            {'h' in section && <h2>{section.h}</h2>}
-            {section.p.map(text => <p>{text}</p>)}
-          </section>
-        ))}
-      </div>
+      <div class="prose"><Content /></div>
       <aside class="post-app-card reveal">
         <img src={icon(app)} width="64" height="64" alt="" />
         <span class="eyebrow">{app.category}</span>
