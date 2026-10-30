@@ -10,11 +10,11 @@ Production canonical domain: **https://teamsazen.com**. Connect this custom doma
 
 | App | Sazen page | App website | Android package |
 | --- | --- | --- | --- |
-| Quran Khatam Tracker | `/apps/quran-khatam-tracker` | https://qurankhatamtracker.pages.dev | `com.quran.khatam.tracker` |
-| Exit Rush | `/apps/exit-rush` | https://exit-rush.pages.dev | `com.sazen.exit.rush` |
+| Quran Khatam Tracker | `/apps/quran-khatam-tracker` | https://qkt.teamsazen.com | `com.quran.khatam.tracker` |
+| Exit Rush | `/apps/exit-rush` | https://exitrush.teamsazen.com | `com.sazen.exit.rush` |
 | Rafeeq | `/apps/rafeeq` | https://rafeeq.teamsazen.com | `com.satechdev.rafeeqapp` |
-| Budget AI | `/apps/budget-ai` | https://budgetai-app.pages.dev | `com.budgetai.android` |
-| 99 Names – Asmaul Husna | `/apps/99-names` | https://99asmaulhusna.pages.dev | `com.muzamil.asmaulhusna` |
+| Budget AI | `/apps/budget-ai` | https://budgetai.teamsazen.com | `com.budgetai.android` |
+| 99 Names – Asmaul Husna | `/apps/99-names` | https://99.teamsazen.com | `com.muzamil.asmaulhusna` |
 | FM Crafts | `/apps/fm-crafts` | https://fmcrafts.web.app | `com.fmcrafts.fmcrafts` |
 | SalahLog | `/apps/salahlog` | The Sazen page serves as its landing page | `com.track_prayer` |
 
