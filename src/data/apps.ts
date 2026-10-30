@@ -1,9 +1,12 @@
 export const developerUrl = 'https://play.google.com/store/apps/dev?id=5262989636703605828';
-export const description = 'Apps with purpose. Games with personality. Discover Rafeeq, Quran Khatam Tracker, Exit Rush and more from Sazen.';
+export const siteTitle = 'Sazen – Quran & Prayer Apps, Puzzle Games and Everyday Tools';
+export const description = 'Sazen is an independent studio making Android apps and games: Rafeeq, Quran Khatam Tracker, SalahLog, 99 Names, Budget AI, FM Crafts and Exit Rush.';
+// Search titles name what each app does, using only features its own copy already lists.
 
 export const apps = [
   {
     slug: 'quran-khatam-tracker', name: 'Quran Khatam Tracker', subtitle: 'One ayah at a time', category: 'Faith & reflection', filter: 'faith', color: 'mint',
+    seoTitle: 'Quran Khatam Tracker – Quran Reading Progress App',
     headline: 'Make every ayah count.',
     description: 'Set your niyyah, mark each ayah, and follow your journey through the Quran.',
     package: 'com.quran.khatam.tracker', website: 'https://qkt.teamsazen.com/',
@@ -14,6 +17,7 @@ export const apps = [
   },
   {
     slug: 'exit-rush', name: 'Exit Rush', subtitle: 'Find your way out', category: 'Games', filter: 'games', color: 'blue',
+    seoTitle: 'Exit Rush – Arrow Puzzle Game for Android',
     headline: 'Every arrow wants out.',
     description: 'Find the right order, keep your hearts, and beat the clock in an arrow puzzle game.',
     package: 'com.sazen.exit.rush', website: 'https://exitrush.teamsazen.com/',
@@ -24,6 +28,7 @@ export const apps = [
   },
   {
     slug: 'rafeeq', name: 'Rafeeq', subtitle: 'Your Muslim companion', category: 'Faith & reflection', filter: 'faith', color: 'mint',
+    seoTitle: 'Rafeeq – Quran, Prayer Times, Qibla & Duas App',
     headline: 'A little closer. Every day.',
     description: 'Make room for what matters. Read the Quran, find prayer times, and keep your daily duas close.',
     package: 'com.satechdev.rafeeqapp', website: 'https://rafeeq.teamsazen.com',
@@ -34,6 +39,7 @@ export const apps = [
   },
   {
     slug: 'budget-ai', name: 'Budget AI', subtitle: 'Your money, made clear', category: 'Everyday tools', filter: 'everyday', color: 'blue',
+    seoTitle: 'Budget AI – AI Expense Tracker & Budget App',
     headline: 'Less logging. More living.',
     description: 'Type an expense, say it out loud, or snap a receipt. Give your money a little more clarity.',
     package: 'com.budgetai.android', website: 'https://budgetai.teamsazen.com',
@@ -44,6 +50,7 @@ export const apps = [
   },
   {
     slug: '99-names', name: '99 Names', subtitle: 'Asmaul Husna', category: 'Faith & reflection', filter: 'faith', color: 'butter',
+    seoTitle: '99 Names of Allah – Asmaul Husna App',
     headline: 'Beautiful names. Deeper meaning.',
     description: 'Discover the 99 names of Allah. Read, reflect, and carry your favourites with you, even offline.',
     package: 'com.muzamil.asmaulhusna', website: 'https://99.teamsazen.com',
@@ -54,6 +61,7 @@ export const apps = [
   },
   {
     slug: 'fm-crafts', name: 'FM Crafts', subtitle: 'Made by hand. Made for you.', category: 'Shopping & gifts', filter: 'shopping', color: 'peach',
+    seoTitle: 'FM Crafts – Handmade Crochet Flowers & Gifts',
     headline: 'Find something made with love.',
     description: 'Handmade flowers, crochet bouquets, and thoughtful little gifts. Find a piece that feels like them.',
     package: 'com.fmcrafts.fmcrafts', website: 'https://fmcrafts.web.app',
@@ -64,6 +72,7 @@ export const apps = [
   },
   {
     slug: 'salahlog', name: 'SalahLog', subtitle: 'One prayer at a time', category: 'Faith & reflection', filter: 'faith', color: 'lilac',
+    seoTitle: 'SalahLog – Daily Salah & Prayer Tracker App',
     headline: 'Small steps. A steady practice.',
     description: 'Keep track of your daily Salah and look back on your progress. Build a routine, one prayer at a time.',
     package: 'com.track_prayer', website: '/apps/salahlog',

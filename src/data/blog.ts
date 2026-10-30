@@ -1,7 +1,7 @@
 // One short post per app. Copy stays within what each app's own listing and website already say.
 export const posts = [
   {
-    slug: 'a-companion-for-the-small-moments', app: 'rafeeq',
+    slug: 'a-companion-for-the-small-moments', app: 'rafeeq', date: '2026-10-30',
     title: 'A companion for the small moments of your day',
     excerpt: 'Rafeeq keeps the Quran, prayer times, the Qibla and your daily duas in one calm place.',
     sections: [
@@ -12,7 +12,7 @@ export const posts = [
     ],
   },
   {
-    slug: 'building-a-quran-habit', app: 'quran-khatam-tracker',
+    slug: 'building-a-quran-habit', app: 'quran-khatam-tracker', date: '2026-10-30',
     title: 'Building a Quran habit, one ayah at a time',
     excerpt: 'Start with a niyyah, mark each ayah, and watch your khatam journey grow.',
     sections: [
@@ -23,7 +23,7 @@ export const posts = [
     ],
   },
   {
-    slug: 'thinking-through-an-exit-rush-board', app: 'exit-rush',
+    slug: 'thinking-through-an-exit-rush-board', app: 'exit-rush', date: '2026-10-30',
     title: 'How to think through an Exit Rush board',
     excerpt: 'Every arrow wants out. The trick is finding the right order before the clock runs down.',
     sections: [
@@ -34,7 +34,7 @@ export const posts = [
     ],
   },
   {
-    slug: 'tracking-money-without-the-busywork', app: 'budget-ai',
+    slug: 'tracking-money-without-the-busywork', app: 'budget-ai', date: '2026-10-30',
     title: 'Tracking money without the busywork',
     excerpt: 'Type it, say it, or snap the receipt. Budget AI turns logging into a few seconds.',
     sections: [
@@ -45,7 +45,7 @@ export const posts = [
     ],
   },
   {
-    slug: 'time-with-the-99-names', app: '99-names',
+    slug: 'time-with-the-99-names', app: '99-names', date: '2026-10-30',
     title: 'Spending time with the 99 names of Allah',
     excerpt: 'Read each name, its meaning in English and Urdu, and a short reflection. Even offline.',
     sections: [
@@ -56,7 +56,7 @@ export const posts = [
     ],
   },
   {
-    slug: 'choosing-a-handmade-gift', app: 'fm-crafts',
+    slug: 'choosing-a-handmade-gift', app: 'fm-crafts', date: '2026-10-30',
     title: 'Choosing a handmade gift that feels like them',
     excerpt: 'Crochet flowers, custom bouquets and small gifts, made by hand in Pakistan.',
     sections: [
@@ -67,7 +67,7 @@ export const posts = [
     ],
   },
   {
-    slug: 'keeping-a-steady-prayer-routine', app: 'salahlog',
+    slug: 'keeping-a-steady-prayer-routine', app: 'salahlog', date: '2026-10-30',
     title: 'Keeping a steady prayer routine',
     excerpt: 'Record each of the five daily prayers and look back on your progress, one prayer at a time.',
     sections: [
@@ -80,5 +80,6 @@ export const posts = [
 ] as const;
 
 export type Post = (typeof posts)[number];
-export const published = '30 October 2026';
+export const postDate = (post: Post) => new Date(`${post.date}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+export const latestPostDate = posts.map(post => post.date).sort().at(-1)!;
 export const readMinutes = (post: Post) => Math.max(1, Math.ceil(post.sections.flatMap(s => s.p).join(' ').split(/\s+/).length / 200));

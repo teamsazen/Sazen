@@ -4,7 +4,7 @@ import PhonePreview from '../components/PhonePreview.astro';
 import { apps, developerUrl, icon, playUrl } from '../data/apps';
 import PostCard from '../components/PostCard.astro';
 import { posts } from '../data/blog';
-import { appPath } from '../data/studio';
+import { appPath, organization } from '../data/studio';
 const start = apps.findIndex(app => app.slug === 'rafeeq');
 // Coverflow placement for a slide `d` steps from the active one (kept in sync with the client script).
 const place = (raw: number) => {
@@ -17,7 +17,11 @@ const worlds = [
   { id: 'apps', label: '01 · Apps with purpose', title: 'Apps', text: 'A moment to reflect. A tool that fits your day.', list: apps.filter(app => app.filter !== 'games') },
   { id: 'games', label: '02 · Games with personality', title: 'Games', text: 'A puzzle to solve. A little play between the serious things.', list: apps.filter(app => app.filter === 'games') },
 ];
-const schema = { '@context': 'https://schema.org', '@type': 'Organization', name: 'Sazen', url: Astro.site?.toString(), logo: new URL('/images/sazen-logo.png', Astro.site).toString(), sameAs: [developerUrl] };
+const site = Astro.site!;
+const schema = [
+  { '@context': 'https://schema.org', ...organization(site) },
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Sazen', url: site.toString(), publisher: organization(site) },
+];
 // Studio reels rendered from brand/promo; each loops on its own while on screen.
 const reels = [
   { id: 'ivory', title: 'The studio reel', label: 'Sazen studio reel: all seven apps in a phone coverflow' },
@@ -33,8 +37,7 @@ const principles = [
   ['Made for real life', 'Useful tools, quiet moments and a little play.'],
 ];
 ---
-<Studio title="Sazen, Apps & Games">
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(schema)} />
+<Studio schema={schema}>
   <section class="hero band" id="top">
     <div class="hero-top">
       <div>

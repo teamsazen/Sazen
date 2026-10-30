@@ -1,15 +1,28 @@
 ---
 import Studio from '../../layouts/Studio.astro';
 import PhonePreview from '../../components/PhonePreview.astro';
-import { apps, icon, playUrl } from '../../data/apps';
-import { appPath } from '../../data/studio';
+import { apps, icon, playUrl, screen } from '../../data/apps';
+import { appPath, breadcrumbs, organization } from '../../data/studio';
 export function getStaticPaths() { return apps.map(app => ({ params: { slug: app.slug }, props: { app } })); }
 const { app } = Astro.props;
 const fullName = `${app.name}${app.slug === '99-names' ? ' – Asmaul Husna' : ''}`;
 const others = apps.filter(other => other.slug !== app.slug);
 const external = app.website.startsWith('https');
+const site = Astro.site!;
+const url = (path: string) => new URL(path, site).toString();
+const category = { faith: 'LifestyleApplication', games: 'GameApplication', everyday: 'FinanceApplication', shopping: 'ShoppingApplication' }[app.filter];
+// No offers or ratings: those would need real store data we do not publish here.
+const schema = [
+  {
+    '@context': 'https://schema.org', '@type': 'MobileApplication', name: fullName, description: app.detail,
+    operatingSystem: 'Android', applicationCategory: category, url: url(appPath(app.slug)), image: url(icon(app)),
+    screenshot: [1, 2, 3].map(i => url(screen(app, i))), installUrl: playUrl(app), publisher: organization(site),
+    ...(external && { sameAs: [app.website] }),
+  },
+  breadcrumbs(site, [['Sazen', '/'], [app.name, appPath(app.slug)]]),
+];
 ---
-<Studio title={`${fullName} · Sazen`} description={app.description}>
+<Studio title={`${app.seoTitle} · Sazen`} description={app.detail} image={`/og/apps/${app.slug}.png`} imageAlt={`${app.name}: ${app.headline}`} schema={schema}>
   <section class="ah band">
     <a class="back reveal" href={`/#worlds`}>← All Sazen apps</a>
     <div class="ah-grid">

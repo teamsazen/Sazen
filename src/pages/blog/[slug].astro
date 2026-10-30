@@ -3,19 +3,30 @@ import Studio from '../../layouts/Studio.astro';
 import PhonePreview from '../../components/PhonePreview.astro';
 import PostCard from '../../components/PostCard.astro';
 import { apps, icon, playUrl } from '../../data/apps';
-import { posts, published, readMinutes } from '../../data/blog';
-import { appPath } from '../../data/studio';
+import { postDate, posts, readMinutes } from '../../data/blog';
+import { appPath, breadcrumbs, organization, postPath } from '../../data/studio';
 export function getStaticPaths() { return posts.map(post => ({ params: { slug: post.slug }, props: { post } })); }
 const { post } = Astro.props;
 const app = apps.find(a => a.slug === post.app)!;
 const index = posts.findIndex(p => p.slug === post.slug);
 const more = [1, 2, 3].map(step => posts[(index + step) % posts.length]);
+const site = Astro.site!;
+const image = `/og/blog/${post.slug}.png`;
+const schema = [
+  {
+    '@context': 'https://schema.org', '@type': 'BlogPosting', headline: post.title, description: post.excerpt,
+    datePublished: post.date, dateModified: post.date, inLanguage: 'en', image: new URL(image, site).toString(),
+    mainEntityOfPage: new URL(postPath(post.slug), site).toString(), author: organization(site), publisher: organization(site),
+    about: { '@type': 'MobileApplication', name: app.name, url: new URL(appPath(app.slug), site).toString() },
+  },
+  breadcrumbs(site, [['Sazen', '/'], ['Blog', '/blog'], [post.title, postPath(post.slug)]]),
+];
 ---
-<Studio title={`${post.title} · Sazen blog`} description={post.excerpt}>
+<Studio title={`${post.title} · Sazen blog`} description={post.excerpt} type="article" published={post.date} image={image} imageAlt={post.title} schema={schema}>
   <article>
     <header class="post-hero band">
       <a class="back reveal" href={`/blog`}>← All posts</a>
-      <span class="eyebrow reveal">{app.name} · {published} · {readMinutes(post)} min read</span>
+      <span class="eyebrow reveal">{app.name} · <time datetime={post.date}>{postDate(post)}</time> · {readMinutes(post)} min read</span>
       <h1 class="display lines"><span><span>{post.title}</span></span></h1>
       <p class="reveal">{post.excerpt}</p>
     </header>

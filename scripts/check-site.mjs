@@ -34,8 +34,18 @@ for (const file of files) {
     checked++;
   }
   for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) JSON.parse(match[1]);
-  if (!html.includes('<title>') || !html.includes('name="description"') || !html.includes('rel="canonical"')) errors.push(`${file}: missing page metadata`);
+  const noindex = html.includes('name="robots" content="noindex"');
+  if (!html.includes('<title>') || !html.includes('name="description"') || !(noindex || html.includes('rel="canonical"'))) errors.push(`${file}: missing page metadata`);
+  if (file.endsWith('404.html') !== noindex) errors.push(`${file}: only the 404 page should be noindex`);
+  // The canonical must be the clean URL Cloudflare serves, not the redirecting /path.html file.
+  const canonical = html.match(/rel="canonical" href="([^"]+)"/)?.[1];
+  if (canonical && (canonical.endsWith('.html') || !html.includes(`property="og:url" content="${canonical}"`))) errors.push(`${file}: canonical ${canonical} is not a clean URL matching og:url`);
+  const ogImage = html.match(/property="og:image" content="([^"]+)"/)?.[1];
+  if (!ogImage) errors.push(`${file}: missing og:image`);
+  else { try { await access(join(root, new URL(ogImage).pathname)); } catch { errors.push(`${file}: og:image ${ogImage} not found`); } }
 }
+const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8');
+for (const [, loc] of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) if (loc.endsWith('.html')) errors.push(`sitemap.xml: ${loc} is not a clean URL`);
 for (const file of ['robots.txt','sitemap.xml','404.html','_headers']) await access(join(root,file));
 if (errors.length) { console.error(errors.join('\n')); process.exit(1); }
 console.log(`Verified ${files.length} pages and ${checked} local asset, route, and anchor references.`);

@@ -12,6 +12,7 @@ Read `docs/agents/site.md` before changing structure, app content, visuals, or d
 - Reuse real app icons/screenshots and keep their sources in `docs/asset-sources.json`; do not invent app screens, ratings, download counts, testimonials, or product claims.
 - 99 Names and Asmaul Husna are one app, package `com.muzamil.asmaulhusna`.
 - Keep website links and Google Play package IDs in `src/data/apps.ts`, and blog posts in `src/data/blog.ts`; posts may only restate each app's existing copy.
+- Keep SEO metadata clean: canonicals without `.html`, per-page structured data via the layout's `schema` prop, no invented ratings or prices in JSON-LD. Run `node brand/og/render.mjs` after adding or renaming an app or post.
 - Budget AI manual tracking is free. AI is paid with 5 free AI messages per month.
 - Do not imply all apps share one data policy. Link to each app's official support and privacy information.
 - Use `PhonePreview.astro` for device presentation; crop baked-in frames within the shared shell and distinguish SalahLog presentation mockups from native Android captures.

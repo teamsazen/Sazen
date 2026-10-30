@@ -4,9 +4,9 @@
 
 ```text
 astro.config.mjs               Static build, production origin, clean URL output
-src/data/apps.ts               Seven apps, copy, features, captions, store/website URLs
-src/data/blog.ts               One short blog post per app, written only from each app's existing copy
-src/data/studio.ts             Studio GitHub profile, analytics ID, app and post URL helpers
+src/data/apps.ts               Seven apps, copy, features, captions, search titles, store/website URLs
+src/data/blog.ts               One short blog post per app (with ISO publish date), written only from each app's existing copy
+src/data/studio.ts             Studio GitHub profile, analytics ID, app and post URL helpers, Organization and breadcrumb structured data
 src/layouts/Studio.astro       SEO, glass pill header, giant-wordmark footer, Lenis, reveals, tilt
 src/components/PhonePreview.astro  Shared device frame for every screenshot and the Exit Rush video
 src/components/PostCard.astro  Blog card with app icon and a real screenshot cover
@@ -16,16 +16,17 @@ src/pages/blog/                Blog index (3 + View all) and one page per post
 src/pages/privacy.astro        Website privacy and individual app policy pointers
 src/pages/404.astro            Not-found page
 src/pages/robots.txt.ts        Crawl rules derived from configured origin
-src/pages/sitemap.xml.ts       Home, app pages, blog, posts, privacy
+src/pages/sitemap.xml.ts       Home, app pages, blog, posts, privacy; lastmod only for dated blog URLs
 src/styles/studio.css          Tokens, type, layout, motion, light/dark, reduced motion
 public/fonts/                  Self-hosted Anton (display) and Google Sans (body)
 public/images/                 Sazen logo, 7 icons, 21 screenshots, device bezel and status bars, Exit Rush poster, reels/ posters
 public/videos/                 exit-rush.mp4 gameplay; sazen-reel-{ivory,dark,colour}.mp4 collection reels (960px web encodes of brand/promo)
 public/favicon.svg             Theme-aware Sazen S favicon (black on light, white on dark)
-public/{favicon,apple-touch-icon,og}.png  Brand and social assets
+public/{favicon,apple-touch-icon,og}.png  Brand and social assets (og.png is the default share image)
+public/og/                     Generated 1200×630 share images: apps/<slug>.png and blog/<slug>.png
 public/_headers                Cloudflare cache and security response headers
-brand/                         Sazen brand kit sources (S mark, logo, feature graphics, og/og.html = social banner source, promo/ = 30 s 1:1 social promo videos: promo.html (ivory), promo-dark.html and promo-colour.html timelines, render.cjs renderer, sazen-promo*.mp4); not served
-scripts/check-site.mjs         Build-output route, asset, anchor and metadata checks
+brand/                         Sazen brand kit sources (S mark, logo, feature graphics, og/og.html = social banner source, og/render.mjs = per-app and per-post share image renderer, promo/ = 30 s 1:1 social promo videos: promo.html (ivory), promo-dark.html and promo-colour.html timelines, render.cjs renderer, sazen-promo*.mp4); not served
+scripts/check-site.mjs         Build-output route, asset, anchor, metadata, canonical, og:image and sitemap checks
 docs/asset-sources.json        Asset provenance
 ```
 
@@ -43,9 +44,19 @@ Motion is balanced: line-by-line headline reveals, soft fade-up, a never-pausing
 
 **App pages.** Fanned three-phone hero (the centre phone plays the Exit Rush video on its page), feature marquee and numbered feature rows, three real screenshots with a native `<dialog>` enlargement (Escape, close button, backdrop, arrow keys), a support band pointing to that app's own Google Play listing and website, and rows for the other six apps. Budget AI states its pricing in its note.
 
-**Blog.** One post per app, published 30 October 2026. The index shows three posts and reveals the rest with a button; all posts render without JavaScript. Post pages show the app's screens as a banner, the article, a sticky app card and three more posts.
+**Blog.** One post per app, each with its own `date` (all seven were published 30 October 2026). The index shows three posts and reveals the rest with a button; all posts render without JavaScript. Post pages show the app's screens as a banner, the article, a sticky app card and three more posts.
 
 **Privacy and 404.** Same visual system. No app policies are consolidated into a studio-wide claim.
+
+## SEO
+
+`Studio.astro` writes the title, description, canonical, Open Graph/Twitter tags and any JSON-LD a page passes in `schema`. Canonicals strip the `.html` that `build.format: 'file'` adds, because Cloudflare serves (and the sitemap lists) clean URLs; `npm run check` fails on `.html` canonicals, a canonical that differs from `og:url`, a missing `og:image` file, or `.html` sitemap entries. The 404 page is `noindex` and has no canonical.
+
+- Home: default site title and description from `src/data/apps.ts`, `Organization` + `WebSite` JSON-LD, `og.png`.
+- App pages: `seoTitle` from `apps.ts`, `detail` as the description, `MobileApplication` + `BreadcrumbList` JSON-LD, `og/apps/<slug>.png`. No offers or ratings are published, since that would need real store data.
+- Blog index: `Blog` + `BreadcrumbList`. Posts: `og:type` article, `article:published_time`, `BlogPosting` + `BreadcrumbList`, `og/blog/<slug>.png`.
+
+After adding or renaming an app or post (or changing an app name/headline or post title), run `node brand/og/render.mjs` (Node 23.6+ and local Google Chrome) to regenerate `public/og/`, then build and check.
 
 ## Content provenance
 

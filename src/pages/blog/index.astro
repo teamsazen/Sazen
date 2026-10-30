@@ -2,9 +2,18 @@
 import Studio from '../../layouts/Studio.astro';
 import PostCard from '../../components/PostCard.astro';
 import { posts } from '../../data/blog';
+import { breadcrumbs, organization, postPath } from '../../data/studio';
 const FIRST = 3;
+const site = Astro.site!;
+const schema = [
+  {
+    '@context': 'https://schema.org', '@type': 'Blog', name: 'Sazen blog', url: new URL('/blog', site).toString(), publisher: organization(site),
+    blogPost: posts.map(post => ({ '@type': 'BlogPosting', headline: post.title, datePublished: post.date, url: new URL(postPath(post.slug), site).toString() })),
+  },
+  breadcrumbs(site, [['Sazen', '/'], ['Blog', '/blog']]),
+];
 ---
-<Studio title="Blog · Sazen" description="Notes from the Sazen studio about our apps and games.">
+<Studio title="Sazen Blog – Notes on Our Apps and Games" description="Short reads from the Sazen studio about Rafeeq, Quran Khatam Tracker, SalahLog, Budget AI, Exit Rush and our other apps and games." schema={schema}>
   <section class="blog-hero band">
     <a class="back reveal" href="/">← Back to Sazen</a>
     <span class="eyebrow reveal">The Sazen blog</span>

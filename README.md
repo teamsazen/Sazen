@@ -45,7 +45,7 @@ npm run check
 npm run preview
 ```
 
-`check` verifies generated page metadata, local asset references, page links, anchors, structured data, and deployment support files. Browser QA should cover 390px, 768px and desktop widths; light and dark mode; the hero showcase (auto-advance, arrows, swipe, keyboard); the pinned "How we build" section; the screenshot dialog (Escape, close, backdrop, arrow keys); the blog "View all" button; reduced motion; and no-JavaScript content.
+`check` verifies generated page metadata (clean canonicals matching `og:url`, existing `og:image` files, `noindex` only on 404), local asset references, page links, anchors, structured data, and deployment support files. Browser QA should cover 390px, 768px and desktop widths; light and dark mode; the hero showcase (auto-advance, arrows, swipe, keyboard); the pinned "How we build" section; the screenshot dialog (Escape, close, backdrop, arrow keys); the blog "View all" button; reduced motion; and no-JavaScript content.
 
 ## Publishing
 
@@ -62,8 +62,9 @@ For a different Pages project, change the deploy script's `--project-name` and s
 
 ## Maintenance
 
-- `src/data/apps.ts`: app copy, package IDs, website links, screenshot captions, and categories.
-- `src/data/blog.ts`: blog posts (one per app, written only from each app's existing copy).
+- `src/data/apps.ts`: app copy, search titles, package IDs, website links, screenshot captions, and categories.
+- `src/data/blog.ts`: blog posts (one per app, written only from each app's existing copy), each with an ISO `date`.
+- `public/og/`: per-app and per-post share images; regenerate with `node brand/og/render.mjs` after adding or renaming an app or post.
 - `src/data/studio.ts`: studio GitHub profile, analytics ID, and app/post URL helpers.
 - `src/layouts/Studio.astro`: SEO, glass pill header, footer, smooth scroll, reveals, tilt.
 - `src/pages/`: home, app pages, blog, privacy, 404, robots and sitemap.
