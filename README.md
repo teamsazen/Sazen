@@ -1,10 +1,10 @@
 # Sazen
 
-The Sazen studio and app collection website, built with Astro and deployed to Cloudflare Pages at **https://sazen.pages.dev**.
+The Sazen studio and app collection website, built with Astro and deployed to Cloudflare Pages and published only at **https://teamsazen.com**.
 
 Full-bleed, minimal and animated: light ivory with black type in light mode, pure black with white type in dark mode, tall condensed Anton headings with Google Sans body text (both self-hosted), a floating glass pill header, a 3D app showcase in the hero, smooth scrolling, scroll reveals and a giant SAZEN wordmark footer.
 
-Production canonical domain: **https://teamsazen.com**. Connect this custom domain to the existing Sazen Cloudflare Pages project; domain registration stays at Namecheap.
+Production canonical domain: **https://teamsazen.com**. Connect this custom domain to the existing Sazen Cloudflare Pages project; domain registration stays at Namecheap. The project's `sazen.pages.dev` address cannot be removed, so it sends `X-Robots-Tag: noindex` (see `public/_headers`) and a Cloudflare Bulk Redirect sends it to teamsazen.com.
 
 ## App collection
 

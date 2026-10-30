@@ -1,6 +1,6 @@
 # Sazen — Agent Guide
 
-Sazen is an independent Astro static website for the studio's seven apps: Quran Khatam Tracker, Exit Rush, Rafeeq, Budget AI, 99 Names – Asmaul Husna, FM Crafts, and SalahLog. The project lives alongside Budget-AI in `Muzamil/Projects/Sazen` and uses Cloudflare Pages (`sazen.pages.dev`).
+Sazen is an independent Astro static website for the studio's seven apps: Quran Khatam Tracker, Exit Rush, Rafeeq, Budget AI, 99 Names – Asmaul Husna, FM Crafts, and SalahLog. The project lives alongside Budget-AI in `Muzamil/Projects/Sazen` and uses Cloudflare Pages project `sazen`, published only at `teamsazen.com`; `sazen.pages.dev` stays noindexed and redirected.
 
 Read `docs/agents/site.md` before changing structure, app content, visuals, or deployment. Keep this file, that guide, and README.md consistent when adding/removing/renaming files or changing features.
 

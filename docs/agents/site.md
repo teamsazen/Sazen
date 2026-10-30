@@ -59,7 +59,7 @@ The local Budget AI, Rafeeq, 99-Names, FM-CRAFTS, Quran-Khatam-Tracker and Exit 
 
 ## Deployment and verification
 
-Run `npm run build` then `npm run check`, and verify real browser behaviour after UI changes. Production publication uses Cloudflare Pages project `sazen`, branch `master`, `dist/` output. `SITE_URL` can override the origin, with metadata, robots and sitemap following it.
+Run `npm run build` then `npm run check`, and verify real browser behaviour after UI changes. Production publication uses Cloudflare Pages project `sazen`, branch `master`, `dist/` output, served publicly only at `https://teamsazen.com`. The `sazen.pages.dev` address cannot be deleted: `public/_headers` sends `X-Robots-Tag: noindex` on every `*.pages.dev` host (preview deploys included), and a Cloudflare Bulk Redirect (dashboard, not in this repo) sends `sazen.pages.dev` to `https://teamsazen.com`, keeping path and query. `SITE_URL` can override the origin, with metadata, robots and sitemap following it.
 
 Do not store Cloudflare/GitHub tokens in files. No changes to Budget AI's Flutter app or other sibling projects are needed for site updates.
 
