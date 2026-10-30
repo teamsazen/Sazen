@@ -1,0 +1,56 @@
+---
+import Studio from '../../layouts/Studio.astro';
+import PhonePreview from '../../components/PhonePreview.astro';
+import PostCard from '../../components/PostCard.astro';
+import { apps, icon, playUrl } from '../../data/apps';
+import { posts, published, readMinutes } from '../../data/blog';
+import { appPath } from '../../data/studio';
+export function getStaticPaths() { return posts.map(post => ({ params: { slug: post.slug }, props: { post } })); }
+const { post } = Astro.props;
+const app = apps.find(a => a.slug === post.app)!;
+const index = posts.findIndex(p => p.slug === post.slug);
+const more = [1, 2, 3].map(step => posts[(index + step) % posts.length]);
+---
+<Studio title={`${post.title} · Sazen blog`} description={post.excerpt}>
+  <article>
+    <header class="post-hero band">
+      <a class="back reveal" href={`/blog`}>← All posts</a>
+      <span class="eyebrow reveal">{app.name} · {published} · {readMinutes(post)} min read</span>
+      <h1 class="display lines"><span><span>{post.title}</span></span></h1>
+      <p class="reveal">{post.excerpt}</p>
+    </header>
+    <div class="post-banner band">
+      <div class="post-banner-inner reveal">
+        <img src={icon(app)} width="72" height="72" alt="" />
+        <div class="banner-phones">
+          {[2, 1, 3].map(i => <span class:list={['banner-phone', { mid: i === 1 }]}><PhonePreview app={app} index={i} eager={i === 1} /></span>)}
+        </div>
+      </div>
+    </div>
+    <div class="post-body band">
+      <div class="prose">
+        {post.sections.map(section => (
+          <section class="reveal">
+            {'h' in section && <h2>{section.h}</h2>}
+            {section.p.map(text => <p>{text}</p>)}
+          </section>
+        ))}
+      </div>
+      <aside class="post-app-card reveal">
+        <img src={icon(app)} width="64" height="64" alt="" />
+        <span class="eyebrow">{app.category}</span>
+        <b>{app.name}</b>
+        <p>{app.headline}</p>
+        <a class="btn" href={appPath(app.slug)}>Explore {app.name}</a>
+        <a class="btn ghost" href={playUrl(app)} target="_blank" rel="noopener noreferrer">{app.slug === 'budget-ai' ? 'Check Google Play' : 'Google Play'} ↗</a>
+      </aside>
+    </div>
+  </article>
+  <section class="journal band">
+    <div class="gal-head">
+      <h2 class="display lines"><span><span>Keep reading.</span></span></h2>
+      <a class="btn ghost reveal" href={`/blog`}>View all posts →</a>
+    </div>
+    <div class="post-grid">{more.map((p, i) => <PostCard post={p} index={i} />)}</div>
+  </section>
+</Studio>

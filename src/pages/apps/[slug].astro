@@ -1,20 +1,147 @@
 ---
-import Base from '../../layouts/Base.astro';
-import Gallery from '../../components/Gallery.astro';
-import Arrow from '../../components/Arrow.astro';
-import Play from '../../components/Play.astro';
-import { apps, playUrl, icon, screen } from '../../data/apps';
-export function getStaticPaths() { return apps.map(app => ({params:{slug:app.slug},props:{app}})); }
+import Studio from '../../layouts/Studio.astro';
+import PhonePreview from '../../components/PhonePreview.astro';
+import { apps, icon, playUrl } from '../../data/apps';
+import { appPath } from '../../data/studio';
+export function getStaticPaths() { return apps.map(app => ({ params: { slug: app.slug }, props: { app } })); }
 const { app } = Astro.props;
+const fullName = `${app.name}${app.slug === '99-names' ? ' – Asmaul Husna' : ''}`;
+const others = apps.filter(other => other.slug !== app.slug);
+const external = app.website.startsWith('https');
 ---
-<Base title={`${app.name}${app.slug==='99-names'?' – Asmaul Husna':''} · Sazen`} description={app.description}>
-  <div class="container"><a class="back-link" href="/#apps">← All Sazen apps</a></div>
-  <section class={`container detail-hero ${app.color}`}>
-    <div class="detail-copy"><div class="app-title"><img src={icon(app)} width="64" height="64" alt={`${app.name} icon`} /><div><span class="eyebrow">{app.category}</span><p>{app.name} · {app.subtitle}</p></div></div><h1>{app.headline}</h1><p class="lead">{app.detail}</p><div class="detail-actions"><a class="btn btn-primary" href={playUrl(app)} target="_blank" rel="noopener noreferrer"><Play /> {app.slug === 'budget-ai' ? 'Check Google Play' : `Get ${app.name}`}</a>{app.website.startsWith('https') && <a class="btn btn-ghost" href={app.website} target="_blank" rel="noopener noreferrer">Visit website <Arrow /></a>}</div><p class="detail-note">{app.note}</p></div>
-    <div class="detail-stage"><img src={screen(app)} width="720" height="1560" alt={`${app.name}: ${app.captions[0]}`} fetchpriority="high" /></div>
+<Studio title={`${fullName} · Sazen`} description={app.description}>
+  <section class="ah band">
+    <a class="back reveal" href={`/#worlds`}>← All Sazen apps</a>
+    <div class="ah-grid">
+      <div class="ah-copy">
+        <div class="ah-id reveal">
+          <img src={icon(app)} width="76" height="76" alt={`${app.name} icon`} />
+          <div><span class="eyebrow">{app.category}</span><span class="ah-sub">{app.slug === '99-names' ? 'Asmaul Husna' : app.subtitle}</span></div>
+        </div>
+        <h1 class="display lines"><span><span>{app.name}</span></span></h1>
+        <p class="ah-head reveal">{app.headline}</p>
+        <p class="ah-detail reveal">{app.detail}</p>
+        <div class="ah-actions reveal">
+          <a class="btn" href={playUrl(app)} target="_blank" rel="noopener noreferrer">{app.slug === 'budget-ai' ? 'Check Google Play' : `Get ${app.name}`} ↗</a>
+          {external && <a class="btn ghost" href={app.website} target="_blank" rel="noopener noreferrer">Visit website ↗</a>}
+        </div>
+        <p class="ah-note reveal">{app.note}</p>
+      </div>
+      <div class="ah-stage" aria-label={`${app.name} screens`}>
+        <div class="ah-phone left"><PhonePreview app={app} index={2} eager /></div>
+        <div class="ah-phone right"><PhonePreview app={app} index={3} eager /></div>
+        <div class="ah-phone center"><PhonePreview app={app} index={1} video={app.slug === 'exit-rush'} eager /></div>
+      </div>
+    </div>
   </section>
-  <div class="container feature-strip">{app.features.map(feature=><span><span aria-hidden="true">✦</span> {feature}</span>)}</div>
-  <section class="section container"><div class="section-heading"><div><span class="eyebrow">Inside {app.name}</span><h2>A closer look.</h2></div><p>Real screens from the app.<br />Select a screenshot to explore.</p></div><Gallery app={app} /></section>
-  <section class="detail-support container"><div><h2>Make it part of your day.</h2><p>Find downloads, app support, and privacy information on Google Play.</p></div><a class="btn btn-primary" href={playUrl(app)} target="_blank" rel="noopener noreferrer"><Play /> Open Google Play</a></section>
-  <section class="section container"><span class="eyebrow">More from the family</span><div class="more-apps">{apps.filter(other=>other.slug!==app.slug).map(other=><a href={`/apps/${other.slug}`}><img src={icon(other)} alt="" width="48" height="48" loading="lazy" /><span>{other.name}<small>{other.subtitle}</small></span><Arrow /></a>)}</div></section>
-</Base>
+
+  <div class="marquee" aria-label={app.features.join(', ')}>
+    <div class="marquee-track" aria-hidden="true">{[...app.features, ...app.features, ...app.features, ...app.features].map(item => <span>{item}</span>)}</div>
+  </div>
+
+  <section class="feat band">
+    <span class="eyebrow reveal">Inside {app.name}</span>
+    <ol>
+      {app.features.map((feature, i) => (
+        <li class="reveal"><span class="feat-num">0{i + 1}</span><span class="display lines"><span><span>{feature}</span></span></span></li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="gal band">
+    <div class="gal-head">
+      <h2 class="display lines"><span><span>A closer look.</span></span></h2>
+      <p class="reveal">Real screens from the app. Select one to enlarge it.</p>
+    </div>
+    <div class="gal-row">
+      {app.captions.map((caption, i) => (
+        <figure class="reveal">
+          <button type="button" class="shot" data-shot={i} data-caption={`${app.name}: ${caption}`} aria-label={`Enlarge screenshot: ${caption}`} data-tilt>
+            <PhonePreview app={app} index={i + 1} />
+          </button>
+          <figcaption><span>0{i + 1}</span>{caption}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="cta band">
+    <span class="eyebrow reveal">Downloads, support and privacy</span>
+    <h2 class="display lines"><span><span>Make it part</span></span><span><span>of your day.</span></span></h2>
+    <p class="cta-text reveal">Find downloads, app support and the privacy information for {app.name} on Google Play{external ? ' and on its website' : ''}.</p>
+    <div class="ah-actions reveal">
+      <a class="btn" href={playUrl(app)} target="_blank" rel="noopener noreferrer">Open Google Play ↗</a>
+      {external && <a class="btn ghost" href={app.website} target="_blank" rel="noopener noreferrer">Visit website ↗</a>}
+    </div>
+  </section>
+
+  <section class="more band">
+    <div class="gal-head">
+      <h2 class="display lines"><span><span>More from Sazen.</span></span></h2>
+    </div>
+    <ul class="app-rows">
+      {others.map(other => (
+        <li class="reveal">
+          <a href={appPath(other.slug)}>
+            <img src={icon(other)} width="56" height="56" alt="" loading="lazy" />
+            <span class="row-text"><b>{other.name}</b><small>{other.slug === '99-names' ? 'Asmaul Husna' : other.subtitle}</small></span>
+            <span class="row-cat">{other.category}</span>
+            <span class="row-go" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <dialog class="lightbox" aria-labelledby="lightbox-caption">
+    <button type="button" class="round lb-close" aria-label="Close screenshot">×</button>
+    <button type="button" class="round lb-prev" aria-label="Previous screenshot">←</button>
+    <div class="lb-frame"></div>
+    <button type="button" class="round lb-next" aria-label="Next screenshot">→</button>
+    <p id="lightbox-caption"></p>
+  </dialog>
+
+  <script>
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const shots = [...document.querySelectorAll<HTMLButtonElement>('[data-shot]')];
+    const dialog = document.querySelector<HTMLDialogElement>('.lightbox')!;
+    const frame = dialog.querySelector<HTMLElement>('.lb-frame')!;
+    const caption = dialog.querySelector<HTMLElement>('#lightbox-caption')!;
+    let current = 0;
+    const showShot = (i: number) => {
+      current = (i + shots.length) % shots.length;
+      const preview = shots[current].querySelector('.device-preview');
+      if (preview) frame.replaceChildren(preview.cloneNode(true));
+      caption.textContent = shots[current].dataset.caption ?? '';
+    };
+    shots.forEach((shot, i) => shot.addEventListener('click', () => {
+      showShot(i);
+      dialog.showModal();
+      document.documentElement.classList.add('locked');
+    }));
+    dialog.querySelector('.lb-close')!.addEventListener('click', () => dialog.close());
+    dialog.querySelector('.lb-prev')!.addEventListener('click', () => showShot(current - 1));
+    dialog.querySelector('.lb-next')!.addEventListener('click', () => showShot(current + 1));
+    dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+    dialog.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') showShot(current - 1);
+      if (e.key === 'ArrowRight') showShot(current + 1);
+    });
+    dialog.addEventListener('close', () => document.documentElement.classList.remove('locked'));
+
+    const video = document.querySelector<HTMLVideoElement>('.ah-stage video');
+    if (video) {
+      let visible = false;
+      const sync = () => (visible && !reduce && !document.hidden ? video.play().catch(() => {}) : video.pause());
+      new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }, { threshold: 0.2 }).observe(video);
+      document.addEventListener('visibilitychange', sync);
+    }
+
+    // Phones fan out a little further as the hero scrolls away.
+    const stage = document.querySelector<HTMLElement>('.ah-stage');
+    if (stage && !reduce) addEventListener('scroll', () => {
+      const t = Math.min(1, Math.max(0, scrollY / innerHeight));
+      stage.style.setProperty('--fan', String(t));
+    }, { passive: true });
+  </script>
+</Studio>

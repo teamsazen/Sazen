@@ -1,14 +1,34 @@
 export const developerUrl = 'https://play.google.com/store/apps/dev?id=5262989636703605828';
-export const description = 'Thoughtful apps for everyday life. Explore Rafeeq, Budget AI, 99 Names – Asmaul Husna, FM Crafts, and SalahLog. Made with care by Sazen.';
+export const description = 'Apps with purpose. Games with personality. Discover Rafeeq, Quran Khatam Tracker, Exit Rush and more from Sazen.';
 
 export const apps = [
+  {
+    slug: 'quran-khatam-tracker', name: 'Quran Khatam Tracker', subtitle: 'One ayah at a time', category: 'Faith & reflection', filter: 'faith', color: 'mint',
+    headline: 'Make every ayah count.',
+    description: 'Set your niyyah, mark each ayah, and follow your journey through the Quran.',
+    package: 'com.quran.khatam.tracker', website: 'https://qurankhatamtracker.pages.dev/',
+    features: ['Ayah-by-ayah progress', 'Khatam journeys', 'Reading streaks & awards'],
+    captions: ['Your reading journey', 'Read and mark each ayah', 'Your khatam progress'],
+    detail: 'Begin with a niyyah and build a reading habit, one ayah at a time. Continue where you left off and see your khatam progress grow.',
+    note: 'Visit the Quran Khatam Tracker website for downloads and app information.',
+  },
+  {
+    slug: 'exit-rush', name: 'Exit Rush', subtitle: 'Find your way out', category: 'Games', filter: 'games', color: 'blue',
+    headline: 'Every arrow wants out.',
+    description: 'Find the right order, keep your hearts, and beat the clock in an arrow puzzle game.',
+    package: 'com.sazen.exit.rush', website: 'https://exit-rush.pages.dev/',
+    features: ['Arrow puzzles', 'Special stages', 'Plays offline'],
+    captions: ['Choose your next challenge', 'Find the right order', 'Explore special stages'],
+    detail: 'Tap an arrow and watch it slide along its path. Clear the board in the right order, protect your three hearts, and take on special stages.',
+    note: 'Explore the Exit Rush website to play the demo and find download information.',
+  },
   {
     slug: 'rafeeq', name: 'Rafeeq', subtitle: 'Your Muslim companion', category: 'Faith & reflection', filter: 'faith', color: 'mint',
     headline: 'A little closer. Every day.',
     description: 'Make room for what matters. Read the Quran, find prayer times, and keep your daily duas close.',
-    package: 'com.satechdev.rafeeqapp', website: 'https://rafeeq.pages.dev',
+    package: 'com.satechdev.rafeeqapp', website: 'https://rafeeq.teamsazen.com',
     features: ['Quran reading & recitation', 'Prayer times & Qibla', 'Duas & Namaz guide'],
-    captions: ['Your day with Rafeeq', 'Read the Quran', 'Daily prayer times'],
+    captions: ['Your day with Rafeeq', 'Read the Quran', 'Share Rafeeq with others'],
     detail: 'A companion for your daily practice, from reading and listening to the Quran to finding the Qibla. Explore duas and a Namaz guide, with English and Urdu support.',
     note: 'Explore the Rafeeq website for the full feature guide and app policies.',
   },

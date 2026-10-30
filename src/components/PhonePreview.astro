@@ -1,0 +1,30 @@
+---
+import { screen, type App } from '../data/apps';
+interface Props { app: App; index?: number; video?: boolean; eager?: boolean; class?: string }
+const {app,index=1,video=false,eager=false,class:className=''}=Astro.props;
+const addStatus=['quran-khatam-tracker','99-names'].includes(app.slug);
+const overlayStatus=['exit-rush','salahlog'].includes(app.slug);
+const dark=app.slug==='quran-khatam-tracker'||(app.slug==='salahlog'&&index===1);
+---
+<span class:list={['device-preview','phone-render',className,{'phone-dark':dark,'phone-add-status':addStatus,'phone-mask-status':app.slug==='salahlog'}]}>
+ <span class="phone-screen">
+  {addStatus && <span class="phone-status" aria-hidden="true"></span>}
+  <span class="phone-content">
+   {video ? <video id="hero-gameplay" src="/videos/exit-rush.mp4" poster="/images/exit-rush/video-poster.webp" muted loop playsinline preload="metadata" aria-label="Exit Rush gameplay preview"></video> : <img src={screen(app,index)} alt={`${app.name}: ${app.captions[index-1]}`} width="900" height="1950" loading={eager?'eager':'lazy'} fetchpriority={eager?'high':'auto'} />}
+  </span>
+  {overlayStatus && <span class="phone-status phone-status-overlay" aria-hidden="true"></span>}
+ </span>
+ <span class="phone-bezel" aria-hidden="true"></span>
+</span>
+<style>
+.phone-render{display:block;position:relative;width:100%;aspect-ratio:1470/3000;container-type:inline-size;--screen-bg:#fffffa;--status-image:url('/images/device/statusbar-light.png');filter:drop-shadow(0 18px 14px var(--device-shadow));}
+.phone-render.phone-dark{--screen-bg:#080d09;--status-image:url('/images/device/statusbar-dark.png')}
+.phone-screen{position:absolute;inset:2.23% 5.1%;border-radius:15% / 7%;overflow:hidden;background:var(--screen-bg);display:flex;flex-direction:column}
+.phone-content{position:relative;display:block;min-height:0;flex:1}
+.phone-content img,.phone-content video{display:block;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:fill;border:0!important;border-radius:0!important;box-shadow:none!important;transform:none!important;padding:0!important;clip-path:none!important}
+.phone-status{display:block;flex:0 0 6.2%;background:var(--screen-bg) var(--status-image) center 2.1cqw / 88% auto no-repeat;z-index:2}
+.phone-status-overlay{position:absolute;top:0;left:0;right:0;height:4%}
+.phone-mask-status .phone-status-overlay{height:6.5%}
+.phone-bezel{position:absolute;inset:0;z-index:3;pointer-events:none;background:url('/images/device/rafeeq-bezel.png') center / 100% 100% no-repeat;clip-path:inset(.45% 1% round 17.5% / 8.6%)}
+.phone-render.card-phone{padding:0;border:0;border-radius:0;box-shadow:none;background:transparent;width:34%;height:auto;align-self:start}
+</style>

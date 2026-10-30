@@ -10,9 +10,9 @@
   "rafeeq": {
     "icon": "Rafeeq/assets/logo.png",
     "screens": [
-      "Rafeeq/website/src/assets/screens/home-light.png",
-      "Rafeeq/website/src/assets/screens/quran.png",
-      "Rafeeq/website/src/assets/screens/prayer-times.png"
+      "Rafeeq/website/screens/light/01-home.png",
+      "Rafeeq/website/screens/light/07-surah-al-baqara.png",
+      "Rafeeq/website/screens/light/03-home-share.png"
     ]
   },
   "99-names": {
@@ -24,18 +24,20 @@
     ]
   },
   "fm-crafts": {
-    "icon": "FM-CRAFTS/storefront/public/icon-512.png",
+    "icon": "FM-CRAFTS/brand/play-store-icon-512.png (green app icon, FM-CRAFTS commit bc2fd0d)",
     "screens": [
       "FM-CRAFTS/storefront/src/assets/screens/home.png",
       "FM-CRAFTS/storefront/src/assets/screens/red-rose.png",
       "FM-CRAFTS/storefront/src/assets/screens/crochet.png"
-    ]
+    ],
+    "revision": "FM-CRAFTS Git commit 3409d53: original storefront/src/assets/screens files, removed in subsequent redesign"
   },
   "sazen": {
     "source": "https://play.google.com/store/apps/dev?id=5262989636703605828",
     "downloaded": "2026-10-23",
     "icon": "https://play-lh.googleusercontent.com/HWR1A6yhxQDfTYcQ0oXRzRGMURIzPOYujsZkGc-QIvApQK8DyypUv5-CHLHxSVttrg",
-    "banner": "https://play-lh.googleusercontent.com/CVlDAOreiKyzOnMwy6p-hHXHW14X_K9ggOa4j3TOoQDyK4AExAV9XDCCadG-XduJfeZP"
+    "banner": "https://play-lh.googleusercontent.com/CVlDAOreiKyzOnMwy6p-hHXHW14X_K9ggOa4j3TOoQDyK4AExAV9XDCCadG-XduJfeZP",
+    "banner_note": "Banner source kept for reference; the banner image is no longer served."
   },
   "salahlog": {
     "source": "https://play.google.com/store/apps/details?id=com.track_prayer",
@@ -45,5 +47,35 @@
       "https://play-lh.googleusercontent.com/gvVCWI-GEMKHPhSQ4hDTIUmANPgd59piugClR0JcoBGpvP1jOquA4HpJBXL_CzvqxE8meFti1YwQrUbY2w0J2AI",
       "https://play-lh.googleusercontent.com/gpT-Ee21zCHRG-FhMgjdgB_y596k_ABp7pVNK6OvTts2pifgt0qHOVLhq5TqyjGFtlv2pHKnevMAD8xQ6m_Vlao"
     ]
-  }
+  },
+  "quran-khatam-tracker": {
+    "icon": "Quran-Khatam-Tracker/landing/img/logo.png",
+    "screens": [
+      "Quran-Khatam-Tracker/landing/screens/home.webp",
+      "Quran-Khatam-Tracker/landing/screens/reader.webp",
+      "Quran-Khatam-Tracker/landing/screens/journey.webp"
+    ]
+  },
+  "exit-rush": {
+    "icon": "ArrowMax/website/assets/icon-light.png",
+    "screens": [
+      "ArrowMax/website/assets/screens/home2.webp",
+      "ArrowMax/website/assets/screens/g1.webp",
+      "ArrowMax/website/assets/screens/specials.webp"
+    ],
+    "video": "ArrowMax/website/assets/video/play57.mp4"
+  },
+  "device": {
+    "statusBars": [
+      "ArrowMax/website/assets/statusbar-light.png",
+      "ArrowMax/website/assets/statusbar-dark.png"
+    ],
+    "note": "CSS device presentation. SalahLog store images have embedded iPhone chrome; presentation masks only that chrome with Android-style status bar. App UI remains original; not a new Android capture.",
+    "bezel": "Rafeeq/website/screens/iphone-bezel.png"
+  },
+  "fonts": {
+    "anton": "https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm3Kz-C8CSKlv.woff2 (latin subset, downloaded 2026-10-30)",
+    "google-sans": "Budget AI website (self-hosted)"
+  },
+  "sazen-s-favicon": "brand/svg/sazen-s-white.svg, recoloured with a prefers-color-scheme style"
 }

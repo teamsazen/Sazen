@@ -3,53 +3,66 @@
 ## Structure
 
 ```text
-astro.config.mjs              Static build, production origin, clean URL output
-src/data/apps.ts             Five apps, copy, features, captions, store/website URLs
-src/layouts/Base.astro        SEO, header, mobile menu, footer, screenshot dialog
-src/components/Arrow.astro   Shared arrow glyph
-src/components/Play.astro    Play link glyph
-src/components/Gallery.astro Three real screenshots, enlargement buttons
-src/pages/index.astro        Hero, app ribbon, filtered catalog, banner/about, FAQs, CTA
-src/pages/apps/[slug].astro  Five individual app pages, galleries, related apps
-src/pages/privacy.astro      Website privacy and individual app policy pointers
-src/pages/404.astro          Helpful not-found page
-src/pages/robots.txt.ts      Crawl rules derived from configured origin
-src/pages/sitemap.xml.ts     Home, all app pages, privacy
-src/styles/global.css       Shared layout, type, responsive rules, dark/reduced-motion
-public/fonts/               Budget AI's self-hosted Boldonse and Google Sans
-public/images/              Official Sazen logo/banner; 5 icons and 15 screenshots
+astro.config.mjs               Static build, production origin, clean URL output
+src/data/apps.ts               Seven apps, copy, features, captions, store/website URLs
+src/data/blog.ts               One short blog post per app, written only from each app's existing copy
+src/data/studio.ts             App and post URL helpers
+src/layouts/Studio.astro       SEO, glass pill header, giant-wordmark footer, Lenis, reveals, tilt
+src/components/PhonePreview.astro  Shared device frame for every screenshot and the Exit Rush video
+src/components/PostCard.astro  Blog card with app icon and a real screenshot cover
+src/pages/index.astro          Hero showcase, marquee, manifesto, Apps & Games, How we build, collection, blog, CTA
+src/pages/apps/[slug].astro    Seven app pages: phone hero, features, gallery + dialog, support, other apps
+src/pages/blog/                Blog index (3 + View all) and one page per post
+src/pages/privacy.astro        Website privacy and individual app policy pointers
+src/pages/404.astro            Not-found page
+src/pages/robots.txt.ts        Crawl rules derived from configured origin
+src/pages/sitemap.xml.ts       Home, app pages, blog, posts, privacy
+src/styles/studio.css          Tokens, type, layout, motion, light/dark, reduced motion
+public/fonts/                  Self-hosted Anton (display) and Google Sans (body)
+public/images/                 Sazen logo, 7 icons, 21 screenshots, device bezel and status bars, Exit Rush poster
+public/videos/exit-rush.mp4    Exit Rush gameplay
+public/favicon.svg             Theme-aware Sazen S favicon (black on light, white on dark)
 public/{favicon,apple-touch-icon,og}.png  Brand and social assets
-public/_headers             Cloudflare cache and security response headers
-scripts/check-site.mjs       Build-output route, asset, anchor and metadata checks
-docs/asset-sources.json      Local project paths and official Play asset sources
+public/_headers                Cloudflare cache and security response headers
+brand/                         Sazen brand kit sources (S mark, logo, feature graphics); not served
+scripts/check-site.mjs         Build-output route, asset, anchor and metadata checks
+docs/asset-sources.json        Asset provenance
 ```
 
-The site is a static Astro build without framework hydration, server APIs, or third-party runtime dependencies. Plain browser scripts handle filters, the mobile menu and a native `<dialog>`. `dist/` is the Cloudflare upload directory; it is not committed.
+The site is a static Astro build without framework hydration, server APIs, or third-party runtime services. Lenis (bundled at build time) provides smooth scrolling; plain browser scripts handle the showcase, pinned scroll, reveals, tilt, the screenshot dialog and the blog "View all" button. `dist/` is the Cloudflare upload directory; it is not committed.
+
+## Design
+
+Full-bleed width on desktop with side gutters only. Light mode is ivory `#f4f2ec` with near-black type; dark mode is pure black with white type, following the OS setting. Headings use Anton in uppercase; body text uses Google Sans. The header is a compact floating glass pill (links hidden on narrow screens). Same-origin navigations use a curtain-wipe view transition where supported.
+
+Motion is balanced: line-by-line headline reveals, soft fade-up, a never-pausing marquee, 3D tilt on cards (fine pointers only), Lenis smooth scrolling and the giant SAZEN footer wordmark rising into place. Reveal hidden states only apply after JavaScript adds the `js` class, so content is visible without scripts. `prefers-reduced-motion` disables animation, smooth scrolling, auto-advance and video autoplay.
 
 ## Experience
 
-The home hero shows three real app screens and all five app icons. The phone composition scales proportionally on the page background, with complete frames visible at every breakpoint. It has no colored clipping backdrop, orbit rings, or bottom badge covering the screens. The collection includes Rafeeq, Budget AI, 99 Names – Asmaul Husna, FM Crafts, and SalahLog. Category filters use buttons with pressed states and a live result count. They are hidden until JavaScript initializes, so the full catalog remains available without scripts. Following an app anchor after filtering reveals that app again.
+**Home.** The hero pairs the headline with a coverflow of all seven apps in `PhonePreview` frames, fully visible on the page background. It auto-advances every 4.2 s with a progress line, pauses on hover and focus, and responds to arrow buttons, the keyboard, swipe and clicking a side phone. The bar below shows the active app's icon, category, name, headline, its Sazen page and Google Play. Exit Rush plays its gameplay video only while it is the active slide and on screen. The Apps and Games panels list every app as an icon row linking to its page. "How we build" pins and scrolls horizontally on screens 900px and wider; narrower screens swipe natively. The collection section holds labelled placeholders for owner-supplied product videos: planned behaviour is play on hover on desktop and muted autoplay while in view on touch devices. Three blog cards link to posts and to `/blog`.
 
-Every card links to an individual Sazen page, the exact Google Play package URL and its app website. SalahLog uses `/apps/salahlog` as its website. Each individual page has feature highlights, three full screenshot images, an accessible enlargement dialog, download/support links, and links to the other four apps. Mobile galleries scroll horizontally without creating page overflow.
+**App pages.** Fanned three-phone hero (the centre phone plays the Exit Rush video on its page), feature marquee and numbered feature rows, three real screenshots with a native `<dialog>` enlargement (Escape, close button, backdrop, arrow keys), a support band pointing to that app's own Google Play listing and website, and rows for the other six apps. Budget AI states its pricing in its note.
 
-Shared navigation uses native `<details>` on mobile. Screenshot dialogs close by Escape, close button, or backdrop; native dialog behavior manages focus. Motion respects the OS reduced-motion preference. Color themes follow the system, with readable pastel stages in both light and dark modes.
+**Blog.** One post per app, published 30 October 2026. The index shows three posts and reveals the rest with a button; all posts render without JavaScript. Post pages show the app's screens as a banner, the article, a sticky app card and three more posts.
 
-The original Sazen developer banner is presented in About and supplies the social image. The footer links to individual app pages, Google Play and website privacy. No app policies are consolidated into a studio-wide claim.
+**Privacy and 404.** Same visual system. No app policies are consolidated into a studio-wide claim.
 
 ## Content provenance
 
-The local Budget AI, Rafeeq, 99-Names and FM-CRAFTS websites supply app content and screenshots. SalahLog images come from the public Google Play listing for `com.track_prayer`. Sazen branding comes from developer ID `5262989636703605828`, fetched directly on 23 October 2026. Older search caches still call the studio SA Apps Dev; use the verified current name Sazen.
+The local Budget AI, Rafeeq, 99-Names, FM-CRAFTS, Quran-Khatam-Tracker and Exit Rush projects supply app content, icons and screenshots; exact paths are in `docs/asset-sources.json`. SalahLog images come from its public Google Play listing for `com.track_prayer`. Sazen branding comes from developer ID `5262989636703605828`. The FM Crafts icon is its current green app icon (FM-CRAFTS commit `bc2fd0d`).
 
-`99-Names` and `asmaul_husna` identify the same Android package and must not be duplicated. No local SalahLog source or separate landing website was found, so its Sazen page is the landing destination. Budget AI's store URL is taken from its own website project; it was not listed on the fetched developer collection at implementation time.
+`99-Names` and `asmaul_husna` identify the same Android package and must not be duplicated. SalahLog has no separate website, so its Sazen page is the landing destination.
 
-Assets are optimized as WebP and served locally. Source path provenance is relative to `Muzamil/Projects`, not a build-time dependency; Sazen is self-contained.
+## Screenshot presentation
+
+`PhonePreview.astro` owns the complete device presentation with the original Rafeeq metallic bezel. Sources with embedded status bars (Rafeeq, FM Crafts and Budget AI) keep their own bar. Quran Khatam Tracker and 99 Names reserve space for one status bar. Exit Rush and SalahLog mask only the existing status region. App content is not regenerated.
 
 ## Deployment and verification
 
-Run `npm run build` then `npm run check`. The latter validates all generated local references, not external service availability. Verify real browser behavior after UI changes. Production publication uses Cloudflare Pages project `sazen`, branch `master`, `dist/` output. `SITE_URL` can override the origin, with metadata, robots and sitemap following it automatically.
+Run `npm run build` then `npm run check`, and verify real browser behaviour after UI changes. Production publication uses Cloudflare Pages project `sazen`, branch `master`, `dist/` output. `SITE_URL` can override the origin, with metadata, robots and sitemap following it.
 
 Do not store Cloudflare/GitHub tokens in files. No changes to Budget AI's Flutter app or other sibling projects are needed for site updates.
 
-Store-link verification on 23 October 2026: the four existing app websites returned HTTP 200. Budget AI’s configured Google Play package URL returned HTTP 404, so its CTA says “Check Google Play”; the intended package link is retained, alongside its working website. Confirm publication/region availability in Play Console.
+Store-link verification on 23 October 2026: the four existing app websites returned HTTP 200. Budget AI’s configured Google Play package URL returned HTTP 404, so its CTA says “Check Google Play”; the intended package link is retained alongside its working website.
 
-Cloudflare CLI note: Wrangler 4.152 automatically delegates new Pages projects to Workers. The Sazen Pages project was explicitly created with `pages project create sazen --production-branch master --force` to preserve the requested `pages.dev` domain. Routine deployments use the existing project without that flag.
+Cloudflare CLI note: Wrangler 4.152 delegates new Pages projects to Workers. The Sazen Pages project was created with `pages project create sazen --production-branch master --force` to keep the `pages.dev` domain. Routine deployments use the existing project without that flag.

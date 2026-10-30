@@ -1,0 +1,97 @@
+---
+import '../styles/studio.css';
+import { developerUrl, description as defaultDescription } from '../data/apps';
+interface Props { title?: string; description?: string }
+const { title = 'Sazen, Apps & Games', description = defaultDescription } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const word = ['S', 'A', 'Z', 'E', 'N'];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#f4f2ec" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <link rel="preload" href="/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/google-sans.woff2" as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="pill-wrap">
+      <nav class="pill" aria-label="Main navigation">
+        <a href="/" class="pill-brand" aria-label="Sazen home">
+          <svg viewBox="0 0 600 600" aria-hidden="true"><use href="#sazen-s" width="600" height="600" /></svg>
+          <span>Sazen</span>
+        </a>
+        <div class="pill-links"><a href={`/#studio`}>Studio</a><a href={`/#worlds`}>Apps &amp; Games</a><a href={`/#build`}>How we build</a><a href={`/blog`}>Blog</a></div>
+        <a class="pill-cta" href={developerUrl} target="_blank" rel="noopener noreferrer">Google Play <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="foot band">
+      <div class="foot-top">
+        <p>Independent by nature. Thoughtful by design.</p>
+        <nav class="foot-links" aria-label="Footer"><a href={`/#worlds`}>Our apps</a><a href={`/blog`}>Blog</a><a href={developerUrl} target="_blank" rel="noopener noreferrer">Google Play ↗</a><a href={`/privacy`}>Website privacy</a></nav>
+      </div>
+      <div class="wordmark reveal-word" data-fit aria-hidden="true">{word.map(letter => <span>{letter}</span>)}</div>
+      <div class="foot-bottom"><span>© {new Date().getFullYear()} Sazen. Apps &amp; Games.</span><span>Crafted With Care.</span></div>
+    </footer>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol id="sazen-s" viewBox="-300 -300 600 600"><path d="M118.95 -300H-75A187.5 187.5 0 0 0 -75 75H75A37.5 37.5 0 0 1 75 150H-170.55A32.25 32.25 0 0 0 -170.55 214.5H-80.25A10.5 10.5 0 0 1 -80.25 235.5H-118.95A32.25 32.25 0 0 0 -118.95 300H75A187.5 187.5 0 0 0 75 -75H-75A37.5 37.5 0 0 1 -75 -150H170.55A32.25 32.25 0 0 0 170.55 -214.5H80.25A10.5 10.5 0 0 1 80.25 -235.5H118.95A32.25 32.25 0 0 0 118.95 -300Z" /><rect x="172.20" y="-300" width="90.30" height="64.50" rx="32.25" /><rect x="-262.50" y="235.50" width="90.30" height="64.50" rx="32.25" /></symbol>
+    </svg>
+    <script>
+      import Lenis from 'lenis';
+      import 'lenis/dist/lenis.css';
+
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Lenis drives native scrolling, so page scripts can listen to plain `scroll` events.
+      if (!reduce) {
+        const lenis = new Lenis({ lerp: 0.09, anchors: { offset: -96 } });
+        const raf = (t: number) => { lenis.raf(t); requestAnimationFrame(raf); };
+        requestAnimationFrame(raf);
+      }
+
+      // Size each wordmark so its letters span the full width.
+      const fit = () => document.querySelectorAll<HTMLElement>('[data-fit]').forEach(el => {
+        el.style.fontSize = '100px';
+        const natural = [...el.children].reduce((w, c) => w + (c as HTMLElement).getBoundingClientRect().width, 0);
+        el.style.fontSize = `${(el.clientWidth / natural) * 100 * 0.995}px`;
+      });
+      document.fonts.ready.then(fit);
+      addEventListener('resize', fit);
+
+      const io = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }), { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+      document.querySelectorAll('.reveal, .lines, .reveal-word').forEach(el => io.observe(el));
+
+      if (matchMedia('(pointer: fine)').matches && !reduce) document.querySelectorAll<HTMLElement>('[data-tilt]').forEach(card => {
+        card.addEventListener('pointermove', e => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transition = 'transform .15s ease-out';
+          card.style.transform = `rotateX(${-y * 7}deg) rotateY(${x * 9}deg)`;
+        });
+        card.addEventListener('pointerleave', () => { card.style.transition = ''; card.style.transform = ''; });
+      });
+    </script>
+  </body>
+</html>

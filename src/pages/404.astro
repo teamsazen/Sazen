@@ -1,4 +1,12 @@
 ---
-import Base from '../layouts/Base.astro';
+import Studio from '../layouts/Studio.astro';
 ---
-<Base title="Page not found · Sazen"><section class="container not-found"><span class="eyebrow">404 · A little off course</span><h1>Let’s get you<br />back home.</h1><p>We couldn’t find that page. Your next app is still waiting.</p><a href="/#apps" class="btn btn-primary">Explore Sazen apps →</a></section></Base>
+<Studio title="Page not found · Sazen">
+  <section class="nf band">
+    <div class="nf-num display" aria-hidden="true"><span>4</span><span>0</span><span>4</span></div>
+    <span class="eyebrow">A little off course</span>
+    <h1 class="display lines"><span><span>Let’s get you</span></span><span><span>back home.</span></span></h1>
+    <p>We couldn’t find that page. Your next app is still waiting.</p>
+    <a href={`/#worlds`} class="btn">Explore Sazen apps →</a>
+  </section>
+</Studio>
