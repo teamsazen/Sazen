@@ -72,4 +72,4 @@ For a different Pages project, change the deploy script's `--project-name` and s
 - `public/images/`: locally served, optimized real app assets.
 - `docs/asset-sources.json`: asset provenance.
 
-There are no accounts, forms, cookies, analytics scripts, remote fonts, or backend services. Keep Budget AI pricing accurate: free manual tracking; paid AI with 5 free messages monthly. See [AGENTS.md](AGENTS.md) and [the site guide](docs/agents/site.md).
+Google Analytics 4 (`G-1R2782BC02`) loads in production builds only and is disclosed on `/privacy`. There are no accounts, forms, remote fonts, or backend services. Keep Budget AI pricing accurate: free manual tracking; paid AI with 5 free messages monthly. See [AGENTS.md](AGENTS.md) and [the site guide](docs/agents/site.md).

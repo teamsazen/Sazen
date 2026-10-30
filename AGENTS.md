@@ -15,7 +15,7 @@ Read `docs/agents/site.md` before changing structure, app content, visuals, or d
 - Do not imply all apps share one data policy. Link to each app's official support and privacy information.
 - Use `PhonePreview.astro` for device presentation; crop baked-in frames within the shared shell and distinguish SalahLog presentation mockups from native Android captures.
 - Keep assets local, responsive layouts accessible, content usable without JavaScript, and motion off under reduced motion.
-- No analytics, contact submissions, accounts, backend or client secrets are needed.
+- Google Analytics 4 (`G-1R2782BC02`, in `src/data/studio.ts`, production builds only) is the only analytics; keep the privacy page accurate about it. No contact submissions, accounts, backend or client secrets are needed.
 - Use `master` directly. Commit with a Conventional Commit prefix and a co-author trailer; push after verification. Keep credentials, `.env`, generated build output and dependency folders out of Git.
 
 ## Verification

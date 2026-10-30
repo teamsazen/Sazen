@@ -29,7 +29,7 @@ scripts/check-site.mjs         Build-output route, asset, anchor and metadata ch
 docs/asset-sources.json        Asset provenance
 ```
 
-The site is a static Astro build without framework hydration, server APIs, or third-party runtime services. Lenis (bundled at build time) provides smooth scrolling; plain browser scripts handle the showcase, pinned scroll, reveals, tilt, the screenshot dialog and the blog "View all" button. `dist/` is the Cloudflare upload directory; it is not committed.
+The site is a static Astro build without framework hydration or server APIs. The only third-party runtime service is Google Analytics 4 (`G-1R2782BC02`), injected by `Studio.astro` in production builds only and disclosed on `/privacy`. Lenis (bundled at build time) provides smooth scrolling; plain browser scripts handle the showcase, pinned scroll, reveals, tilt, the screenshot dialog and the blog "View all" button. `dist/` is the Cloudflare upload directory; it is not committed.
 
 ## Design
 
