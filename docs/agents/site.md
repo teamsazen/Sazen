@@ -67,4 +67,4 @@ Store-link verification on 23 October 2026: the four existing app websites retur
 
 Cloudflare CLI note: Wrangler 4.152 delegates new Pages projects to Workers. The Sazen Pages project was created with `pages project create sazen --production-branch master --force` to keep the `pages.dev` domain. Routine deployments use the existing project without that flag.
 
-The shared header includes an accessible GitHub icon linking to `https://github.com/teamsazen`, visible on desktop and mobile.
+The shared header includes an accessible GitHub icon linking to `https://github.com/teamsazen`, visible on desktop and mobile. The Google Play header button includes a monochrome inline SVG Play icon before its label.

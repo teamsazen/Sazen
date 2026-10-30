@@ -74,4 +74,4 @@ For a different Pages project, change the deploy script's `--project-name` and s
 
 Google Analytics 4 (`G-1R2782BC02`) loads in production builds only and is disclosed on `/privacy`. There are no accounts, forms, remote fonts, or backend services. Keep Budget AI pricing accurate: free manual tracking; paid AI with 5 free messages monthly. See [AGENTS.md](AGENTS.md) and [the site guide](docs/agents/site.md).
 
-The shared header includes an accessible GitHub icon linking to `https://github.com/teamsazen`, visible on desktop and mobile.
+The shared header includes an accessible GitHub icon linking to `https://github.com/teamsazen`, visible on desktop and mobile. The Google Play header button includes a monochrome inline SVG Play icon before its label.
