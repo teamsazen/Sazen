@@ -25,6 +25,7 @@ public/images/                 Sazen logo, 7 icons, 21 screenshots, device bezel
 public/videos/                 exit-rush.mp4 gameplay; sazen-reel-{ivory,dark,colour}.mp4 collection reels (960px web encodes of brand/promo)
 public/favicon.svg             Theme-aware Sazen S favicon (black on light, white on dark)
 public/{favicon,apple-touch-icon,og}.png  Brand and social assets (og.png is the default share image)
+public/favicon-{96,192}.png, favicon.ico  Search-result favicons (Google needs a multiple of 48 px), from brand/png/sazen-icon-512.png
 public/og/                     Generated 1200×630 share images: apps/<slug>.png and blog/<slug>.png
 public/_headers                Cloudflare cache and security response headers
 brand/                         Sazen brand kit sources (S mark, logo, feature graphics, og/og.html = social banner source, og/render.mjs = per-app and per-post share image renderer, promo/ = 30 s 1:1 social promo videos: promo.html (ivory), promo-dark.html and promo-colour.html timelines, render.cjs renderer, sazen-promo*.mp4); not served
