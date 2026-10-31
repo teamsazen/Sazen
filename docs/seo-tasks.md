@@ -55,8 +55,17 @@ open; **Claude** = done in the code.
       on their own after a few weeks of search data; nothing to fix there.
 
 ### 6. FM Crafts products (Claude, later)
-- [ ] Products load with JavaScript, so Google barely sees them. Give each
-      product its own crawlable page.
+- [x] (31 Oct 2026) Each product has its own page at
+      `https://fmcrafts.teamsazen.com/products/<name>-<id6>`, rendered live by the
+      admin Worker from the products table, plus a sitemap listing every product.
+      Only each product's first photo is public.
+- [ ] Keep the `fmcrafts` DNS record **proxied (orange cloud)** in Cloudflare (You).
+      The product pages run through Cloudflare, so ignore the earlier advice to
+      switch it to DNS only.
+- [ ] Cloudflare → SSL/TLS: keep the mode on **Full** rather than Full (strict)
+      (You), so the shop keeps working even if Firebase cannot renew its own
+      certificate behind the proxy.
+- [ ] Search Console → Sitemaps: submit `https://fmcrafts.teamsazen.com/sitemap.xml` (You)
 - [ ] Redesign the storefront in the studio design like the other sites.
 
 ### 7. Optional
