@@ -15,7 +15,7 @@ Production canonical domain: **https://teamsazen.com**. Connect this custom doma
 | Rafeeq | `/apps/rafeeq` | https://rafeeq.teamsazen.com | `com.satechdev.rafeeqapp` |
 | Budget AI | `/apps/budget-ai` | https://budgetai.teamsazen.com | `com.budgetai.android` |
 | 99 Names – Asmaul Husna | `/apps/99-names` | https://99.teamsazen.com | `com.muzamil.asmaulhusna` |
-| FM Crafts | `/apps/fm-crafts` | https://fmcrafts.web.app | `com.fmcrafts.fmcrafts` |
+| FM Crafts | `/apps/fm-crafts` | https://fmcrafts.teamsazen.com | `com.fmcrafts.fmcrafts` |
 | SalahLog | `/apps/salahlog` | The Sazen page serves as its landing page | `com.track_prayer` |
 
 99 Names and Asmaul Husna are one app. Budget AI is included even though the developer page fetched on 23 October 2026 listed only the other six apps; its package URL comes from Budget AI's own website source.

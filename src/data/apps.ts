@@ -64,7 +64,7 @@ export const apps = [
     seoTitle: 'FM Crafts – Handmade Crochet Flowers & Gifts',
     headline: 'Find something made with love.',
     description: 'Handmade flowers, crochet bouquets, and thoughtful little gifts. Find a piece that feels like them.',
-    package: 'com.fmcrafts.fmcrafts', website: 'https://fmcrafts.web.app',
+    package: 'com.fmcrafts.fmcrafts', website: 'https://fmcrafts.teamsazen.com',
     features: ['Handmade crochet collection', 'Bouquets & thoughtful gifts', 'Ask about pieces on WhatsApp'],
     captions: ['Browse the handmade collection', 'A closer look at a crochet rose', 'Explore crochet creations'],
     detail: 'Discover handmade crochet flowers, custom bouquets, and gifts from Pakistan. Browse the collection, see each piece up close, and ask about your favourites on WhatsApp.',
