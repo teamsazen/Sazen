@@ -7,12 +7,12 @@ open; **Claude** = done in the code.
 ## Open
 
 ### 1. One page for each of the 99 Names (Claude)
-- [ ] `99.teamsazen.com/names/<name>`: one page per Name with the Arabic,
+- [x] (31 Oct 2026) `99.teamsazen.com/names/<name>`: one page per Name with the Arabic,
       transliteration, English and Urdu meanings and the reflection, all read
       from the app's `lib/src/data/names.dart` (no new text)
-- [ ] Each card in the homepage grid links to its page
-- [ ] All 99 pages in `sitemap.xml`; structured data and breadcrumbs
-- [ ] After it goes live (You): Search Console → Sitemaps → resubmit
+- [x] (31 Oct 2026) Each card in the homepage grid links to its page
+- [x] (31 Oct 2026) All 99 pages in `sitemap.xml` (101 URLs); structured data and breadcrumbs
+- [ ] Now that it is live (You): Search Console → Sitemaps → resubmit
       `https://99.teamsazen.com/sitemap.xml`
 
 ### 2. Longer, useful blog posts (Claude drafts, You approve)
