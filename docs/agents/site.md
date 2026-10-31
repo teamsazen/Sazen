@@ -31,6 +31,7 @@ public/_headers                Cloudflare cache and security response headers
 brand/                         Sazen brand kit sources (S mark, logo, feature graphics, og/og.html = social banner source, og/render.mjs = per-app and per-post share image renderer, promo/ = 30 s 1:1 social promo videos: promo.html (ivory), promo-dark.html and promo-colour.html timelines, render.cjs renderer, sazen-promo*.mp4); not served
 scripts/check-site.mjs         Build-output route, asset, anchor, metadata, canonical, og:image and sitemap checks
 docs/asset-sources.json        Asset provenance
+docs/seo-tasks.md              SEO plan for teamsazen.com and the app sites, with open and done tasks
 ```
 
 The site is a static Astro build without framework hydration or server APIs. The only third-party runtime service is Google Analytics 4 (`G-1R2782BC02`), injected by `Studio.astro` in production builds only and disclosed on `/privacy`. Lenis (bundled at build time) provides smooth scrolling; plain browser scripts handle the showcase, pinned scroll, reveals, tilt, the screenshot dialog and the blog "View all" button. `dist/` is the Cloudflare upload directory; it is not committed.
