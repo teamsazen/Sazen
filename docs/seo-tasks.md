@@ -16,12 +16,13 @@ open; **Claude** = done in the code.
       `https://99.teamsazen.com/sitemap.xml`
 
 ### 2. Longer, useful blog posts (Claude drafts, You approve)
-- [ ] Decide whether posts may go beyond each app's existing copy (the rule in
-      `AGENTS.md` says they may only restate it)
-- [ ] Draft posts of 800+ words that answer real searches, for example
-      "How to complete a Quran khatam in Ramadan" and
-      "How to track expenses without a spreadsheet"
-- [ ] Review and approve each draft before it goes live
+- [x] (31 Oct 2026) Posts may now give general guidance; app claims still restate
+      existing copy, and new posts start as drafts (`draft: true`)
+- [x] (31 Oct 2026) Four drafts of 1,100+ words: Quran khatam in 30 days, the 99
+      Names and their meanings, tracking expenses without a spreadsheet, finding
+      the Qibla. Preview: https://drafts.sazen.pages.dev/blog
+- [ ] Review and approve each draft before it goes live (You); then Claude
+      removes `draft: true` and deploys
 
 ### 3. Links from your own accounts (You, about 15 minutes)
 - [ ] Play Console: set each app's store listing **Website** to its site
