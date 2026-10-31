@@ -66,7 +66,15 @@ open; **Claude** = done in the code.
       (You), so the shop keeps working even if Firebase cannot renew its own
       certificate behind the proxy.
 - [ ] Search Console → Sitemaps: submit `https://fmcrafts.teamsazen.com/sitemap.xml` (You)
-- [ ] Redesign the storefront in the studio design like the other sites.
+- [x] (31 Oct 2026) Search-friendly titles ("Red Crochet Heart Keychain – Handmade in
+      Pakistan"), collection pages that fill themselves (`/collections/crochet-heart-keychains`,
+      `/collections/crochet-roses`, `/collections/crochet-sunflowers`), readable photo
+      names and an image sitemap
+- [ ] Storefront redesign: preview ready at https://fmcrafts--redesign-tn8v2wja.web.app,
+      waiting for approval (You)
+- [ ] Optional (You): show a price, even "from Rs X", to qualify for Google's product
+      results and free Shopping listings; register FM Crafts on Google Business
+      Profile for local and Maps results
 
 ### 7. Optional
 - [ ] Google Analytics on the app sites. Each site's privacy policy must change
