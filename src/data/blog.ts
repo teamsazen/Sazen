@@ -1,7 +1,9 @@
 import { getCollection } from 'astro:content';
-// Posts are Markdown files in src/content/blog/. Copy stays within what each app's own listing and website already say.
+// Posts are Markdown files in src/content/blog/. General guidance is fine; what a post says about an app
+// stays within that app's own listing and website. Drafts appear only in builds with SHOW_DRAFTS=1.
 // Newest first; posts from the same day follow their `order`.
-export const posts = (await getCollection('blog'))
+const showDrafts = process.env.SHOW_DRAFTS === '1';
+export const posts = (await getCollection('blog', ({ data }) => showDrafts || !data.draft))
   .map(entry => ({ ...entry.data, slug: entry.id, date: entry.data.date.toISOString().slice(0, 10), entry }))
   .sort((a, b) => b.date.localeCompare(a.date) || a.order - b.order);
 

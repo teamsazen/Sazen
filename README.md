@@ -85,7 +85,7 @@ For a different Pages project, change the deploy script's `--project-name` and s
 ## Maintenance
 
 - `src/data/apps.ts`: app copy, search titles, package IDs, website links, screenshot captions, and categories.
-- `src/content/blog/`: blog posts as Markdown (one per app, written only from each app's existing copy); `src/data/blog.ts` loads and sorts them.
+- `src/content/blog/`: blog posts as Markdown; `src/data/blog.ts` loads and sorts them. Posts may give general guidance, but app claims restate existing copy. A post with `draft: true` is left out of the site, sitemap and feeds unless the build runs with `SHOW_DRAFTS=1` (for a preview the owner approves first).
 - `public/og/`: per-app and per-post share images; regenerate with `node brand/og/render.mjs` after adding or renaming an app or post.
 - `src/data/studio.ts`: studio GitHub profile, analytics ID, and app/post URL helpers.
 - `src/layouts/Studio.astro`: SEO, glass pill header, footer, smooth scroll, reveals, tilt.

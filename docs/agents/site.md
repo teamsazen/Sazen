@@ -5,7 +5,7 @@
 ```text
 astro.config.mjs               Static build, production origin, clean URL output, Markdown section wrapper for posts
 src/data/apps.ts               Seven apps, copy, features, captions, search titles, store/website URLs
-src/content/blog/              One Markdown post per app (frontmatter: title, excerpt, app, date, order), written only from each app's existing copy
+src/content/blog/              Markdown posts (frontmatter: title, excerpt, app, date, order, draft); general guidance is fine, app claims restate existing copy; drafts build only with SHOW_DRAFTS=1
 src/content.config.ts          Blog collection schema; the build fails on a missing field or unknown app slug
 src/data/blog.ts               Loads the blog collection, sorted newest first (same-day posts by order), plus date and reading-time helpers
 src/data/studio.ts             Studio GitHub profile, analytics ID, app and post URL helpers, Organization and breadcrumb structured data

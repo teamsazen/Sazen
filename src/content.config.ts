@@ -12,6 +12,8 @@ const blog = defineCollection({
     date: z.coerce.date(),
     // Tie-break for posts published on the same day: lower comes first.
     order: z.number().default(0),
+    // Unapproved posts: built only with SHOW_DRAFTS=1, for a preview deploy.
+    draft: z.boolean().default(false),
   }),
 });
 

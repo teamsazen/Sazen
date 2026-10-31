@@ -301,6 +301,17 @@ html.locked{overflow:hidden}
 .prose h2{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(30px,3vw,48px);line-height:1;margin:0}
 .prose p{margin:0;font-size:clamp(17px,1.3vw,20px);line-height:1.7;color:color-mix(in oklab,var(--fg) 82%,var(--bg))}
 .prose section:first-child p{font-size:clamp(20px,1.7vw,26px);line-height:1.5;color:var(--fg)}
+.prose h3{font-size:clamp(20px,1.6vw,24px);font-weight:700;margin:12px 0 0;letter-spacing:-.01em}
+.prose ul,.prose ol{margin:0;padding-left:1.3em;display:grid;gap:8px;font-size:clamp(17px,1.3vw,20px);line-height:1.6;color:color-mix(in oklab,var(--fg) 82%,var(--bg))}
+.prose li::marker{color:var(--fg);font-weight:700}
+.prose strong{color:var(--fg)}
+.prose a{color:var(--fg);text-decoration-thickness:1px;text-underline-offset:3px}
+.prose blockquote{margin:0;padding:4px 0 4px 20px;border-left:3px solid var(--fg);font-size:clamp(18px,1.4vw,21px)}
+.prose blockquote p{color:var(--fg)}
+.prose table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:16px}
+.prose th,.prose td{padding:10px 12px 10px 0;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.prose th{font-weight:700;color:var(--fg)}
+.prose td{color:color-mix(in oklab,var(--fg) 82%,var(--bg))}
 .post-app-card{position:sticky;top:110px;align-self:start;display:grid;gap:10px;justify-items:start;padding:clamp(22px,2vw,30px);border:1px solid var(--line);border-radius:24px}
 .post-app-card img{width:60px;height:60px;border-radius:16px;margin-bottom:6px}
 .post-app-card b{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:32px;line-height:1}
