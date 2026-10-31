@@ -4,7 +4,6 @@ excerpt: "A simple daily plan for finishing the whole Quran in a month or in Ram
 app: quran-khatam-tracker
 date: 2026-10-31
 order: 1
-draft: true
 ---
 
 Finishing the whole Quran, a khatam, feels like a big goal until you see it as a daily habit. The Quran has 114 surahs and 6,236 ayahs, usually divided into 30 juz (parts). Read one juz a day and you finish in a month. This guide turns that into a plan you can actually keep, whether you are aiming for Ramadan or for any month of the year.

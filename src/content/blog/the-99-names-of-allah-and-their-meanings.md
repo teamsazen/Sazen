@@ -4,7 +4,6 @@ excerpt: "All 99 Names of Allah (Asmaul Husna) with their English meanings, in t
 app: 99-names
 date: 2026-10-31
 order: 2
-draft: true
 ---
 
 The 99 Names of Allah, known as Asmaul Husna ("the most beautiful names"), describe who Allah is: His mercy, His knowledge, His power and His care for His creation. Learning them is one of the most direct ways to know Him better, and each Name gives you a new way to call upon Him in dua.

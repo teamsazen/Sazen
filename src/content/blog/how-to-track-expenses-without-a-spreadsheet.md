@@ -4,7 +4,6 @@ excerpt: "Spreadsheets are where most budgets go to die. Here is a simpler way t
 app: budget-ai
 date: 2026-10-31
 order: 3
-draft: true
 ---
 
 Most people who try to track their spending start with a spreadsheet. A week later it is three days behind; a month later it is forgotten. The problem is rarely discipline. It is that writing every expense into rows and columns takes just enough effort to skip. Here is a simpler way to keep track of your money that does not depend on a spreadsheet at all.

@@ -4,7 +4,6 @@ excerpt: "Four reliable ways to face the Kaaba wherever you are: a compass app, 
 app: rafeeq
 date: 2026-10-31
 order: 4
-draft: true
 ---
 
 Facing the Qibla, the direction of the Kaaba in Makkah, is one of the conditions of salah. At home you probably know which way to turn. In a hotel, an office, a park or a new city, it is easy to be unsure. Here are four reliable ways to find it, and a few things that commonly throw people off.

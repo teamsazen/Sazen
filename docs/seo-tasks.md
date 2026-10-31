@@ -21,8 +21,7 @@ open; **Claude** = done in the code.
 - [x] (31 Oct 2026) Four drafts of 1,100+ words: Quran khatam in 30 days, the 99
       Names and their meanings, tracking expenses without a spreadsheet, finding
       the Qibla. Preview: https://drafts.sazen.pages.dev/blog
-- [ ] Review and approve each draft before it goes live (You); then Claude
-      removes `draft: true` and deploys
+- [x] (31 Oct 2026) All four approved and live
 
 ### 3. Links from your own accounts (You, about 15 minutes)
 - [ ] Play Console: set each app's store listing **Website** to its site
@@ -44,6 +43,11 @@ open; **Claude** = done in the code.
       `https://teamsazen.com/blog/time-with-the-99-names`,
       `https://teamsazen.com/blog/choosing-a-handmade-gift`,
       `https://teamsazen.com/blog/keeping-a-steady-prayer-routine`
+- [ ] Request indexing for the 4 new guide posts:
+      `https://teamsazen.com/blog/how-to-complete-a-quran-khatam-in-30-days`,
+      `https://teamsazen.com/blog/the-99-names-of-allah-and-their-meanings`,
+      `https://teamsazen.com/blog/how-to-track-expenses-without-a-spreadsheet`,
+      `https://teamsazen.com/blog/how-to-find-the-qibla-direction-anywhere`
 - [ ] Sitemaps: submit all 7 if not done yet
       (`https://teamsazen.com/sitemap.xml` and the same path on `rafeeq.`,
       `99.`, `budgetai.`, `qkt.`, `exitrush.` and `fmcrafts.teamsazen.com`)
