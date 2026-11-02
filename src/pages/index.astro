@@ -4,7 +4,7 @@ import PhonePreview from '../components/PhonePreview.astro';
 import { apps, developerUrl, icon, playUrl } from '../data/apps';
 import PostCard from '../components/PostCard.astro';
 import { posts } from '../data/blog';
-import { appPath, organization } from '../data/studio';
+import { alternateNames, appPath, organization } from '../data/studio';
 const start = apps.findIndex(app => app.slug === 'rafeeq');
 // Coverflow placement for a slide `d` steps from the active one (kept in sync with the client script).
 const place = (raw: number) => {
@@ -20,7 +20,7 @@ const worlds = [
 const site = Astro.site!;
 const schema = [
   { '@context': 'https://schema.org', ...organization(site) },
-  { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Sazen', url: site.toString(), publisher: organization(site) },
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Sazen', alternateName: alternateNames, url: site.toString(), publisher: organization(site) },
 ];
 // Studio reels rendered from brand/promo; each loops on its own while on screen.
 const reels = [

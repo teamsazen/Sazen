@@ -56,7 +56,7 @@ Motion is balanced: line-by-line headline reveals, soft fade-up, a never-pausing
 
 `Studio.astro` writes the title, description, canonical, Open Graph/Twitter tags and any JSON-LD a page passes in `schema`. Canonicals strip the `.html` that `build.format: 'file'` adds, because Cloudflare serves (and the sitemap lists) clean URLs; `npm run check` fails on `.html` canonicals, a canonical that differs from `og:url`, a missing `og:image` file, or `.html` sitemap entries. The 404 page is `noindex` and has no canonical.
 
-- Home: default site title and description from `src/data/apps.ts`, `Organization` + `WebSite` JSON-LD, `og.png`.
+- Home: default site title and description from `src/data/apps.ts`, `Organization` + `WebSite` JSON-LD (both with `alternateName` "Team Sazen" and "teamsazen" so Google ties the brand search to the site), `og.png`.
 - App pages: `seoTitle` from `apps.ts`, `detail` as the description, `MobileApplication` + `BreadcrumbList` JSON-LD, `og/apps/<slug>.png`. No offers or ratings are published, since that would need real store data.
 - Blog index: `Blog` + `BreadcrumbList`. Posts: `og:type` article, `article:published_time`, `BlogPosting` + `BreadcrumbList`, `og/blog/<slug>.png`.
 
