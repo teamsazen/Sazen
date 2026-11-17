@@ -10,8 +10,8 @@ const start = apps.findIndex(app => app.slug === 'rafeeq');
 const place = (raw: number) => {
   const n = apps.length;
   const d = ((raw % n) + n + 3) % n - 3;
-  const a = Math.abs(d);
-  return { x: [0, 0.78, 1.45, 1.9][a] * Math.sign(d), ry: -d * 16, s: [1, 0.84, 0.7, 0.6][a], o: [1, 0.92, 0.5, 0][a], z: 10 - a, far: a >= 2 };
+  const a = Math.min(Math.abs(d), 3);
+  return { x: [0, 0.78, 1.45, 1.9][a] * Math.sign(d), ry: -Math.sign(d) * a * 16, s: [1, 0.84, 0.7, 0.6][a], o: [1, 0.92, 0.5, 0][a], z: 10 - a, far: a >= 2 };
 };
 const worlds = [
   { id: 'apps', label: '01 · Apps with purpose', title: 'Apps', text: 'A moment to reflect. A tool that fits your day.', list: apps.filter(app => app.filter !== 'games') },
@@ -229,8 +229,8 @@ const principles = [
 
       const place = (raw: number) => {
         const d = ((raw % n) + n + 3) % n - 3;
-        const a = Math.abs(d);
-        return { x: [0, 0.78, 1.45, 1.9][a] * Math.sign(d), ry: -d * 16, s: [1, 0.84, 0.7, 0.6][a], o: [1, 0.92, 0.5, 0][a], z: 10 - a, far: a >= 2 };
+        const a = Math.min(Math.abs(d), 3);
+        return { x: [0, 0.78, 1.45, 1.9][a] * Math.sign(d), ry: -Math.sign(d) * a * 16, s: [1, 0.84, 0.7, 0.6][a], o: [1, 0.92, 0.5, 0][a], z: 10 - a, far: a >= 2 };
       };
       const syncVideo = () => {
         if (!video) return;
