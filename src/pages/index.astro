@@ -30,11 +30,11 @@ const reels = [
 ];
 const marquee = ['Apps with purpose', 'Games with personality', 'Crafted with care', 'Independent by nature', 'Thoughtful by design'];
 const principles = [
-  ['A clear purpose', 'Every app starts with a real moment in someone’s day, and is built around it.'],
-  ['A considered design', 'Calm screens, clear words and details that are easy to trust.'],
-  ['Worth coming back to', 'An experience people return to because it helps, not because it nags.'],
-  ['Independent by nature', 'A small studio that chooses its own ideas and takes its time with them.'],
-  ['Made for real life', 'Useful tools, quiet moments and a little play.'],
+  ['A clear purpose', 'Why it exists', 'Every app starts with a real moment in someone’s day, and is built around it.'],
+  ['A considered design', 'How it feels', 'Calm screens, clear words and details that are easy to trust.'],
+  ['Worth coming back to', 'Why people return', 'An experience people return to because it helps, not because it nags.'],
+  ['Independent by nature', 'Who we are', 'A small studio that chooses its own ideas and takes its time with them.'],
+  ['Made for real life', 'Where it fits', 'Useful tools, quiet moments and a little play.'],
 ];
 ---
 <Studio schema={schema}>
@@ -97,16 +97,16 @@ const principles = [
     </div>
   </div>
 
-  <section class="manifesto band" id="studio">
-    <span class="eyebrow reveal">The studio behind the screens</span>
-    <h2 class="display lines">
-      <span><span>We’re Sazen.</span></span>
-      <span><span class="ghost">Small moments.</span></span>
-      <span><span>Lasting meaning.</span></span>
-    </h2>
+  <section class="belief band" id="studio" aria-labelledby="belief-title">
+    <figure class="belief-frame">
+      <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+      <div class="belief-inner">
+        <figcaption class="belief-label" id="belief-title">We believe</figcaption>
+        <blockquote class="belief-quote"><p style="margin:0">“<b>Small moments</b> deserve a <b>clear purpose</b>, a <b>considered design</b> and an experience <b>worth coming back to.</b>”</p></blockquote>
+      </div>
+    </figure>
     <div class="manifesto-foot">
-      <p class="reveal">An independent studio making apps and games for everyday life. From faith and reflection to a satisfying puzzle, we build around moments that matter.</p>
-      <p class="reveal">Different ideas, one shared approach: a clear purpose, a considered design, and an experience worth coming back to.</p>
+      <p class="reveal belief-note">We’re Sazen, an independent studio making apps and games for everyday life. From faith and reflection to a satisfying puzzle, we build around moments that matter.</p>
     </div>
   </section>
 
@@ -134,21 +134,21 @@ const principles = [
     ))}
   </section>
 
-  <section class="build" id="build">
-    <div class="build-sticky">
-      <div class="build-head band">
-        <h2 class="display lines"><span><span>How we</span></span><span><span>build.</span></span></h2>
-        <p class="reveal">Different ideas, one shared approach.</p>
-      </div>
-      <div class="build-track band">
-        {principles.map(([title, text], i) => (
-          <article class="principle">
-            <span class="num" aria-hidden="true">0{i + 1}</span>
-            <div><h3>{title}</h3><p>{text}</p></div>
-          </article>
-        ))}
-      </div>
+  <section class="process band" id="build" aria-labelledby="build-title">
+    <div class="process-head reveal">
+      <span class="eyebrow">How we build</span>
+      <h2 class="display" id="build-title">Different ideas,<br /><span class="ghost">one approach.</span></h2>
+      <p>Five things every Sazen app and game is built around, from the first idea to the version on your phone.</p>
     </div>
+    <ol class="steps reveal">
+      {principles.map(([title, label, text], i) => (
+        <li class="step" tabindex="0">
+          <span class="step-num" aria-hidden="true">0{i + 1}</span>
+          <div class="step-row"><span class="step-title">{title}</span><span class="step-label">{label}</span></div>
+          <div class="step-body"><p>{text}</p></div>
+        </li>
+      ))}
+    </ol>
   </section>
 
   <section class="showcase band" id="collection" aria-label="Studio reels">
