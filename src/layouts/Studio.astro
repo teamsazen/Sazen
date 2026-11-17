@@ -111,16 +111,22 @@ const word = ['S', 'A', 'Z', 'E', 'N'];
       }), { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
       document.querySelectorAll('.reveal, .lines, .reveal-word').forEach(el => io.observe(el));
 
-      if (matchMedia('(pointer: fine)').matches && !reduce) document.querySelectorAll<HTMLElement>('[data-tilt]').forEach(card => {
-        card.addEventListener('pointermove', e => {
-          const r = card.getBoundingClientRect();
-          const x = (e.clientX - r.left) / r.width - 0.5;
-          const y = (e.clientY - r.top) / r.height - 0.5;
-          card.style.transition = 'transform .15s ease-out';
-          card.style.transform = `rotateX(${-y * 7}deg) rotateY(${x * 9}deg)`;
-        });
-        card.addEventListener('pointerleave', () => { card.style.transition = ''; card.style.transform = ''; });
-      });
+      // Header: mark the current page, and on the home page the section in view, like the hover state.
+      const links = [...document.querySelectorAll<HTMLAnchorElement>('.pill-links a')];
+      const path = location.pathname.replace(/\.html$/, '');
+      links.forEach(link => { if (link.pathname !== '/' && path.startsWith(link.pathname.replace(/\.html$/, ''))) link.setAttribute('aria-current', 'page'); });
+      const spied = path === '/' || path === '/index' ? links.filter(link => link.pathname === '/' && link.hash).map(link => ({ link, section: document.querySelector<HTMLElement>(link.hash) })).filter(item => item.section) : [];
+      if (spied.length) {
+        const mark = () => {
+          const line = innerHeight * 0.4;
+          let current: HTMLAnchorElement | null = null;
+          spied.forEach(({ link, section }) => { const r = section!.getBoundingClientRect(); if (r.top <= line && r.bottom > line) current = link; });
+          spied.forEach(({ link }) => link.classList.toggle('is-active', link === current));
+        };
+        addEventListener('scroll', mark, { passive: true });
+        addEventListener('resize', mark);
+        mark();
+      }
     </script>
   </body>
 </html>

@@ -54,7 +54,6 @@ const principles = [
     </div>
 
     <div class="show" data-show data-active={start} aria-roledescription="carousel" aria-label="Sazen apps and games">
-      <div class="show-ghost" aria-hidden="true"><span>{apps[start].name}</span></div>
       <div class="show-stage">
         {apps.map((app, i) => {
           const p = place(i - start);
@@ -92,8 +91,10 @@ const principles = [
     </div>
   </section>
 
-  <div class="marquee" aria-label={marquee.join(', ')}>
-    <div class="marquee-track" aria-hidden="true">{[...marquee, ...marquee].map(item => <span>{item}</span>)}</div>
+  <div class="marquee-wrap">
+    <div class="marquee" aria-label={marquee.join(', ')}>
+      <div class="marquee-track" aria-hidden="true">{[...marquee, ...marquee].map(item => <span>{item}</span>)}</div>
+    </div>
   </div>
 
   <section class="manifesto band" id="studio">
@@ -133,11 +134,11 @@ const principles = [
     ))}
   </section>
 
-  <section class="build" id="build" data-pin>
+  <section class="build" id="build">
     <div class="build-sticky">
       <div class="build-head band">
         <h2 class="display lines"><span><span>How we</span></span><span><span>build.</span></span></h2>
-        <p class="reveal">Different ideas, one shared approach. Scroll to see it.</p>
+        <p class="reveal">Different ideas, one shared approach.</p>
       </div>
       <div class="build-track band">
         {principles.map(([title, text], i) => (
@@ -150,19 +151,14 @@ const principles = [
     </div>
   </section>
 
-  <section class="showcase band" id="collection">
-    <div>
-      <span class="eyebrow reveal">The collection</span>
-      <h2 class="display lines"><span><span>Different worlds.</span></span><span><span>One studio.</span></span></h2>
-    </div>
+  <section class="showcase band" id="collection" aria-label="Studio reels">
     <div class="frames" data-reels>
-      {reels.map((reel, i) => (
+      {reels.map(reel => (
         <figure class="reel reveal">
-          <div class="frame" data-tilt>
+          <div class="frame">
             <video src={`/videos/sazen-reel-${reel.id}.mp4`} poster={`/images/reels/${reel.id}.webp`} width="960" height="960" muted loop playsinline preload="none" aria-label={reel.label}></video>
             <button class="reel-play" type="button" data-title={reel.title} aria-label={`Play ${reel.title}`}></button>
           </div>
-          <figcaption><span class="eyebrow">{String(i + 1).padStart(2, '0')} · {reel.title}</span><span class="reel-bar" aria-hidden="true"><i></i></span></figcaption>
         </figure>
       ))}
     </div>
@@ -188,38 +184,11 @@ const principles = [
   <script>
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Pinned horizontal scroll on wide screens; native swipe elsewhere.
-    const pin = document.querySelector<HTMLElement>('[data-pin]');
-    const track = pin?.querySelector<HTMLElement>('.build-track');
-    const wide = matchMedia('(min-width: 900px)');
-    const layoutPin = () => {
-      if (!pin || !track) return;
-      const on = wide.matches && !reduce;
-      pin.classList.toggle('pinned', on);
-      track.style.transform = '';
-      pin.style.height = '';
-      if (!on) return;
-      const distance = track.scrollWidth + parseFloat(getComputedStyle(track).paddingLeft) - innerWidth;
-      pin.style.height = `${innerHeight + Math.max(0, distance)}px`;
-      pin.dataset.distance = String(Math.max(0, distance));
-    };
-    const movePin = () => {
-      if (!pin || !track || !pin.classList.contains('pinned')) return;
-      const distance = Number(pin.dataset.distance);
-      const progress = Math.min(1, Math.max(0, -pin.getBoundingClientRect().top / distance || 0));
-      track.style.transform = `translate3d(${-progress * distance}px,0,0)`;
-    };
-    document.fonts.ready.then(() => { layoutPin(); movePin(); });
-    addEventListener('resize', () => { layoutPin(); movePin(); });
-    wide.addEventListener('change', layoutPin);
-    addEventListener('scroll', movePin, { passive: true });
-
     // Hero showcase: coverflow of every app, auto-advancing until the visitor takes over.
     const show = document.querySelector<HTMLElement>('[data-show]');
     if (show) {
       const slides = [...show.querySelectorAll<HTMLElement>('.slide')];
       const infos = [...show.querySelectorAll<HTMLElement>('.info')];
-      const ghost = show.querySelector<HTMLElement>('.show-ghost span')!;
       const count = show.querySelector<HTMLElement>('[data-count]')!;
       const video = show.querySelector<HTMLVideoElement>('video');
       const n = slides.length;
@@ -246,8 +215,6 @@ const principles = [
           slide.classList.toggle('is-active', i === active);
         });
         infos.forEach((info, i) => (info.hidden = i !== active));
-        ghost.textContent = infos[active].querySelector('h2')!.textContent!.split(' · ')[0];
-        if (!reduce) ghost.animate([{ opacity: 0, transform: 'translateY(12%)' }, { opacity: 1, transform: 'none' }], { duration: 900, easing: 'cubic-bezier(.16,1,.3,1)' });
         count.textContent = String(active + 1).padStart(2, '0');
         syncVideo();
         restart();
@@ -286,12 +253,6 @@ const principles = [
       new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; syncVideo(); restart(); }, { threshold: 0.2 }).observe(show);
       document.addEventListener('visibilitychange', syncVideo);
 
-      // A gentle lift as the showcase scrolls away.
-      if (!reduce) addEventListener('scroll', () => {
-        const r = show.getBoundingClientRect();
-        const t = Math.min(1, Math.max(0, -r.top / r.height));
-        stage.style.transform = `translateY(${t * -60}px) scale(${1 - t * 0.06})`;
-      }, { passive: true });
       go(active);
     }
 
@@ -301,18 +262,11 @@ const principles = [
       const reels = [...reelWrap.querySelectorAll<HTMLElement>('.reel')].map(el => ({
         el,
         video: el.querySelector('video')!,
-        bar: el.querySelector<HTMLElement>('.reel-bar i')!,
         button: el.querySelector<HTMLButtonElement>('.reel-play')!,
         title: el.querySelector<HTMLButtonElement>('.reel-play')!.dataset.title!,
         visible: false,
         paused: reduce,
       }));
-      let frame = 0;
-
-      const tick = () => {
-        reels.forEach(({ video, bar }) => (bar.style.transform = `scaleX(${video.currentTime / video.duration || 0})`));
-        frame = requestAnimationFrame(tick);
-      };
       const sync = () => {
         reels.forEach(reel => {
           const on = reel.visible && !reel.paused && !document.hidden;
@@ -320,8 +274,6 @@ const principles = [
           reel.el.classList.toggle('is-paused', reel.paused);
           reel.button.setAttribute('aria-label', `${reel.paused ? 'Play' : 'Pause'} ${reel.title}`);
         });
-        cancelAnimationFrame(frame);
-        if (reels.some(reel => reel.visible)) tick();
       };
       // Start fetching just before the section arrives, so playback begins without a stall.
       new IntersectionObserver(([entry], observer) => {
