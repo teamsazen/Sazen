@@ -266,6 +266,9 @@ html.locked{overflow:hidden}
 .journal{padding-block:clamp(80px,10vw,160px);display:grid;gap:clamp(30px,4vw,56px)}
 .journal + .journal,.blog-hero + .journal{padding-top:0}
 .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:clamp(28px,3vw,48px) clamp(14px,1.6vw,28px);perspective:1400px}
+@media (max-width:639px){.post-grid.four{grid-template-columns:1fr}}
+@media (min-width:640px){.post-grid.four{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1100px){.post-grid.four{grid-template-columns:repeat(4,1fr)}}
 .post-slot{display:grid}
 .post-card{display:grid;align-content:start;gap:12px;text-decoration:none}
 .post-cover{position:relative;display:block;aspect-ratio:4/3.4;border-radius:clamp(20px,2vw,30px);background:var(--panel);overflow:hidden;margin-bottom:8px;transition:transform .6s var(--ease);transform-style:preserve-3d}

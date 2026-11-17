@@ -10,7 +10,7 @@ export function getStaticPaths() { return posts.map(post => ({ params: { slug: p
 const { post } = Astro.props;
 const app = apps.find(a => a.slug === post.app)!;
 const index = posts.findIndex(p => p.slug === post.slug);
-const more = [1, 2, 3].map(step => posts[(index + step) % posts.length]);
+const more = [1, 2, 3, 4].map(step => posts[(index + step) % posts.length]);
 const { Content } = await render(post.entry);
 const site = Astro.site!;
 const image = `/og/blog/${post.slug}.png`;
@@ -57,6 +57,6 @@ const schema = [
       <h2 class="display lines"><span><span>Keep reading.</span></span></h2>
       <a class="btn ghost reveal" href={`/blog`}>View all posts →</a>
     </div>
-    <div class="post-grid">{more.map((p, i) => <PostCard post={p} index={i} />)}</div>
+    <div class="post-grid four">{more.map((p, i) => <PostCard post={p} index={i} />)}</div>
   </section>
 </Studio>
