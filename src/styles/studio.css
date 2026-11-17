@@ -70,9 +70,9 @@ img{max-width:100%}
 .pill-github:hover{background:var(--surface)}
 .pill-cta{display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:var(--fg);color:var(--bg);font-size:14px;font-weight:600;padding:10px 18px;border-radius:999px;white-space:nowrap}
 .play-icon{flex:none}
-@media (max-width:640px){.pill{width:100%}.pill-github{margin-left:auto}}
+@media (max-width:640px){.pill{width:100%;gap:6px}.pill-github{margin-left:auto}.pill-cta{width:44px;height:44px;padding:0;justify-content:center;border-radius:50%}.pill-cta>span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.play-icon{width:18px;height:18px}}
 @media (max-width:800px){.pill-links{display:none}}
-@media (max-width:360px){.pill{gap:6px;padding-left:12px}.pill-cta{font-size:13px;padding-inline:12px;gap:6px}.play-icon{width:16px;height:16px}}
+@media (max-width:360px){.pill{padding-left:12px}}
 
 /* Soft fade, only once JS can lift it */
 .js .reveal,.js .lines{opacity:0;transform:translateY(14px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
