@@ -2,6 +2,7 @@
 import Studio from '../../layouts/Studio.astro';
 import PhonePreview from '../../components/PhonePreview.astro';
 import PostCard from '../../components/PostCard.astro';
+import AppIndex from '../../components/AppIndex.astro';
 import { apps, icon, playUrl, screen } from '../../data/apps';
 import { posts } from '../../data/blog';
 import { appPath, breadcrumbs, organization } from '../../data/studio';
@@ -26,27 +27,29 @@ const schema = [
 ];
 ---
 <Studio title={`${app.seoTitle} · Sazen`} description={app.detail} image={`/og/apps/${app.slug}.png`} imageAlt={`${app.name}: ${app.headline}`} schema={schema}>
-  <section class="ah band">
-    <a class="back reveal" href={`/#worlds`}>← All Sazen apps</a>
-    <div class="ah-grid">
-      <div class="ah-copy">
-        <div class="ah-id reveal">
-          <img src={icon(app)} width="76" height="76" alt={`${app.name} icon`} />
-          <div><span class="eyebrow">{app.category}</span><span class="ah-sub">{app.slug === '99-names' ? 'Asmaul Husna' : app.subtitle}</span></div>
+  <section class="ah">
+    <div class="wrap">
+      <a class="back" href="/#worlds">All Sazen apps</a>
+      <div class="ah-grid">
+        <div class="ah-copy">
+          <div class="ah-id">
+            <img src={icon(app)} width="72" height="72" alt={`${app.name} icon`} />
+            <span><b>{app.category}</b><span>{app.slug === '99-names' ? 'Asmaul Husna' : app.subtitle}</span></span>
+          </div>
+          <h1 class="display">{app.name}</h1>
+          <p class="ah-head">{app.headline}</p>
+          <p class="ah-detail">{app.detail}</p>
+          <div class="actions">
+            <a class="btn" href={playUrl(app)} target="_blank" rel="noopener noreferrer">{app.slug === 'budget-ai' ? 'Check Google Play' : `Get ${app.name}`} <span class="ext" aria-hidden="true">↗</span></a>
+            {external && <a class="btn ghost" href={app.website} target="_blank" rel="noopener noreferrer">Visit website <span class="ext" aria-hidden="true">↗</span></a>}
+          </div>
+          <p class="ah-note">{app.note}</p>
         </div>
-        <h1 class="display lines"><span><span>{app.name}</span></span></h1>
-        <p class="ah-head reveal">{app.headline}</p>
-        <p class="ah-detail reveal">{app.detail}</p>
-        <div class="ah-actions reveal">
-          <a class="btn" href={playUrl(app)} target="_blank" rel="noopener noreferrer">{app.slug === 'budget-ai' ? 'Check Google Play' : `Get ${app.name}`} ↗</a>
-          {external && <a class="btn ghost" href={app.website} target="_blank" rel="noopener noreferrer">Visit website ↗</a>}
+        <div class="ah-stage" aria-label={`${app.name} screens`}>
+          <div class="ah-phone left"><PhonePreview app={app} index={2} eager /></div>
+          <div class="ah-phone right"><PhonePreview app={app} index={3} eager /></div>
+          <div class="ah-phone center"><PhonePreview app={app} index={1} video={app.slug === 'exit-rush'} eager /></div>
         </div>
-        <p class="ah-note reveal">{app.note}</p>
-      </div>
-      <div class="ah-stage" aria-label={`${app.name} screens`}>
-        <div class="ah-phone left"><PhonePreview app={app} index={2} eager /></div>
-        <div class="ah-phone right"><PhonePreview app={app} index={3} eager /></div>
-        <div class="ah-phone center"><PhonePreview app={app} index={1} video={app.slug === 'exit-rush'} eager /></div>
       </div>
     </div>
   </section>
@@ -57,68 +60,69 @@ const schema = [
     </div>
   </div>
 
-  <section class="feat band">
-    <span class="eyebrow reveal">Inside {app.name}</span>
-    <ol>
-      {app.features.map((feature, i) => (
-        <li class="reveal"><span class="feat-num">0{i + 1}</span><span class="display lines"><span><span>{feature}</span></span></span></li>
-      ))}
-    </ol>
-  </section>
-
-  <section class="gal band">
-    <div class="gal-head">
-      <h2 class="display lines"><span><span>A closer look.</span></span></h2>
-      <p class="reveal">Real screens from the app. Select one to enlarge it.</p>
-    </div>
-    <div class="gal-row">
-      {app.captions.map((caption, i) => (
-        <figure class="reveal">
-          <button type="button" class="shot" data-shot={i} data-caption={`${app.name}: ${caption}`} aria-label={`Enlarge screenshot: ${caption}`}>
-            <PhonePreview app={app} index={i + 1} />
-          </button>
-          <figcaption><span>0{i + 1}</span>{caption}</figcaption>
-        </figure>
-      ))}
+  <section class="feat" aria-labelledby="feat-title">
+    <div class="wrap process-grid">
+      <div class="process-head">
+        <h2 class="display" id="feat-title">Inside<br /><span class="ghost">{app.name}.</span></h2>
+        <p>{app.description}</p>
+      </div>
+      <ol class="feat-list">
+        {app.features.map((feature, i) => (
+          <li><span class="step-num" aria-hidden="true">0{i + 1}</span><span class="feat-title">{feature}</span></li>
+        ))}
+      </ol>
     </div>
   </section>
 
-  <section class="cta band">
-    <span class="eyebrow reveal">Downloads, support and privacy</span>
-    <h2 class="display lines"><span><span>Make it part</span></span><span><span>of your day.</span></span></h2>
-    <p class="cta-text reveal">Find downloads, app support and the privacy information for {app.name} on Google Play{external ? ' and on its website' : ''}.</p>
-    <div class="ah-actions reveal">
-      <a class="btn" href={playUrl(app)} target="_blank" rel="noopener noreferrer">Open Google Play ↗</a>
-      {external && <a class="btn ghost" href={app.website} target="_blank" rel="noopener noreferrer">Visit website ↗</a>}
+  <section class="gal" aria-labelledby="gal-title">
+    <div class="wrap">
+      <div class="section-head row">
+        <h2 class="display" id="gal-title">A closer look.</h2>
+        <p>Real screens from the app. Select one to enlarge it.</p>
+      </div>
+      <div class="gal-row">
+        {app.captions.map((caption, i) => (
+          <figure class="reveal">
+            <button type="button" class="shot" data-shot={i} data-caption={`${app.name}: ${caption}`} aria-label={`Enlarge screenshot: ${caption}`}>
+              <PhonePreview app={app} index={i + 1} />
+            </button>
+            <figcaption>{caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="closing" aria-labelledby="support-title">
+    <div class="wrap closing-inner">
+      <h2 class="display" id="support-title">Make it part<br /><span class="ghost">of your day.</span></h2>
+      <p>Find downloads, app support and the privacy information for {app.name} on Google Play{external ? ' and on its website' : ''}.</p>
+      <div class="actions">
+        <a class="btn" href={playUrl(app)} target="_blank" rel="noopener noreferrer">Open Google Play <span class="ext" aria-hidden="true">↗</span></a>
+        {external && <a class="btn ghost" href={app.website} target="_blank" rel="noopener noreferrer">Visit website <span class="ext" aria-hidden="true">↗</span></a>}
+      </div>
     </div>
   </section>
 
   {related.length > 0 && (
-    <section class="journal band">
-      <div class="gal-head">
-        <h2 class="display lines"><span><span>From the blog.</span></span></h2>
-        <a class="btn ghost reveal" href={`/blog`}>View all posts →</a>
+    <section class="journal" aria-labelledby="related-title">
+      <div class="wrap">
+        <div class="section-head row">
+          <h2 class="display" id="related-title">From the blog.</h2>
+          <a class="btn ghost" href="/blog">All posts</a>
+        </div>
+        <div class="post-grid">{related.map((post, i) => <PostCard post={post} index={i} />)}</div>
       </div>
-      <div class="post-grid">{related.map((post, i) => <PostCard post={post} index={i} />)}</div>
     </section>
   )}
 
-  <section class="more band">
-    <div class="gal-head">
-      <h2 class="display lines"><span><span>More from Sazen.</span></span></h2>
+  <section class="catalogue more" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="display" id="more-title">More from Sazen.</h2>
+      </div>
+      <AppIndex list={others} />
     </div>
-    <ul class="app-rows">
-      {others.map(other => (
-        <li class="reveal">
-          <a href={appPath(other.slug)}>
-            <img src={icon(other)} width="56" height="56" alt="" loading="lazy" />
-            <span class="row-text"><b>{other.name}</b><small>{other.slug === '99-names' ? 'Asmaul Husna' : other.subtitle}</small></span>
-            <span class="row-cat">{other.category}</span>
-            <span class="row-go" aria-hidden="true">→</span>
-          </a>
-        </li>
-      ))}
-    </ul>
   </section>
 
   <dialog class="lightbox" aria-labelledby="lightbox-caption">
@@ -165,11 +169,5 @@ const schema = [
       document.addEventListener('visibilitychange', sync);
     }
 
-    // Phones fan out a little further as the hero scrolls away.
-    const stage = document.querySelector<HTMLElement>('.ah-stage');
-    if (stage && !reduce) addEventListener('scroll', () => {
-      const t = Math.min(1, Math.max(0, scrollY / innerHeight));
-      stage.style.setProperty('--fan', String(t));
-    }, { passive: true });
   </script>
 </Studio>

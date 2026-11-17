@@ -27,10 +27,10 @@ const schema = [
 <Studio title={`${post.title} · Sazen blog`} description={post.excerpt} type="article" published={post.date} image={image} imageAlt={post.title} schema={schema}>
   <article>
     <header class="post-hero band">
-      <a class="back reveal" href={`/blog`}>← All posts</a>
-      <span class="eyebrow reveal">{app.name} · <time datetime={post.date}>{postDate(post)}</time> · {readMinutes(post)} min read</span>
-      <h1 class="display lines"><span><span>{post.title}</span></span></h1>
-      <p class="reveal">{post.excerpt}</p>
+      <a class="back" href="/blog">All posts</a>
+      <span class="meta"><span>{app.name}</span><time datetime={post.date}>{postDate(post)}</time><span>{readMinutes(post)} min read</span></span>
+      <h1 class="display">{post.title}</h1>
+      <p>{post.excerpt}</p>
     </header>
     <div class="post-banner band">
       <div class="post-banner-inner reveal">
@@ -44,18 +44,18 @@ const schema = [
       <div class="prose"><Content /></div>
       <aside class="post-app-card reveal">
         <img src={icon(app)} width="64" height="64" alt="" />
-        <span class="eyebrow">{app.category}</span>
+        <span class="label">{app.category}</span>
         <b>{app.name}</b>
         <p>{app.headline}</p>
         <a class="btn" href={appPath(app.slug)}>Explore {app.name}</a>
-        <a class="btn ghost" href={playUrl(app)} target="_blank" rel="noopener noreferrer">{app.slug === 'budget-ai' ? 'Check Google Play' : 'Google Play'} ↗</a>
+        <a class="btn ghost" href={playUrl(app)} target="_blank" rel="noopener noreferrer">{app.slug === 'budget-ai' ? 'Check Google Play' : 'Google Play'} <span class="ext" aria-hidden="true">↗</span></a>
       </aside>
     </div>
   </article>
   <section class="journal band">
-    <div class="gal-head">
-      <h2 class="display lines"><span><span>Keep reading.</span></span></h2>
-      <a class="btn ghost reveal" href={`/blog`}>View all posts →</a>
+    <div class="section-head row">
+      <h2 class="display">Keep reading.</h2>
+      <a class="btn ghost" href="/blog">All posts</a>
     </div>
     <div class="post-grid four">{more.map((p, i) => <PostCard post={p} index={i} />)}</div>
   </section>

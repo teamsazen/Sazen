@@ -7,14 +7,13 @@ interface Props { post: Post; index?: number; heading?: 'h2' | 'h3' }
 const { post, index = 0, heading: Heading = 'h3' } = Astro.props;
 const app = apps.find(a => a.slug === post.app)!;
 ---
-<a class:list={['post-card', 'reveal', { dark: index % 2 === 1 }]} href={postPath(post.slug)} data-post>
-  <span class="post-cover" data-tilt>
+<a class="post-card reveal" href={postPath(post.slug)} data-post>
+  <span class="post-cover">
     <img class="post-icon" src={icon(app)} width="48" height="48" alt="" loading="lazy" />
     <span class="post-app">{app.name}</span>
     <span class="post-phone"><PhonePreview app={app} index={index % 3 + 1} /></span>
   </span>
-  <span class="post-meta">{app.category} · {readMinutes(post)} min read</span>
+  <span class="post-meta"><span>{app.category}</span><span>{readMinutes(post)} min read</span></span>
   <Heading class="post-title">{post.title}</Heading>
   <span class="post-excerpt">{post.excerpt}</span>
-  <span class="post-more">Read post <span aria-hidden="true">→</span></span>
-</a>
+  </a>

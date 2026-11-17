@@ -3,6 +3,7 @@ import Studio from '../layouts/Studio.astro';
 import PhonePreview from '../components/PhonePreview.astro';
 import { apps, developerUrl, icon, playUrl } from '../data/apps';
 import PostCard from '../components/PostCard.astro';
+import AppIndex from '../components/AppIndex.astro';
 import { posts } from '../data/blog';
 import { alternateNames, appPath, organization } from '../data/studio';
 const start = apps.findIndex(app => app.slug === 'rafeeq');
@@ -11,12 +12,10 @@ const place = (raw: number) => {
   const n = apps.length;
   const d = ((raw % n) + n + 3) % n - 3;
   const a = Math.min(Math.abs(d), 3);
-  return { x: [0, 0.78, 1.45, 1.9][a] * Math.sign(d), ry: -Math.sign(d) * a * 16, s: [1, 0.84, 0.7, 0.6][a], o: [1, 0.92, 0.5, 0][a], z: 10 - a, far: a >= 2 };
+  return { x: [0, 0.8, 1.48, 1.95][a] * Math.sign(d), ry: -Math.sign(d) * a * 10, s: [1, 0.84, 0.7, 0.6][a], o: [1, 0.92, 0.5, 0][a], z: 10 - a, far: a >= 2 };
 };
-const worlds = [
-  { id: 'apps', label: '01 · Apps with purpose', title: 'Apps', text: 'A moment to reflect. A tool that fits your day.', list: apps.filter(app => app.filter !== 'games') },
-  { id: 'games', label: '02 · Games with personality', title: 'Games', text: 'A puzzle to solve. A little play between the serious things.', list: apps.filter(app => app.filter === 'games') },
-];
+const tools = apps.filter(app => app.filter !== 'games');
+const games = apps.filter(app => app.filter === 'games');
 const site = Astro.site!;
 const schema = [
   { '@context': 'https://schema.org', ...organization(site) },
@@ -38,17 +37,14 @@ const principles = [
 ];
 ---
 <Studio schema={schema}>
-  <section class="hero band" id="top">
-    <div class="hero-top">
-      <div>
-        <span class="eyebrow">Independent app &amp; game studio</span>
-        <h1 class="display lines"><span><span>Apps with purpose.</span></span><span><span class="ghost">Games with personality.</span></span></h1>
-      </div>
+  <section class="hero" id="top">
+    <div class="wrap hero-top">
+      <h1 class="display hero-title">Apps with purpose.<br /><span class="ghost">Games with personality.</span></h1>
       <div class="hero-side">
-        <p>Thoughtful apps and playful escapes. Made with care, by Sazen.</p>
-        <div class="hero-actions">
-          <a class="btn" href="#worlds">Explore the studio <span aria-hidden="true">↓</span></a>
-          <a class="btn ghost" href={developerUrl} target="_blank" rel="noopener noreferrer">Google Play ↗</a>
+        <p>An independent studio making thoughtful apps and playful escapes for Android.</p>
+        <div class="actions">
+          <a class="btn" href="#worlds">See the apps</a>
+          <a class="btn ghost" href={developerUrl} target="_blank" rel="noopener noreferrer">Google Play <span class="ext" aria-hidden="true">↗</span></a>
         </div>
       </div>
     </div>
@@ -64,25 +60,17 @@ const principles = [
           );
         })}
       </div>
-      <div class="show-bar">
+      <div class="wrap show-bar">
         <div class="show-info">
           {apps.map((app, i) => (
-            <div class="info" data-i={i} hidden={i !== start}>
-              <img src={icon(app)} width="64" height="64" alt="" />
-              <div class="info-text">
-                <span class="eyebrow">{app.category}</span>
-                <h2>{app.name}{app.slug === '99-names' ? ' · Asmaul Husna' : ''}</h2>
-                <p>{app.headline}</p>
-              </div>
-              <div class="info-links">
-                <a class="btn" href={appPath(app.slug)}>Explore {app.name}</a>
-                <a class="btn ghost" href={playUrl(app)} target="_blank" rel="noopener noreferrer">{app.slug === 'budget-ai' ? 'Check Google Play' : 'Google Play'} ↗</a>
-              </div>
-            </div>
+            <a class="info" data-i={i} hidden={i !== start} href={appPath(app.slug)}>
+              <img src={icon(app)} width="48" height="48" alt="" />
+              <span class="info-text"><b>{app.name}</b><span>{app.headline}</span></span>
+            </a>
           ))}
         </div>
         <div class="show-ctrl">
-          <span class="show-count"><b data-count>0{start + 1}</b> / 0{apps.length}</span>
+          <span class="show-count"><b data-count>0{start + 1}</b> of 0{apps.length}</span>
           <button type="button" class="round" data-prev aria-label="Previous app">←</button>
           <button type="button" class="round" data-next aria-label="Next app">→</button>
           <span class="show-progress" aria-hidden="true"><i></i></span>
@@ -97,62 +85,50 @@ const principles = [
     </div>
   </div>
 
-  <section class="belief band" id="studio" aria-labelledby="belief-title">
-    <figure class="belief-frame">
-      <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
-      <div class="belief-inner">
-        <figcaption class="belief-label" id="belief-title">We believe</figcaption>
-        <blockquote class="belief-quote"><p style="margin:0">“<b>Small moments</b> deserve a <b>clear purpose</b>, a <b>considered design</b> and an experience <b>worth coming back to.</b>”</p></blockquote>
+  <section class="catalogue" id="worlds" aria-labelledby="catalogue-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="display" id="catalogue-title">Eight apps.<br /><span class="ghost">One studio.</span></h2>
+        <p>From faith and reflection to a satisfying puzzle, each one is built around a moment in someone’s day.</p>
       </div>
-    </figure>
-    <div class="manifesto-foot">
-      <p class="reveal belief-note">We’re Sazen, an independent studio making apps and games for everyday life. From faith and reflection to a satisfying puzzle, we build around moments that matter.</p>
+      <AppIndex list={tools} label="Apps" />
+      <AppIndex list={games} start={tools.length} label="Games" />
     </div>
   </section>
 
-  <section class="worlds band" id="worlds" aria-label="Apps and games">
-    {worlds.map(world => (
-      <article class:list={['world', 'reveal', { dark: world.id === 'games' }]}>
-        <svg class="world-mark" viewBox="0 0 600 600" aria-hidden="true"><use href="#sazen-s" width="600" height="600" /></svg>
-        <span class="eyebrow">{world.label}</span>
-        <div>
-          <h3 class="display">{world.title}</h3>
-          <p>{world.text}</p>
+  <section class="belief" id="studio" aria-labelledby="belief-title">
+    <div class="wrap">
+      <figure class="belief-frame">
+        <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+        <div class="belief-inner">
+          <figcaption class="belief-label" id="belief-title">We believe</figcaption>
+          <blockquote class="belief-quote"><p>“<b>Small moments</b> deserve a <b>clear purpose</b>, a <b>considered design</b> and an experience <b>worth coming back to.</b>”</p></blockquote>
         </div>
-        <ul class="app-rows">
-          {world.list.map(app => (
-            <li>
-              <a href={appPath(app.slug)}>
-                <img src={icon(app)} width="56" height="56" alt="" loading="lazy" />
-                <span class="row-text"><b>{app.name}</b><small>{app.slug === '99-names' ? 'Asmaul Husna' : app.subtitle}</small></span>
-                <span class="row-go" aria-hidden="true">→</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </article>
-    ))}
-  </section>
-
-  <section class="process band" id="build" aria-labelledby="build-title">
-    <div class="process-head reveal">
-      <span class="eyebrow">How we build</span>
-      <h2 class="display" id="build-title">Different ideas,<br /><span class="ghost">one approach.</span></h2>
-      <p>Five things every Sazen app and game is built around, from the first idea to the version on your phone.</p>
+      </figure>
+      <p class="belief-note reveal">We’re Sazen, an independent studio making apps and games for everyday life. Different ideas, one shared approach.</p>
     </div>
-    <ol class="steps reveal">
-      {principles.map(([title, label, text], i) => (
-        <li class="step" tabindex="0">
-          <span class="step-num" aria-hidden="true">0{i + 1}</span>
-          <div class="step-row"><span class="step-title">{title}</span><span class="step-label">{label}</span></div>
-          <div class="step-body"><p>{text}</p></div>
-        </li>
-      ))}
-    </ol>
   </section>
 
-  <section class="showcase band" id="collection" aria-label="Studio reels">
-    <div class="frames" data-reels>
+  <section class="process" id="build" aria-labelledby="build-title">
+    <div class="wrap process-grid">
+      <div class="process-head">
+        <h2 class="display" id="build-title">How we build.<br /><span class="ghost">One approach.</span></h2>
+        <p>Five things every Sazen app and game is built around, from the first idea to the version on your phone.</p>
+      </div>
+      <ol class="steps">
+        {principles.map(([title, label, text], i) => (
+          <li class="step" tabindex="0">
+            <span class="step-num" aria-hidden="true">0{i + 1}</span>
+            <div class="step-row"><span class="step-title">{title}</span><span class="step-label">{label}</span></div>
+            <div class="step-body"><p>{text}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="showcase" id="collection" aria-label="Studio reels">
+    <div class="wrap frames" data-reels>
       {reels.map(reel => (
         <figure class="reel reveal">
           <div class="frame">
@@ -164,21 +140,21 @@ const principles = [
     </div>
   </section>
 
-  <section class="journal band" id="blog">
-    <div class="gal-head">
-      <div>
-        <span class="eyebrow reveal">The Sazen blog</span>
-        <h2 class="display lines"><span><span>Notes from</span></span><span><span>the studio.</span></span></h2>
+  <section class="journal" id="blog" aria-labelledby="blog-title">
+    <div class="wrap">
+      <div class="section-head row">
+        <h2 class="display" id="blog-title">Notes from<br /><span class="ghost">the studio.</span></h2>
+        <a class="btn ghost" href="/blog">All posts</a>
       </div>
-      <a class="btn ghost reveal" href={`/blog`}>View all posts →</a>
+      <div class="post-grid four">{posts.slice(0, 4).map((post, i) => <PostCard post={post} index={i} />)}</div>
     </div>
-    <div class="post-grid four">{posts.slice(0, 4).map((post, i) => <PostCard post={post} index={i} />)}</div>
   </section>
 
-  <section class="cta band">
-    <span class="eyebrow reveal">Apps with purpose. Games with personality.</span>
-    <h2 class="display lines"><span><span>Find your next</span></span><span><span>everyday</span></span><span><span>favourite.</span></span></h2>
-    <a class="btn reveal" href={developerUrl} target="_blank" rel="noopener noreferrer">Explore Sazen on Google Play ↗</a>
+  <section class="closing" aria-labelledby="closing-title">
+    <div class="wrap closing-inner">
+      <h2 class="display" id="closing-title">Find your next<br /><span class="ghost">everyday favourite.</span></h2>
+      <a class="btn" href={developerUrl} target="_blank" rel="noopener noreferrer">Explore Sazen on Google Play <span class="ext" aria-hidden="true">↗</span></a>
+    </div>
   </section>
 
   <script>
@@ -199,7 +175,7 @@ const principles = [
       const place = (raw: number) => {
         const d = ((raw % n) + n + 3) % n - 3;
         const a = Math.min(Math.abs(d), 3);
-        return { x: [0, 0.78, 1.45, 1.9][a] * Math.sign(d), ry: -Math.sign(d) * a * 16, s: [1, 0.84, 0.7, 0.6][a], o: [1, 0.92, 0.5, 0][a], z: 10 - a, far: a >= 2 };
+        return { x: [0, 0.8, 1.48, 1.95][a] * Math.sign(d), ry: -Math.sign(d) * a * 10, s: [1, 0.84, 0.7, 0.6][a], o: [1, 0.92, 0.5, 0][a], z: 10 - a, far: a >= 2 };
       };
       const syncVideo = () => {
         if (!video) return;

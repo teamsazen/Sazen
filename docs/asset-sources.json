@@ -74,8 +74,7 @@
     "bezel": "Rafeeq/website/screens/iphone-bezel.png"
   },
   "fonts": {
-    "anton": "https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm3Kz-C8CSKlv.woff2 (latin subset, downloaded 2026-10-30)",
-    "google-sans": "Budget AI website (self-hosted)"
+    "bricolage-grotesque": "Google Fonts, Bricolage Grotesque variable (opsz 12-96, wght 200-800), latin subset, SIL Open Font License; downloaded 2026-11-17"
   },
   "sazen-s-favicon": "brand/svg/sazen-s-white.svg, recoloured with a prefers-color-scheme style",
   "reels": {

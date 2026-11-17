@@ -9,10 +9,11 @@ src/content/blog/              Markdown posts (frontmatter: title, excerpt, app,
 src/content.config.ts          Blog collection schema; the build fails on a missing field or unknown app slug
 src/data/blog.ts               Loads the blog collection, sorted newest first (same-day posts by order), plus date and reading-time helpers
 src/data/studio.ts             Studio GitHub profile, analytics ID, app and post URL helpers, Organization and breadcrumb structured data
-src/layouts/Studio.astro       SEO, glass pill header, giant-wordmark footer, Lenis, reveals, tilt
+src/layouts/Studio.astro       SEO, glass pill header with current-section state, footer (app and studio links, faint wordmark), reveals
+src/components/AppIndex.astro  Catalogue rows (number, icon, name, line, category, hover screenshot) for the home page and app pages
 src/components/PhonePreview.astro  Shared device frame for every screenshot and the Exit Rush video
 src/components/PostCard.astro  Blog card with app icon and a real screenshot cover
-src/pages/index.astro          Hero showcase, marquee, manifesto, Apps & Games, How we build, collection, blog, CTA
+src/pages/index.astro          Hero showcase, marquee, catalogue, belief frame, How we build, reels, blog, closing panel
 src/pages/apps/[slug].astro    Eight app pages: phone hero, features, gallery + dialog, support, other apps
 src/pages/blog/                Blog index (4 + View all) and one page per post
 src/pages/privacy.astro        Website privacy and individual app policy pointers
@@ -20,7 +21,7 @@ src/pages/404.astro            Not-found page
 src/pages/robots.txt.ts        Crawl rules derived from configured origin
 src/pages/sitemap.xml.ts       Home, app pages, blog, posts, privacy; lastmod only for dated blog URLs
 src/styles/studio.css          Tokens, type, layout, motion, light/dark, reduced motion
-public/fonts/                  Self-hosted Anton (display) and Google Sans (body)
+public/fonts/                  Self-hosted Bricolage Grotesque (headings), Google Sans (body) and Anton (OG renderer only)
 public/images/                 Sazen logo, 8 icons, 24 screenshots, device bezel and status bars, Exit Rush poster, reels/ posters
 public/videos/                 exit-rush.mp4 gameplay; sazen-reel-{ivory,dark,colour}.mp4 collection reels (960px web encodes of brand/promo)
 public/favicon.svg             Theme-aware Sazen S favicon (black on light, white on dark)
@@ -34,19 +35,19 @@ docs/asset-sources.json        Asset provenance
 docs/seo-tasks.md              SEO plan for teamsazen.com and the app sites, with open and done tasks
 ```
 
-The site is a static Astro build without framework hydration or server APIs. The only third-party runtime service is Google Analytics 4 (`G-1R2782BC02`), injected by `Studio.astro` in production builds only and disclosed on `/privacy`. Lenis (bundled at build time) provides smooth scrolling; plain browser scripts handle the showcase, pinned scroll, reveals, tilt, the screenshot dialog and the blog "View all" button. `dist/` is the Cloudflare upload directory; it is not committed.
+The site is a static Astro build without framework hydration or server APIs. The only third-party runtime service is Google Analytics 4 (`G-1R2782BC02`), injected by `Studio.astro` in production builds only and disclosed on `/privacy`. Plain browser scripts handle the showcase, reveals, the header's current-section state, the reels, the screenshot dialog and the blog "View all" button. `dist/` is the Cloudflare upload directory; it is not committed.
 
 ## Design
 
-Full-bleed width on desktop with side gutters only. Light mode is ivory `#f4f2ec` with near-black type; dark mode is pure black with white type, following the OS setting. Headings use Anton in uppercase; body text uses Google Sans. The header is a compact floating glass pill (links hidden on narrow screens). Same-origin navigations use a curtain-wipe view transition where supported.
+A quiet catalogue. Content sits in one capped column (`--max` 1240px, `.wrap` or `.band`) with growing gutters on wide screens. Light mode is ivory `#f4f2ec` with near-black type; dark mode is pure black with white type, following the OS setting. Headings use Bricolage Grotesque (`public/fonts/bricolage.woff2`, variable 200–800, OFL) in sentence case, usually a bold line followed by a thin italic `.ghost` line; body text uses Google Sans. One red `--accent` appears only on the belief frame and on hover numbers. Labels and meta are sentence case in the body face, never tracked capitals or dot-joined strings. The header is a compact floating glass pill (links hidden on narrow screens) that turns the current page's link, or on the home page the section in view, to full contrast. Same-origin navigations cross-fade briefly where supported. Anton (`public/fonts/anton.woff2`) is now used only by the OG image renderer in `brand/og`.
 
-Motion is balanced: line-by-line headline reveals, soft fade-up, a never-pausing marquee, 3D tilt on cards (fine pointers only), Lenis smooth scrolling and the giant SAZEN footer wordmark rising into place. Reveal hidden states only apply after JavaScript adds the `js` class, so content is visible without scripts. `prefers-reduced-motion` disables animation, smooth scrolling, auto-advance and video autoplay.
+Motion is calm: a single soft fade-up for `.reveal`/`.lines` elements, the angled marquee, the hero coverflow, and hover responses (the catalogue and process lists dim the other rows, nudge the hovered one and reveal a screenshot or description). Scrolling is native; there is no scroll pinning, tilt or smooth-scroll library. Reveal hidden states only apply after JavaScript adds the `js` class, so content is visible without scripts. `prefers-reduced-motion` disables animation, auto-advance and video autoplay.
 
 ## Experience
 
-**Home.** The hero pairs the headline with a coverflow of all eight apps in `PhonePreview` frames, fully visible on the page background. It auto-advances every 4.2 s with a progress line, pauses on hover and focus, and responds to arrow buttons, the keyboard, swipe and clicking a side phone. The bar below shows the active app's icon, category, name, headline, its Sazen page and Google Play. Exit Rush plays its gameplay video only while it is the active slide and on screen. The Apps and Games panels list every app as an icon row linking to its page. "How we build" pins and scrolls horizontally on screens 900px and wider; narrower screens swipe natively. The collection section shows the three studio reels (ivory, dark, colour) rendered from `brand/promo`: each loops muted on its own while on screen (so all three play together on wide screens), pausing off-screen or in a hidden tab, and preloads shortly before the section arrives; clicking a reel pauses or resumes it. Reduced motion shows posters until a reel is clicked. Four blog cards link to posts and to `/blog`.
+**Home.** Hero headline, one sentence and two actions over a coverflow of all eight apps in `PhonePreview` frames, fully visible on the page background. It auto-advances every 4.2 s with a progress line, pauses on hover and focus, and responds to arrow buttons, the keyboard, swipe and clicking a side phone; the bar below links the active app's icon, name and headline to its page. Exit Rush plays its gameplay video only while it is the active slide and on screen. Then: the angled marquee; the catalogue (`#worlds`, `AppIndex.astro`): numbered rows for Apps and Games, where hovering dims the other rows and slides in a real screenshot; the belief frame (`#studio`), a tilted accent-cornered quote built from the studio's own copy; How we build (`#build`), five numbered steps that open their description on hover or focus (always open on touch); the three studio reels, without a heading, each looping muted while on screen (swipeable on phones; clicking pauses or resumes, reduced motion shows posters until clicked); four blog cards; and a closing panel linking to Google Play.
 
-**App pages.** Fanned three-phone hero (the centre phone plays the Exit Rush video on its page), feature marquee and numbered feature rows, three real screenshots with a native `<dialog>` enlargement (Escape, close button, backdrop, arrow keys), a support band pointing to that app's own Google Play listing and website, and rows for the other seven apps. Budget AI and BG Remover state their pricing in their notes.
+**App pages.** Three-phone hero (the centre phone plays the Exit Rush video on its page), the angled feature marquee, the features as numbered rows beside the app's description, three real screenshots with a native `<dialog>` enlargement (Escape, close button, backdrop, arrow keys), a closing panel pointing to that app's own Google Play listing and website, related posts, and the catalogue rows for the other seven apps. Budget AI and BG Remover state their pricing in their notes.
 
 **Blog.** Markdown posts (BG Remover has none yet), each with its own `date` (all seven were published 30 October 2026). A rehype plugin in `astro.config.mjs` wraps the intro and each `##` heading with its content in `<section class="reveal">`, which the `.prose` layout and scroll reveals rely on, so posts should use `##` for sections. The index shows four posts (a four-column grid on wide screens, `.post-grid.four`) and reveals the rest with a button; all posts render without JavaScript. Post pages show the app's screens as a banner, the article, a sticky app card and four more posts.
 

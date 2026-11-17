@@ -1,0 +1,25 @@
+---
+// Catalogue rows for a list of apps: number, icon, name and line, category. On hover-capable screens the
+// other rows dim and a real screenshot slides in beside the hovered one; touch screens get plain rows.
+import { icon, screen, type App } from '../data/apps';
+import { appPath } from '../data/studio';
+interface Props { list: readonly App[]; start?: number; label?: string }
+const { list, start = 0, label } = Astro.props;
+---
+<div class="index-group">
+  {label && <h3 class="index-label">{label}</h3>}
+  <ol class="index" start={start + 1}>
+    {list.map((app, i) => (
+      <li>
+        <a class="index-row" href={appPath(app.slug)}>
+          <span class="index-num" aria-hidden="true">{String(start + i + 1).padStart(2, '0')}</span>
+          <img class="index-icon" src={icon(app)} width="56" height="56" alt="" loading="lazy" />
+          <span class="index-name">{app.name}</span>
+          <span class="index-line">{app.slug === '99-names' ? 'Asmaul Husna' : app.subtitle}</span>
+          <span class="index-cat">{app.category}</span>
+          <span class="index-peek" aria-hidden="true"><img src={screen(app, 1)} width="160" height="340" alt="" loading="lazy" decoding="async" /></span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</div>

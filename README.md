@@ -2,7 +2,7 @@
 
 The Sazen studio and app collection website, built with Astro and deployed to Cloudflare Pages and published only at **https://teamsazen.com**.
 
-Full-bleed, minimal and animated: light ivory with black type in light mode, pure black with white type in dark mode, tall condensed Anton headings with Google Sans body text (both self-hosted), a floating glass pill header, a 3D app showcase in the hero, smooth scrolling, scroll reveals and a giant SAZEN wordmark footer.
+A quiet catalogue: light ivory with black type in light mode, pure black with white type in dark mode, Bricolage Grotesque headings with Google Sans body text (both self-hosted), one capped column, a floating glass pill header, a coverflow of real app screens in the hero, hover-led lists and a single soft fade.
 
 Production canonical domain: **https://teamsazen.com**. Connect this custom domain to the existing Sazen Cloudflare Pages project; domain registration stays at Namecheap. The project's `sazen.pages.dev` address cannot be removed, so it sends `X-Robots-Tag: noindex` (see `public/_headers`) and a Cloudflare Bulk Redirect sends it to teamsazen.com.
 
@@ -23,7 +23,7 @@ Production canonical domain: **https://teamsazen.com**. Connect this custom doma
 
 ## Pages
 
-- `/`: headline and coverflow showcase of all eight apps, marquee, studio manifesto, Apps and Games panels with app rows, pinned horizontal "How we build" cards, collection of three looping studio reels that play together, four blog cards, Google Play CTA.
+- `/`: headline and coverflow showcase of all eight apps, angled marquee, catalogue of every app with hover screenshots, the "We believe" frame, the "How we build" steps, three looping studio reels, four blog cards, a Google Play closing panel.
 - `/apps/<slug>`: app hero with three phones, feature rows, screenshot gallery with an enlargement dialog, support links, other apps.
 - `/blog` and `/blog/<slug>`: one short post per app.
 - `/privacy`: website-only privacy; each app's store listing remains the source for its own policies.
@@ -46,7 +46,7 @@ npm run check
 npm run preview
 ```
 
-`check` verifies generated page metadata (clean canonicals matching `og:url`, existing `og:image` files, `noindex` only on 404), local asset references, page links, anchors, structured data, and deployment support files. Browser QA should cover 390px, 768px and desktop widths; light and dark mode; the hero showcase (auto-advance, arrows, swipe, keyboard); the pinned "How we build" section; the screenshot dialog (Escape, close, backdrop, arrow keys); the blog "View all" button; reduced motion; and no-JavaScript content.
+`check` verifies generated page metadata (clean canonicals matching `og:url`, existing `og:image` files, `noindex` only on 404), local asset references, page links, anchors, structured data, and deployment support files. Browser QA should cover 390px, 768px and desktop widths; light and dark mode; the hero showcase (auto-advance, arrows, swipe, keyboard); the catalogue and "How we build" hover and focus states; the screenshot dialog (Escape, close, backdrop, arrow keys); the blog "View all" button; reduced motion; and no-JavaScript content.
 
 ## Adding a blog post
 
@@ -89,7 +89,8 @@ For a different Pages project, change the deploy script's `--project-name` and s
 - `src/content/blog/`: blog posts as Markdown; `src/data/blog.ts` loads and sorts them. Posts may give general guidance, but app claims restate existing copy. A post with `draft: true` is left out of the site, sitemap and feeds unless the build runs with `SHOW_DRAFTS=1` (for a preview the owner approves first).
 - `public/og/`: per-app and per-post share images; regenerate with `node brand/og/render.mjs` after adding or renaming an app or post.
 - `src/data/studio.ts`: studio GitHub profile, analytics ID, and app/post URL helpers.
-- `src/layouts/Studio.astro`: SEO, glass pill header, footer, smooth scroll, reveals, tilt.
+- `src/layouts/Studio.astro`: SEO, glass pill header with current-section state, footer, reveals.
+- `src/components/AppIndex.astro`: catalogue rows used on the home page and app pages.
 - `src/pages/`: home, app pages, blog, privacy, 404, robots and sitemap.
 - `src/components/PhonePreview.astro`: shared device frame; `src/components/PostCard.astro`: blog card.
 - `src/styles/studio.css`: visual system, responsive layout, light/dark themes.

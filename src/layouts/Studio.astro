@@ -1,7 +1,7 @@
 ---
 import '../styles/studio.css';
-import { developerUrl, description as defaultDescription, siteTitle } from '../data/apps';
-import { gaId, githubUrl } from '../data/studio';
+import { apps, developerUrl, description as defaultDescription, siteTitle } from '../data/apps';
+import { appPath, gaId, githubUrl } from '../data/studio';
 interface Props { title?: string; description?: string; image?: string; imageAlt?: string; type?: 'website' | 'article'; published?: string; schema?: object[]; noindex?: boolean }
 const { title = siteTitle, description = defaultDescription, image = '/og.png?v=2', imageAlt = 'Sazen: apps with purpose, games with personality', type = 'website', published, schema = [], noindex = false } = Astro.props;
 // Pages build to /path.html (build.format 'file') but Cloudflare serves them at /path.
@@ -67,17 +67,31 @@ const word = ['S', 'A', 'Z', 'E', 'N'];
         <a class="pill-github" href={githubUrl} target="_blank" rel="noopener noreferrer" aria-label="Sazen on GitHub (opens in a new tab)" title="Sazen on GitHub">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 .75a11.25 11.25 0 0 0-3.558 21.923c.563.105.768-.244.768-.542 0-.267-.01-.975-.015-1.913-3.13.68-3.791-1.508-3.791-1.508-.512-1.3-1.25-1.646-1.25-1.646-1.023-.7.078-.686.078-.686 1.13.08 1.725 1.16 1.725 1.16 1.005 1.723 2.637 1.225 3.28.937.103-.729.393-1.225.715-1.507-2.498-.284-5.124-1.25-5.124-5.565 0-1.23.44-2.233 1.16-3.02-.116-.285-.503-1.43.11-2.98 0 0 .945-.303 3.094 1.154a10.79 10.79 0 0 1 5.625 0c2.148-1.457 3.09-1.154 3.09-1.154.615 1.55.228 2.695.112 2.98.722.787 1.158 1.79 1.158 3.02 0 4.327-2.63 5.278-5.136 5.557.404.35.765 1.04.765 2.095 0 1.512-.014 2.732-.014 3.103 0 .3.203.652.774.541A11.252 11.252 0 0 0 12 .75Z" /></svg>
         </a>
-        <a class="pill-cta" href={developerUrl} target="_blank" rel="noopener noreferrer"><svg class="play-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3 2.5v19l10-9.5L3 2.5Zm1.5-1L16 8.1l-2 2.1L4.5 1.5Zm12.8 7.4 3.2 1.8c1 .6 1 2 0 2.6l-3.2 1.8L14.1 12l3.2-3.1ZM16 15.9 4.5 22.5l9.5-8.7 2 2.1Z" /></svg><span>Google Play <span aria-hidden="true">↗</span></span></a>
+        <a class="pill-cta" href={developerUrl} target="_blank" rel="noopener noreferrer"><svg class="play-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3 2.5v19l10-9.5L3 2.5Zm1.5-1L16 8.1l-2 2.1L4.5 1.5Zm12.8 7.4 3.2 1.8c1 .6 1 2 0 2.6l-3.2 1.8L14.1 12l3.2-3.1ZM16 15.9 4.5 22.5l9.5-8.7 2 2.1Z" /></svg><span>Google Play</span></a>
       </nav>
     </header>
     <main id="main"><slot /></main>
-    <footer class="foot band">
-      <div class="foot-top">
-        <p>Independent by nature. Thoughtful by design.</p>
-        <nav class="foot-links" aria-label="Footer"><a href={`/#worlds`}>Our apps</a><a href={`/blog`}>Blog</a><a href={developerUrl} target="_blank" rel="noopener noreferrer">Google Play ↗</a><a href={`/privacy`}>Website privacy</a></nav>
+    <footer class="foot">
+      <div class="wrap foot-grid">
+        <div class="foot-brand">
+          <a href="/" class="pill-brand" aria-label="Sazen home"><svg viewBox="0 0 600 600" aria-hidden="true"><use href="#sazen-s" width="600" height="600" /></svg><span>Sazen</span></a>
+          <p>Independent by nature.<br />Thoughtful by design.</p>
+        </div>
+        <nav class="foot-col" aria-label="Apps">
+          <h2>Apps</h2>
+          {apps.map(app => <a href={appPath(app.slug)}>{app.name}</a>)}
+        </nav>
+        <nav class="foot-col" aria-label="Studio">
+          <h2>Studio</h2>
+          <a href="/#studio">About</a><a href="/#build">How we build</a><a href="/blog">Blog</a><a href="/privacy">Website privacy</a>
+        </nav>
+        <nav class="foot-col" aria-label="Elsewhere">
+          <h2>Elsewhere</h2>
+          <a href={developerUrl} target="_blank" rel="noopener noreferrer">Google Play</a><a href={githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
       </div>
-      <div class="wordmark reveal-word" data-fit aria-hidden="true">{word.map(letter => <span>{letter}</span>)}</div>
-      <div class="foot-bottom"><span>© {new Date().getFullYear()} Sazen. Apps &amp; Games.</span><span>Crafted With Care.</span></div>
+      <div class="wrap"><div class="wordmark" data-fit aria-hidden="true">{word.map(letter => <span>{letter}</span>)}</div></div>
+      <div class="wrap foot-bottom"><span>© {new Date().getFullYear()} Sazen</span><span>Apps and games, made with care</span></div>
     </footer>
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
       <symbol id="sazen-s" viewBox="-300 -300 600 600"><path d="M118.95 -300H-75A187.5 187.5 0 0 0 -75 75H75A37.5 37.5 0 0 1 75 150H-170.55A32.25 32.25 0 0 0 -170.55 214.5H-80.25A10.5 10.5 0 0 1 -80.25 235.5H-118.95A32.25 32.25 0 0 0 -118.95 300H75A187.5 187.5 0 0 0 75 -75H-75A37.5 37.5 0 0 1 -75 -150H170.55A32.25 32.25 0 0 0 170.55 -214.5H80.25A10.5 10.5 0 0 1 80.25 -235.5H118.95A32.25 32.25 0 0 0 118.95 -300Z" /><rect x="172.20" y="-300" width="90.30" height="64.50" rx="32.25" /><rect x="-262.50" y="235.50" width="90.30" height="64.50" rx="32.25" /></symbol>
