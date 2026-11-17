@@ -4,7 +4,7 @@
 
 ```text
 astro.config.mjs               Static build, production origin, clean URL output, Markdown section wrapper for posts
-src/data/apps.ts               Seven apps, copy, features, captions, search titles, store/website URLs
+src/data/apps.ts               Eight apps, copy, features, captions, search titles, store/website URLs
 src/content/blog/              Markdown posts (frontmatter: title, excerpt, app, date, order, draft); general guidance is fine, app claims restate existing copy; drafts build only with SHOW_DRAFTS=1
 src/content.config.ts          Blog collection schema; the build fails on a missing field or unknown app slug
 src/data/blog.ts               Loads the blog collection, sorted newest first (same-day posts by order), plus date and reading-time helpers
@@ -13,7 +13,7 @@ src/layouts/Studio.astro       SEO, glass pill header, giant-wordmark footer, Le
 src/components/PhonePreview.astro  Shared device frame for every screenshot and the Exit Rush video
 src/components/PostCard.astro  Blog card with app icon and a real screenshot cover
 src/pages/index.astro          Hero showcase, marquee, manifesto, Apps & Games, How we build, collection, blog, CTA
-src/pages/apps/[slug].astro    Seven app pages: phone hero, features, gallery + dialog, support, other apps
+src/pages/apps/[slug].astro    Eight app pages: phone hero, features, gallery + dialog, support, other apps
 src/pages/blog/                Blog index (3 + View all) and one page per post
 src/pages/privacy.astro        Website privacy and individual app policy pointers
 src/pages/404.astro            Not-found page
@@ -21,7 +21,7 @@ src/pages/robots.txt.ts        Crawl rules derived from configured origin
 src/pages/sitemap.xml.ts       Home, app pages, blog, posts, privacy; lastmod only for dated blog URLs
 src/styles/studio.css          Tokens, type, layout, motion, light/dark, reduced motion
 public/fonts/                  Self-hosted Anton (display) and Google Sans (body)
-public/images/                 Sazen logo, 7 icons, 21 screenshots, device bezel and status bars, Exit Rush poster, reels/ posters
+public/images/                 Sazen logo, 8 icons, 24 screenshots, device bezel and status bars, Exit Rush poster, reels/ posters
 public/videos/                 exit-rush.mp4 gameplay; sazen-reel-{ivory,dark,colour}.mp4 collection reels (960px web encodes of brand/promo)
 public/favicon.svg             Theme-aware Sazen S favicon (black on light, white on dark)
 public/{favicon,apple-touch-icon,og}.png  Brand and social assets (og.png is the default share image)
@@ -44,11 +44,11 @@ Motion is balanced: line-by-line headline reveals, soft fade-up, a never-pausing
 
 ## Experience
 
-**Home.** The hero pairs the headline with a coverflow of all seven apps in `PhonePreview` frames, fully visible on the page background. It auto-advances every 4.2 s with a progress line, pauses on hover and focus, and responds to arrow buttons, the keyboard, swipe and clicking a side phone. The bar below shows the active app's icon, category, name, headline, its Sazen page and Google Play. Exit Rush plays its gameplay video only while it is the active slide and on screen. The Apps and Games panels list every app as an icon row linking to its page. "How we build" pins and scrolls horizontally on screens 900px and wider; narrower screens swipe natively. The collection section shows the three studio reels (ivory, dark, colour) rendered from `brand/promo`: each loops muted on its own while on screen (so all three play together on wide screens), pausing off-screen or in a hidden tab, and preloads shortly before the section arrives; clicking a reel pauses or resumes it. Reduced motion shows posters until a reel is clicked. Three blog cards link to posts and to `/blog`.
+**Home.** The hero pairs the headline with a coverflow of all eight apps in `PhonePreview` frames, fully visible on the page background. It auto-advances every 4.2 s with a progress line, pauses on hover and focus, and responds to arrow buttons, the keyboard, swipe and clicking a side phone. The bar below shows the active app's icon, category, name, headline, its Sazen page and Google Play. Exit Rush plays its gameplay video only while it is the active slide and on screen. The Apps and Games panels list every app as an icon row linking to its page. "How we build" pins and scrolls horizontally on screens 900px and wider; narrower screens swipe natively. The collection section shows the three studio reels (ivory, dark, colour) rendered from `brand/promo`: each loops muted on its own while on screen (so all three play together on wide screens), pausing off-screen or in a hidden tab, and preloads shortly before the section arrives; clicking a reel pauses or resumes it. Reduced motion shows posters until a reel is clicked. Three blog cards link to posts and to `/blog`.
 
-**App pages.** Fanned three-phone hero (the centre phone plays the Exit Rush video on its page), feature marquee and numbered feature rows, three real screenshots with a native `<dialog>` enlargement (Escape, close button, backdrop, arrow keys), a support band pointing to that app's own Google Play listing and website, and rows for the other six apps. Budget AI states its pricing in its note.
+**App pages.** Fanned three-phone hero (the centre phone plays the Exit Rush video on its page), feature marquee and numbered feature rows, three real screenshots with a native `<dialog>` enlargement (Escape, close button, backdrop, arrow keys), a support band pointing to that app's own Google Play listing and website, and rows for the other seven apps. Budget AI and BG Remover state their pricing in their notes.
 
-**Blog.** One Markdown post per app, each with its own `date` (all seven were published 30 October 2026). A rehype plugin in `astro.config.mjs` wraps the intro and each `##` heading with its content in `<section class="reveal">`, which the `.prose` layout and scroll reveals rely on, so posts should use `##` for sections. The index shows three posts and reveals the rest with a button; all posts render without JavaScript. Post pages show the app's screens as a banner, the article, a sticky app card and three more posts.
+**Blog.** Markdown posts (BG Remover has none yet), each with its own `date` (all seven were published 30 October 2026). A rehype plugin in `astro.config.mjs` wraps the intro and each `##` heading with its content in `<section class="reveal">`, which the `.prose` layout and scroll reveals rely on, so posts should use `##` for sections. The index shows three posts and reveals the rest with a button; all posts render without JavaScript. Post pages show the app's screens as a banner, the article, a sticky app card and three more posts.
 
 **Privacy and 404.** Same visual system. No app policies are consolidated into a studio-wide claim.
 
@@ -64,13 +64,13 @@ After adding or renaming an app or post (or changing an app name/headline or pos
 
 ## Content provenance
 
-The local Budget AI, Rafeeq, 99-Names, FM-CRAFTS, Quran-Khatam-Tracker and Exit Rush projects supply app content, icons and screenshots; exact paths are in `docs/asset-sources.json`. SalahLog images come from its public Google Play listing for `com.track_prayer`. Sazen branding comes from developer ID `5262989636703605828`. The FM Crafts icon is its current green app icon (FM-CRAFTS commit `bc2fd0d`).
+The local Budget AI, image-background-remover (BG Remover), Rafeeq, 99-Names, FM-CRAFTS, Quran-Khatam-Tracker and Exit Rush projects supply app content, icons and screenshots; exact paths are in `docs/asset-sources.json`. SalahLog images come from its public Google Play listing for `com.track_prayer`. Sazen branding comes from developer ID `5262989636703605828`. The FM Crafts icon is its current green app icon (FM-CRAFTS commit `bc2fd0d`).
 
 `99-Names` and `asmaul_husna` identify the same Android package and must not be duplicated. SalahLog has no separate website, so its Sazen page is the landing destination.
 
 ## Screenshot presentation
 
-`PhonePreview.astro` owns the complete device presentation with the original Rafeeq metallic bezel. Sources with embedded status bars (Rafeeq, FM Crafts and Budget AI) keep their own bar. Quran Khatam Tracker and 99 Names reserve space for one status bar. Exit Rush and SalahLog mask only the existing status region. App content is not regenerated.
+`PhonePreview.astro` owns the complete device presentation with the original Rafeeq metallic bezel. Sources with embedded status bars (Rafeeq, FM Crafts and Budget AI) keep their own bar. Quran Khatam Tracker, 99 Names and BG Remover reserve space for one status bar. Exit Rush and SalahLog mask only the existing status region. App content is not regenerated.
 
 ## Deployment and verification
 

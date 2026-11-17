@@ -13,7 +13,7 @@ const external = app.website.startsWith('https');
 const related = posts.filter(post => post.app === app.slug);
 const site = Astro.site!;
 const url = (path: string) => new URL(path, site).toString();
-const category = { faith: 'LifestyleApplication', games: 'GameApplication', everyday: 'FinanceApplication', shopping: 'ShoppingApplication' }[app.filter];
+const category = { faith: 'LifestyleApplication', games: 'GameApplication', everyday: 'FinanceApplication', photo: 'PhotographyApplication', shopping: 'ShoppingApplication' }[app.filter];
 // No offers or ratings: those would need real store data we do not publish here.
 const schema = [
   {

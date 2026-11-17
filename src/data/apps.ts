@@ -1,6 +1,6 @@
 export const developerUrl = 'https://play.google.com/store/apps/dev?id=5262989636703605828';
 export const siteTitle = 'Sazen – Quran & Prayer Apps, Puzzle Games and Everyday Tools';
-export const description = 'Sazen is an independent studio making Android apps and games: Rafeeq, Quran Khatam Tracker, SalahLog, 99 Names, Budget AI, FM Crafts and Exit Rush.';
+export const description = 'Sazen is an independent studio making Android apps and games: Rafeeq, Quran Khatam Tracker, SalahLog, 99 Names, Budget AI, BG Remover, FM Crafts and Exit Rush.';
 // Search titles name what each app does, using only features its own copy already lists.
 
 export const apps = [
@@ -47,6 +47,17 @@ export const apps = [
     captions: ['Log spending in a chat', 'All your finances in one place', 'Understand your spending'],
     detail: 'Budget AI helps you record expenses and income through chat, voice, or receipt photos. Browse your entries, explore spending insights, and see your totals from Home Screen widgets.',
     note: 'Manual tracking is free. AI is paid, with 5 free AI messages each month.',
+  },
+  {
+    slug: 'bg-remover', name: 'BG Remover', subtitle: 'Background gone. In one tap.', category: 'Photo tools', filter: 'photo', color: 'peach',
+    seoTitle: 'BG Remover – Background Remover & Photo Enhancer',
+    headline: 'Background gone. In one tap.',
+    description: 'Remove the background from people, products and pets. Enhance the subject, then make the result your own.',
+    package: 'com.sazen.bg.remover', website: 'https://bgremover.teamsazen.com/',
+    features: ['Runs on your phone', 'Backdrop colours, outlines & text', 'Enhance 4× & PNG or JPG export'],
+    captions: ['Pick a backdrop colour', 'Add a white outline', 'Save a transparent PNG or JPG'],
+    detail: 'Remove the background from people, products and pets on your phone. Add backdrop colours, an outline and text, enhance subject detail with 4× AI upscaling, and save a transparent PNG or a JPG.',
+    note: 'Free to use with ads. One-time purchases on Google Play remove them, with no subscription.',
   },
   {
     slug: '99-names', name: '99 Names', subtitle: 'Asmaul Husna', category: 'Faith & reflection', filter: 'faith', color: 'butter',

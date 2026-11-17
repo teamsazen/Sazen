@@ -2,7 +2,7 @@
 import { screen, type App } from '../data/apps';
 interface Props { app: App; index?: number; video?: boolean; eager?: boolean; class?: string }
 const {app,index=1,video=false,eager=false,class:className=''}=Astro.props;
-const addStatus=['quran-khatam-tracker','99-names'].includes(app.slug);
+const addStatus=['quran-khatam-tracker','99-names','bg-remover'].includes(app.slug);
 const overlayStatus=['exit-rush','salahlog'].includes(app.slug);
 const dark=app.slug==='quran-khatam-tracker'||(app.slug==='salahlog'&&index===1);
 ---
