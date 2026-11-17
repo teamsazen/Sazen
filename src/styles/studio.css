@@ -107,9 +107,9 @@ img{max-width:100%}
 @keyframes tick{to{transform:scaleX(1)}}
 @media (max-width:700px){.show{--pw:clamp(150px,42vw,210px);--spread:.8}.slide[data-far]{opacity:0;pointer-events:none}.show-progress{display:none}}
 
-/* Angled marquee */
-.marquee-wrap{overflow:hidden;padding-block:clamp(56px,7vw,110px)}
-.marquee{width:110%;margin-left:-5%;transform:rotate(-3deg);border-block:1px solid var(--line);padding-block:clamp(14px,1.6vw,22px);overflow:hidden}
+/* Marquee */
+.marquee-wrap{overflow:hidden;padding-block:clamp(48px,6vw,90px)}
+.marquee{border-block:1px solid var(--line);padding-block:clamp(14px,1.6vw,22px);overflow:hidden}
 .marquee-track{display:flex;width:max-content;animation:marquee 46s linear infinite}
 .marquee-track span{font-family:var(--display);font-size:clamp(28px,3.4vw,54px);line-height:1.1;letter-spacing:-.04em;padding-right:.7em;white-space:nowrap;font-weight:640}
 .marquee-track span:nth-child(even){font-style:italic;font-weight:260;color:var(--muted)}
